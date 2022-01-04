@@ -1,11 +1,8 @@
 package com.leverx.model.request;
 
-import com.leverx.model.Department;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-
-import javax.persistence.Column;
 
 @Data
 @Builder

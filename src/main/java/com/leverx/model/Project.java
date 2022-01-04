@@ -20,6 +20,9 @@ import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Set;
 
+import static javax.persistence.FetchType.*;
+import static javax.persistence.GenerationType.*;
+
 @Data
 @Builder
 @Entity
@@ -29,7 +32,7 @@ import java.util.Set;
 public class Project {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
     @Column
@@ -41,7 +44,7 @@ public class Project {
     @Column(name = "end_date")
     private LocalDate endDate;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = EAGER)
     @JoinTable(name = "user_projects",
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")

@@ -9,6 +9,8 @@ import lombok.Data;
 @AllArgsConstructor
 public class UserResponse {
 
+    private Long userId;
+
     private String firstName;
 
     private String lastName;

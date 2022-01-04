@@ -6,25 +6,18 @@ import com.leverx.model.request.UserRequest;
 import com.leverx.model.response.UserResponse;
 import com.leverx.repositories.DepartmentRepository;
 import com.leverx.repositories.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
     private final DepartmentRepository departmentRepository;
-
-    public UserService(UserRepository userRepository, DepartmentRepository departmentRepository) {
-        this.userRepository = userRepository;
-        this.departmentRepository = departmentRepository;
-    }
-
-    public User findUserById(Long userId){
-        return userRepository.findUserById(userId);
-    }
 
     public List<UserResponse> findAll(){
         List<User> users = (List<User>) userRepository.findAll();
@@ -32,6 +25,7 @@ public class UserService {
         for (User u : users) {
             Department department = u.getDepartment();
             UserResponse userResponse = UserResponse.builder()
+                    .userId(u.getId())
                     .firstName(u.getFirstName())
                     .lastName(u.getLastName())
                     .position(u.getPosition())
@@ -55,10 +49,11 @@ public class UserService {
         userRepository.save(user);
 
         return UserResponse.builder()
-                .firstName(request.getFirstName())
-                .lastName(request.getLastName())
-                .position(request.getPosition())
-                .departmentId(request.getDepartmentId())
+                .userId(user.getId())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .position(user.getPosition())
+                .departmentId(user.getDepartment().getId())
                 .build();
     }
 
@@ -71,11 +66,14 @@ public class UserService {
         userById.setPosition(request.getPosition());
         userById.setDepartment(departmentRepository.findDepartmentById(request.getDepartmentId()));
 
+        userRepository.save(userById);
+
         return UserResponse.builder()
-                .firstName(request.getFirstName())
-                .lastName(request.getLastName())
-                .position(request.getPosition())
-                .departmentId(request.getDepartmentId())
+                .userId(userId)
+                .firstName(userById.getFirstName())
+                .lastName(userById.getLastName())
+                .position(userById.getPosition())
+                .departmentId(userById.getDepartment().getId())
                 .build();
     }
 

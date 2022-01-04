@@ -9,5 +9,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class DepartmentResponse {
 
+    private Long departmentId;
+
     private String title;
 }

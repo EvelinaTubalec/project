@@ -9,8 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @ComponentScan({"com.leverx"})
 @EnableWebMvc
-@Import(value= DataSourceConfig.class)
+@Import(value = DataSourceConfig.class)
 public class SpringConfig implements WebMvcConfigurer {
-
 
 }
