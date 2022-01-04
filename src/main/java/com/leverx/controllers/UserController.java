@@ -8,8 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,19 +33,19 @@ public class UserController {
     }
 
     @PostMapping()
-    public ResponseEntity<UserResponse> saveUser(UserRequest request){
+    public ResponseEntity<UserResponse> saveUser(@RequestBody UserRequest request){
         UserResponse createdUser = userService.create(request);
         return new ResponseEntity<>(createdUser, CREATED);
     }
 
-    @PatchMapping()
-    public ResponseEntity<UserResponse> updateUser(UserRequest request, Long userId){
+    @PatchMapping("{userId}")
+    public ResponseEntity<UserResponse> updateUser(@RequestBody UserRequest request, @PathVariable Long userId){
         UserResponse updatedUser = userService.update(request, userId);
         return new ResponseEntity<>(updatedUser, CREATED);
     }
 
-    @DeleteMapping()
-    public ResponseEntity deleteUser(Long userId){
+    @DeleteMapping("{userId}")
+    public ResponseEntity deleteUser(@PathVariable Long userId){
         userService.delete(userId);
         return new ResponseEntity<>(OK);
     }

@@ -1,9 +1,7 @@
 package com.leverx.controllers;
 
 import com.leverx.model.request.DepartmentRequest;
-import com.leverx.model.request.UserRequest;
 import com.leverx.model.response.DepartmentResponse;
-import com.leverx.model.response.UserResponse;
 import com.leverx.services.DepartmentService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -34,21 +33,20 @@ public class DepartmentController {
     }
 
     @PostMapping()
-    public ResponseEntity<DepartmentResponse> saveDepartment(DepartmentRequest request){
+    public ResponseEntity<DepartmentResponse> saveDepartment(@RequestBody DepartmentRequest request){
         DepartmentResponse createdDepartment = departmentService.create(request);
         return new ResponseEntity<>(createdDepartment, CREATED);
     }
 
-    @PatchMapping()
-    public ResponseEntity<DepartmentResponse> updateDepartment(DepartmentRequest request, Long departmentId){
+    @PatchMapping("{departmentId}")
+    public ResponseEntity<DepartmentResponse> updateDepartment(@RequestBody DepartmentRequest request, @PathVariable Long departmentId){
         DepartmentResponse updatedDepartment = departmentService.update(request, departmentId);
         return new ResponseEntity<>(updatedDepartment, CREATED);
     }
 
-    @DeleteMapping()
-    public ResponseEntity deleteDepartment(Long departmentId){
+    @DeleteMapping({"{departmentId}"})
+    public ResponseEntity deleteDepartment(@PathVariable Long departmentId){
         departmentService.delete(departmentId);
         return new ResponseEntity<>(OK);
     }
-
 }
