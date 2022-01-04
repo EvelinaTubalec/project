@@ -37,11 +37,11 @@ public class DepartmentService {
                 .title(request.getTitle())
                 .build();
 
-        departmentRepository.save(department);
+        Department savedDepartment = departmentRepository.save(department);
 
         return DepartmentResponse.builder()
-                .departmentId(department.getId())
-                .title(department.getTitle())
+                .departmentId(savedDepartment.getId())
+                .title(savedDepartment.getTitle())
                 .build();
     }
 
