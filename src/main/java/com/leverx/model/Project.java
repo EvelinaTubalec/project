@@ -15,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.Collections;
@@ -44,11 +46,6 @@ public class Project {
     @Column(name = "end_date")
     private LocalDate endDate;
 
-    @ManyToMany(fetch = EAGER)
-    @JoinTable(name = "user_projects",
-            joinColumns = @JoinColumn(name = "project_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    @JsonIgnoreProperties("projects")
-    private Set<User> users = Collections.emptySet();
+    @OneToMany(mappedBy = "project")
+    Set<UserProject> userProjects;
 }

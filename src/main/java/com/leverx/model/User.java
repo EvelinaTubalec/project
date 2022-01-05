@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Collections;
 import java.util.Set;
@@ -54,7 +55,6 @@ public class User {
     @JoinColumn(name = "department_id")
     private Department department;
 
-    @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonIgnoreProperties("users")
-    private Set<Project> projects = Collections.emptySet();
+    @OneToMany(mappedBy = "user")
+    Set<UserProject> userProjects;
 }
