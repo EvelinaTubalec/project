@@ -18,20 +18,20 @@ public class UserService {
     private final UserRepository userRepository;
     private final DepartmentRepository departmentRepository;
 
-    public List<UserResponse> findAll(){
+    public List<UserResponse> findAll() {
         List<User> users = userRepository.findAll();
         return users.stream().map(user ->
-                UserResponse.builder()
-                        .userId(user.getId())
-                        .firstName(user.getFirstName())
-                        .lastName(user.getLastName())
-                        .position(user.getPosition())
-                        .departmentId(user.getDepartment().getId())
-                        .build())
-        .collect(Collectors.toList());
+                        UserResponse.builder()
+                                .userId(user.getId())
+                                .firstName(user.getFirstName())
+                                .lastName(user.getLastName())
+                                .position(user.getPosition())
+                                .departmentId(user.getDepartment().getId())
+                                .build())
+                .collect(Collectors.toList());
     }
 
-    public UserResponse create(UserRequest request){
+    public UserResponse create(UserRequest request) {
         User user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
@@ -52,7 +52,7 @@ public class UserService {
                 .build();
     }
 
-    public UserResponse update(UserRequest request, Long userId){
+    public UserResponse update(UserRequest request, Long userId) {
         User userById = userRepository.findUserById(userId);
         userById.setFirstName(request.getFirstName());
         userById.setLastName(request.getLastName());
@@ -72,7 +72,7 @@ public class UserService {
                 .build();
     }
 
-    public void delete(Long userId){
+    public void delete(Long userId) {
         userRepository.deleteById(userId);
     }
 }

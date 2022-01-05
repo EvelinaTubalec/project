@@ -17,19 +17,19 @@ public class ProjectService {
 
     private final ProjectRepository projectRepository;
 
-    public List<ProjectResponse> findAll(){
+    public List<ProjectResponse> findAll() {
         List<Project> projects = projectRepository.findAll();
         return projects.stream().map(project ->
-                ProjectResponse.builder()
-                        .projectId(project.getId())
-                        .title(project.getTitle())
-                        .startDate(project.getStartDate())
-                        .endDate(project.getEndDate())
-                        .build())
+                        ProjectResponse.builder()
+                                .projectId(project.getId())
+                                .title(project.getTitle())
+                                .startDate(project.getStartDate())
+                                .endDate(project.getEndDate())
+                                .build())
                 .collect(toList());
     }
 
-    public ProjectResponse create(ProjectRequest request){
+    public ProjectResponse create(ProjectRequest request) {
         Project project = Project.builder()
                 .title(request.getTitle())
                 .startDate(request.getStartDate())
@@ -46,7 +46,7 @@ public class ProjectService {
                 .build();
     }
 
-    public ProjectResponse update(ProjectRequest request, Long projectId){
+    public ProjectResponse update(ProjectRequest request, Long projectId) {
         Project projectById = projectRepository.findProjectById(projectId);
         projectById.setTitle(request.getTitle());
         projectById.setStartDate(request.getStartDate());
@@ -62,7 +62,7 @@ public class ProjectService {
                 .build();
     }
 
-    public void delete(Long projectId){
+    public void delete(Long projectId) {
         projectRepository.deleteById(projectId);
     }
 }

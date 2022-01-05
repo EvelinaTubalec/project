@@ -2,8 +2,8 @@ package com.leverx.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -18,26 +18,24 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@ComponentScan({"com.leverx"})
 @EnableJpaRepositories("com.leverx.repositories")
 @PropertySource(value = {"classpath:application.properties"})
 @EnableTransactionManagement
 public class DataSourceConfig {
 
-    /*
-    @Value("${db.url}")
+    @Value("${database.url}")
     public String url;
 
-    @Value("${db.driverName}")
+    @Value("${database.driverName}")
     public String driverName;
 
-    @Value("${db.username}")
+    @Value("${database.username}")
     public String username;
 
-    @Value("${db.password}")
+    @Value("${database.password}")
     public String password;
 
-    @Value("${db.poolSize}")
+    @Value("${database.poolSize}")
     public Integer poolSize;
 
     @Value("${hibernate.dialect}")
@@ -51,16 +49,15 @@ public class DataSourceConfig {
 
     @Value("${hibernate.format_sql}")
     public String formatSql;
-   */
 
     @Bean
     public DataSource dataSource() {
         HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl("jdbc:postgresql://localhost:5432/db");
-        hikariConfig.setDriverClassName("org.postgresql.Driver");
-        hikariConfig.setUsername("postgres");
-        hikariConfig.setPassword("root");
-        hikariConfig.setMaximumPoolSize(10);
+        hikariConfig.setJdbcUrl(url);
+        hikariConfig.setDriverClassName(driverName);
+        hikariConfig.setUsername(username);
+        hikariConfig.setPassword(password);
+        hikariConfig.setMaximumPoolSize(poolSize);
 
         return new HikariDataSource(hikariConfig);
     }
@@ -81,10 +78,10 @@ public class DataSourceConfig {
 
     private Properties getAdditionalProperties() {
         Properties properties = new Properties();
-        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
-        properties.setProperty("hibernate.show_sql", "true");
-        properties.setProperty("hibernate.hbm2ddl.auto", "update");
-        properties.setProperty("hibernate.format_sql", "true");
+        properties.setProperty("hibernate.dialect", dialect);
+        properties.setProperty("hibernate.show_sql", showSql);
+        properties.setProperty("hibernate.hbm2ddl.auto", hbm2ddl);
+        properties.setProperty("hibernate.format_sql", formatSql);
         return properties;
     }
 

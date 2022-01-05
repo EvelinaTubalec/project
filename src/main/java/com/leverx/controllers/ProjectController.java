@@ -3,7 +3,10 @@ package com.leverx.controllers;
 import com.leverx.model.request.ProjectRequest;
 import com.leverx.model.response.ProjectResponse;
 import com.leverx.services.ProjectService;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import org.hibernate.annotations.common.util.impl.LoggerFactory;
+import org.jboss.logging.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
@@ -25,28 +29,37 @@ import static org.springframework.http.HttpStatus.OK;
 public class ProjectController {
 
     private final ProjectService projectService;
+    private static final Logger log = LoggerFactory.logger(DepartmentController.class);
 
-    @GetMapping()
+    @GetMapping
+    @ApiOperation(value = "Get projects")
     public ResponseEntity<List<ProjectResponse>> findAll(){
         List<ProjectResponse> projects = projectService.findAll();
+        log.debug("Find projects");
         return new ResponseEntity<>(projects, OK);
     }
 
-    @PostMapping()
+    @PostMapping
+    @ApiOperation(value = "Save project")
     public ResponseEntity<ProjectResponse> saveProject(@RequestBody ProjectRequest request){
         ProjectResponse createdProject = projectService.create(request);
+        log.debug("Save project");
         return new ResponseEntity<>(createdProject, CREATED);
     }
 
     @PatchMapping("/{projectId}")
+    @ApiOperation(value = "Update project")
     public ResponseEntity<ProjectResponse> updateProject(@RequestBody ProjectRequest request, @PathVariable Long projectId){
         ProjectResponse updatedProject = projectService.update(request, projectId);
+        log.debug("Update project");
         return new ResponseEntity<>(updatedProject, CREATED);
     }
 
     @DeleteMapping("/{projectId}")
-    public ResponseEntity<?> deleteProject(@PathVariable Long projectId){
+    @ApiOperation(value = "Delete project")
+    public ResponseEntity deleteProject(@PathVariable Long projectId){
         projectService.delete(projectId);
-        return new ResponseEntity<>(OK);
+        log.debug("Delete project");
+        return new ResponseEntity<>(NO_CONTENT);
     }
 }
