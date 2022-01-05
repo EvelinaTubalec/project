@@ -5,7 +5,6 @@ import com.leverx.model.response.ProjectResponse;
 import com.leverx.services.ProjectService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -39,14 +38,14 @@ public class ProjectController {
         return new ResponseEntity<>(createdProject, CREATED);
     }
 
-    @PatchMapping("{projectId}")
+    @PatchMapping("/{projectId}")
     public ResponseEntity<ProjectResponse> updateProject(@RequestBody ProjectRequest request, @PathVariable Long projectId){
         ProjectResponse updatedProject = projectService.update(request, projectId);
         return new ResponseEntity<>(updatedProject, CREATED);
     }
 
-    @DeleteMapping("{projectId}")
-    public ResponseEntity deleteProject(@PathVariable Long projectId){
+    @DeleteMapping("/{projectId}")
+    public ResponseEntity<?> deleteProject(@PathVariable Long projectId){
         projectService.delete(projectId);
         return new ResponseEntity<>(OK);
     }

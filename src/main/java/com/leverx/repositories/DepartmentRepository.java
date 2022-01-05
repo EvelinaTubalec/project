@@ -1,12 +1,9 @@
 package com.leverx.repositories;
 
 import com.leverx.model.Department;
-import com.leverx.model.User;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Repository
-public interface DepartmentRepository extends CrudRepository<Department, Long> {
+public interface DepartmentRepository extends JpaRepository<Department, Long> {
 
     Department findDepartmentById(Long id);
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.CascadeType;
@@ -25,6 +26,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Builder
 @Entity
 @Table(name = "users")
+@EqualsAndHashCode(exclude = {"departments"})
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {

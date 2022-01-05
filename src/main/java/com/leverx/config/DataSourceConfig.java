@@ -2,9 +2,6 @@ package com.leverx.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -54,8 +51,7 @@ public class DataSourceConfig {
 
     @Value("${hibernate.format_sql}")
     public String formatSql;
-
-     */
+   */
 
     @Bean
     public DataSource dataSource() {
@@ -87,7 +83,7 @@ public class DataSourceConfig {
         Properties properties = new Properties();
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         properties.setProperty("hibernate.show_sql", "true");
-        properties.setProperty("hibernate.hbm2ddl.auto", "create");
+        properties.setProperty("hibernate.hbm2ddl.auto", "update");
         properties.setProperty("hibernate.format_sql", "true");
         return properties;
     }

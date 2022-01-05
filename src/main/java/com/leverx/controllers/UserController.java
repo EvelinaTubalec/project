@@ -38,14 +38,14 @@ public class UserController {
         return new ResponseEntity<>(createdUser, CREATED);
     }
 
-    @PatchMapping("{userId}")
+    @PatchMapping("/{userId}")
     public ResponseEntity<UserResponse> updateUser(@RequestBody UserRequest request, @PathVariable Long userId){
         UserResponse updatedUser = userService.update(request, userId);
         return new ResponseEntity<>(updatedUser, CREATED);
     }
 
-    @DeleteMapping("{userId}")
-    public ResponseEntity deleteUser(@PathVariable Long userId){
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long userId){
         userService.delete(userId);
         return new ResponseEntity<>(OK);
     }

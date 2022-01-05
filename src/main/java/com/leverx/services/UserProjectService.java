@@ -3,16 +3,12 @@ package com.leverx.services;
 import com.leverx.model.UserProject;
 import com.leverx.model.request.UserProjectRequest;
 import com.leverx.model.response.UserProjectResponse;
-import com.leverx.repositories.DepartmentRepository;
 import com.leverx.repositories.UserProjectRepository;
-import com.leverx.repositories.UserRepository;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -21,19 +17,16 @@ public class UserProjectService {
     private final UserProjectRepository userProjectRepository;
 
     public List<UserProjectResponse> findAll(){
-        List<UserProject> userProjects = (List<UserProject>) userProjectRepository.findAll();
-        List<UserProjectResponse> result = new ArrayList<>();
-        for (UserProject userProject : userProjects) {
-            UserProjectResponse userProjectResponse = UserProjectResponse.builder()
-                    .userProjectId(userProject.getProjectId())
-                    .userId(userProject.getUserId())
-                    .projectId(userProject.getProjectId())
-                    .positionStartDate(userProject.getPositionStartDate())
-                    .positionEndDate(userProject.getPositionEndDate())
-                    .build();
-            result.add(userProjectResponse);
-        }
-        return result;
+        List<UserProject> userProjects = userProjectRepository.findAll();
+        return userProjects.stream().map(userProject ->
+                UserProjectResponse.builder()
+                        .userProjectId(userProject.getProjectId())
+                        .userId(userProject.getUserId())
+                        .projectId(userProject.getProjectId())
+                        .positionStartDate(userProject.getPositionStartDate())
+                        .positionEndDate(userProject.getPositionEndDate())
+                        .build())
+                .collect(Collectors.toList());
     }
 
     public UserProjectResponse create(UserProjectRequest request){
@@ -44,14 +37,14 @@ public class UserProjectService {
                 .positionEndDate(request.getPositionEndDate())
                 .build();
 
-        userProjectRepository.save(userProject);
+        UserProject savedUserProject = userProjectRepository.save(userProject);
 
         return UserProjectResponse.builder()
-                .userProjectId(userProject.getProjectId())
-                .userId(userProject.getUserId())
-                .projectId(userProject.getProjectId())
-                .positionStartDate(userProject.getPositionStartDate())
-                .positionEndDate(userProject.getPositionEndDate())
+                .userProjectId(savedUserProject.getProjectId())
+                .userId(savedUserProject.getUserId())
+                .projectId(savedUserProject.getProjectId())
+                .positionStartDate(savedUserProject.getPositionStartDate())
+                .positionEndDate(savedUserProject.getPositionEndDate())
                 .build();
     }
 
@@ -62,14 +55,14 @@ public class UserProjectService {
         userProjectById.setPositionStartDate(request.getPositionStartDate());
         userProjectById.setPositionEndDate(request.getPositionEndDate());
 
-        userProjectRepository.save(userProjectById);
+        UserProject updatedUserProject = userProjectRepository.save(userProjectById);
 
         return UserProjectResponse.builder()
-                .userProjectId(userProjectById.getProjectId())
-                .userId(userProjectById.getUserId())
-                .projectId(userProjectById.getProjectId())
-                .positionStartDate(userProjectById.getPositionStartDate())
-                .positionEndDate(userProjectById.getPositionEndDate())
+                .userProjectId(updatedUserProject.getProjectId())
+                .userId(updatedUserProject.getUserId())
+                .projectId(updatedUserProject.getProjectId())
+                .positionStartDate(updatedUserProject.getPositionStartDate())
+                .positionEndDate(updatedUserProject.getPositionEndDate())
                 .build();
     }
 

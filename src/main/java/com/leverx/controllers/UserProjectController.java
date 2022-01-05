@@ -5,7 +5,6 @@ import com.leverx.model.response.UserProjectResponse;
 import com.leverx.services.UserProjectService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -39,14 +38,14 @@ public class UserProjectController {
         return new ResponseEntity<>(createdUserProject, CREATED);
     }
 
-    @PatchMapping("{userProjectId}")
+    @PatchMapping("/{userProjectId}")
     public ResponseEntity<UserProjectResponse> updateUserProject(@RequestBody UserProjectRequest request, @PathVariable Long userProjectId){
         UserProjectResponse updatedUserProject = userProjectService.update(request, userProjectId);
         return new ResponseEntity<>(updatedUserProject, CREATED);
     }
 
-    @DeleteMapping("{userProjectId}")
-    public ResponseEntity deleteUserProject(@PathVariable Long userProjectId){
+    @DeleteMapping("/{userProjectId}")
+    public ResponseEntity<?> deleteUserProject(@PathVariable Long userProjectId){
         userProjectService.delete(userProjectId);
         return new ResponseEntity<>(OK);
     }

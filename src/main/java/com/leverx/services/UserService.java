@@ -1,6 +1,5 @@
 package com.leverx.services;
 
-import com.leverx.model.Department;
 import com.leverx.model.User;
 import com.leverx.model.request.UserRequest;
 import com.leverx.model.response.UserResponse;
@@ -9,8 +8,8 @@ import com.leverx.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -20,20 +19,16 @@ public class UserService {
     private final DepartmentRepository departmentRepository;
 
     public List<UserResponse> findAll(){
-        List<User> users = (List<User>) userRepository.findAll();
-        List<UserResponse> result = new ArrayList<>();
-        for (User u : users) {
-            Department department = u.getDepartment();
-            UserResponse userResponse = UserResponse.builder()
-                    .userId(u.getId())
-                    .firstName(u.getFirstName())
-                    .lastName(u.getLastName())
-                    .position(u.getPosition())
-                    .departmentId(department.getId())
-                    .build();
-            result.add(userResponse);
-        }
-        return result;
+        List<User> users = userRepository.findAll();
+        return users.stream().map(user ->
+                UserResponse.builder()
+                        .userId(user.getId())
+                        .firstName(user.getFirstName())
+                        .lastName(user.getLastName())
+                        .position(user.getPosition())
+                        .departmentId(user.getDepartment().getId())
+                        .build())
+        .collect(Collectors.toList());
     }
 
     public UserResponse create(UserRequest request){
@@ -46,14 +41,14 @@ public class UserService {
                 .department(departmentRepository.findDepartmentById(request.getDepartmentId()))
                 .build();
 
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
 
         return UserResponse.builder()
-                .userId(user.getId())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .position(user.getPosition())
-                .departmentId(user.getDepartment().getId())
+                .userId(savedUser.getId())
+                .firstName(savedUser.getFirstName())
+                .lastName(savedUser.getLastName())
+                .position(savedUser.getPosition())
+                .departmentId(savedUser.getDepartment().getId())
                 .build();
     }
 
@@ -66,14 +61,14 @@ public class UserService {
         userById.setPosition(request.getPosition());
         userById.setDepartment(departmentRepository.findDepartmentById(request.getDepartmentId()));
 
-        userRepository.save(userById);
+        User updatedUser = userRepository.save(userById);
 
         return UserResponse.builder()
                 .userId(userId)
-                .firstName(userById.getFirstName())
-                .lastName(userById.getLastName())
-                .position(userById.getPosition())
-                .departmentId(userById.getDepartment().getId())
+                .firstName(updatedUser.getFirstName())
+                .lastName(updatedUser.getLastName())
+                .position(updatedUser.getPosition())
+                .departmentId(updatedUser.getDepartment().getId())
                 .build();
     }
 

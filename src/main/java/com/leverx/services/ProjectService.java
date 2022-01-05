@@ -1,18 +1,15 @@
 package com.leverx.services;
 
-import com.leverx.model.Department;
 import com.leverx.model.Project;
-import com.leverx.model.request.DepartmentRequest;
 import com.leverx.model.request.ProjectRequest;
-import com.leverx.model.response.DepartmentResponse;
 import com.leverx.model.response.ProjectResponse;
 import com.leverx.repositories.ProjectRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 @AllArgsConstructor
@@ -21,18 +18,15 @@ public class ProjectService {
     private final ProjectRepository projectRepository;
 
     public List<ProjectResponse> findAll(){
-        List<Project> projects = (List<Project>) projectRepository.findAll();
-        List<ProjectResponse> result = new ArrayList<>();
-        for (Project p : projects) {
-            ProjectResponse projectResponse = ProjectResponse.builder()
-                    .projectId(p.getId())
-                    .title(p.getTitle())
-                    .startDate(p.getStartDate())
-                    .endDate(p.getEndDate())
-                    .build();
-            result.add(projectResponse);
-        }
-        return result;
+        List<Project> projects = projectRepository.findAll();
+        return projects.stream().map(project ->
+                ProjectResponse.builder()
+                        .projectId(project.getId())
+                        .title(project.getTitle())
+                        .startDate(project.getStartDate())
+                        .endDate(project.getEndDate())
+                        .build())
+                .collect(toList());
     }
 
     public ProjectResponse create(ProjectRequest request){
@@ -42,13 +36,13 @@ public class ProjectService {
                 .endDate(request.getEndDate())
                 .build();
 
-        projectRepository.save(project);
+        Project savedProject = projectRepository.save(project);
 
         return ProjectResponse.builder()
-                .projectId(project.getId())
-                .title(project.getTitle())
-                .startDate(project.getStartDate())
-                .endDate(project.getEndDate())
+                .projectId(savedProject.getId())
+                .title(savedProject.getTitle())
+                .startDate(savedProject.getStartDate())
+                .endDate(savedProject.getEndDate())
                 .build();
     }
 
@@ -58,18 +52,17 @@ public class ProjectService {
         projectById.setStartDate(request.getStartDate());
         projectById.setEndDate(request.getEndDate());
 
-        projectRepository.save(projectById);
+        Project updatedProject = projectRepository.save(projectById);
 
         return ProjectResponse.builder()
-                .projectId(projectById.getId())
-                .title(projectById.getTitle())
-                .startDate(projectById.getStartDate())
-                .endDate(projectById.getEndDate())
+                .projectId(updatedProject.getId())
+                .title(updatedProject.getTitle())
+                .startDate(updatedProject.getStartDate())
+                .endDate(updatedProject.getEndDate())
                 .build();
     }
 
     public void delete(Long projectId){
         projectRepository.deleteById(projectId);
     }
-
 }

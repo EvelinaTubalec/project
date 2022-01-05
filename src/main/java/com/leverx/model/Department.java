@@ -3,6 +3,7 @@ package com.leverx.model;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
@@ -22,6 +23,7 @@ import static javax.persistence.FetchType.EAGER;
 @Table(name = "departments")
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = {"users"})
 @Builder
 public class Department {
 

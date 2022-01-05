@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDate;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 @Data
 @Builder
 @Entity
@@ -22,7 +24,7 @@ import java.time.LocalDate;
 public class UserProject {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
     @Column(name = "user_id")
