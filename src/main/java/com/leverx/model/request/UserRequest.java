@@ -11,15 +11,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserRequest {
 
-    private String firstName;
+  private String firstName;
 
-    private String lastName;
+  private String lastName;
 
-    private String email;
+  private String email;
 
-    private String password;
+  private String password;
 
-    private String position;
+  private String position;
 
-    private Long departmentId;
+  private Long departmentId;
 }

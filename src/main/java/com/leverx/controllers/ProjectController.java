@@ -1,9 +1,14 @@
 package com.leverx.controllers;
 
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
+import static org.springframework.http.HttpStatus.OK;
+
 import com.leverx.model.request.ProjectRequest;
 import com.leverx.model.response.ProjectResponse;
 import com.leverx.services.ProjectService;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.hibernate.annotations.common.util.impl.LoggerFactory;
 import org.jboss.logging.Logger;
@@ -17,49 +22,44 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.NO_CONTENT;
-import static org.springframework.http.HttpStatus.OK;
-
 @RestController
 @AllArgsConstructor
 @RequestMapping("/projects")
 public class ProjectController {
 
-    private final ProjectService projectService;
-    private static final Logger log = LoggerFactory.logger(DepartmentController.class);
+  private final ProjectService projectService;
+  private static final Logger log = LoggerFactory.logger(DepartmentController.class);
 
-    @GetMapping
-    @ApiOperation(value = "Get projects")
-    public ResponseEntity<List<ProjectResponse>> findAll(){
-        List<ProjectResponse> projects = projectService.findAll();
-        log.debug("Find projects");
-        return new ResponseEntity<>(projects, OK);
-    }
+  @GetMapping
+  @Operation(summary = "Get projects")
+  public ResponseEntity<List<ProjectResponse>> findAll() {
+    List<ProjectResponse> projects = projectService.findAll();
+    log.debug("Find projects");
+    return new ResponseEntity<>(projects, OK);
+  }
 
-    @PostMapping
-    @ApiOperation(value = "Save project")
-    public ResponseEntity<ProjectResponse> saveProject(@RequestBody ProjectRequest request){
-        ProjectResponse createdProject = projectService.create(request);
-        log.debug("Save project");
-        return new ResponseEntity<>(createdProject, CREATED);
-    }
+  @PostMapping
+  @Operation(summary = "Save project")
+  public ResponseEntity<ProjectResponse> saveProject(@RequestBody ProjectRequest request) {
+    ProjectResponse createdProject = projectService.create(request);
+    log.debug("Save project");
+    return new ResponseEntity<>(createdProject, CREATED);
+  }
 
-    @PatchMapping("/{projectId}")
-    @ApiOperation(value = "Update project")
-    public ResponseEntity<ProjectResponse> updateProject(@RequestBody ProjectRequest request, @PathVariable Long projectId){
-        ProjectResponse updatedProject = projectService.update(request, projectId);
-        log.debug("Update project");
-        return new ResponseEntity<>(updatedProject, CREATED);
-    }
+  @PatchMapping("/{projectId}")
+  @Operation(summary = "Update project")
+  public ResponseEntity<ProjectResponse> updateProject(
+      @RequestBody ProjectRequest request, @PathVariable Long projectId) {
+    ProjectResponse updatedProject = projectService.update(request, projectId);
+    log.debug("Update project");
+    return new ResponseEntity<>(updatedProject, CREATED);
+  }
 
-    @DeleteMapping("/{projectId}")
-    @ApiOperation(value = "Delete project")
-    public ResponseEntity deleteProject(@PathVariable Long projectId){
-        projectService.delete(projectId);
-        log.debug("Delete project");
-        return new ResponseEntity<>(NO_CONTENT);
-    }
+  @DeleteMapping("/{projectId}")
+  @Operation(summary = "Delete project")
+  public ResponseEntity deleteProject(@PathVariable Long projectId) {
+    projectService.delete(projectId);
+    log.debug("Delete project");
+    return new ResponseEntity<>(NO_CONTENT);
+  }
 }

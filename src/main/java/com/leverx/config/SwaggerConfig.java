@@ -1,34 +1,18 @@
 package com.leverx.config;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import org.springframework.context.annotation.Import;
 
 @Configuration
-@EnableSwagger2
-public class SwaggerConfig extends WebMvcConfigurerAdapter {
-
-    @Bean
-    public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
-                .paths(PathSelectors.any())
-                .build();
-    }
-
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("swagger-ui.html")
-                .addResourceLocations("classpath:/META-INF/resources/");
-        registry.addResourceHandler("/webjars/**")
-                .addResourceLocations("classpath:/META-INF/resources/webjars/");
-    }
-}
+@Import({
+  org.springdoc.core.SpringDocConfigProperties.class,
+  org.springdoc.core.SpringDocConfiguration.class,
+  org.springdoc.webmvc.core.SpringDocWebMvcConfiguration.class,
+  org.springdoc.webmvc.core.MultipleOpenApiSupportConfiguration.class,
+  org.springdoc.core.SwaggerUiConfigProperties.class,
+  org.springdoc.core.SwaggerUiOAuthProperties.class,
+  org.springdoc.webmvc.ui.SwaggerConfig.class,
+  org.springdoc.core.CacheOrGroupedOpenApiCondition.class,
+  org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration.class
+})
+public class SwaggerConfig {}

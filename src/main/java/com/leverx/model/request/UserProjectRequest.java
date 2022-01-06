@@ -1,11 +1,10 @@
 package com.leverx.model.request;
 
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
 
 @Data
 @Builder
@@ -13,11 +12,11 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class UserProjectRequest {
 
-    private Long userId;
+  private Long userId;
 
-    private Long projectId;
+  private Long projectId;
 
-    private LocalDate positionStartDate;
+  private LocalDate positionStartDate;
 
-    private LocalDate positionEndDate;
+  private LocalDate positionEndDate;
 }

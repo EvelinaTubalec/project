@@ -1,11 +1,10 @@
 package com.leverx.model.request;
 
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
 
 @Data
 @Builder
@@ -13,9 +12,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class ProjectRequest {
 
-    private String title;
+  private String title;
 
-    private LocalDate startDate;
+  private LocalDate startDate;
 
-    private LocalDate endDate;
+  private LocalDate endDate;
 }

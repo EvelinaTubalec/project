@@ -1,10 +1,13 @@
 com\leverx\model\request\UserRequest.class
 com\leverx\model\response\DepartmentResponse.class
+com\leverx\config\ApplicationConfig.class
 com\leverx\services\UserService.class
 com\leverx\config\DataSourceConfig.class
 com\leverx\controllers\ProjectController.class
 com\leverx\model\request\UserProjectRequest.class
+com\leverx\exception\DefaultExceptionHandler.class
 com\leverx\repositories\ProjectRepository.class
+com\leverx\exception\ErrorMessage.class
 com\leverx\services\UserProjectService.class
 com\leverx\model\response\UserResponse$UserResponseBuilder.class
 com\leverx\controllers\UserController.class
@@ -26,7 +29,6 @@ com\leverx\repositories\DepartmentRepository.class
 com\leverx\config\SwaggerConfig.class
 com\leverx\model\response\ProjectResponse.class
 com\leverx\model\UserProject.class
-com\leverx\config\SpringConfig.class
 com\leverx\controllers\DepartmentController.class
 com\leverx\model\User$UserBuilder.class
 com\leverx\model\request\DepartmentRequest.class

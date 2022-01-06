@@ -1,21 +1,20 @@
 package com.leverx.model.response;
 
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-
-import java.time.LocalDate;
 
 @Data
 @Builder
 @AllArgsConstructor
 public class ProjectResponse {
 
-    private Long projectId;
+  private Long projectId;
 
-    private String title;
+  private String title;
 
-    private LocalDate startDate;
+  private LocalDate startDate;
 
-    private LocalDate endDate;
+  private LocalDate endDate;
 }

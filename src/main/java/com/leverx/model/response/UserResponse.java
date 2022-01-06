@@ -9,13 +9,13 @@ import lombok.Data;
 @AllArgsConstructor
 public class UserResponse {
 
-    private Long userId;
+  private Long userId;
 
-    private String firstName;
+  private String firstName;
 
-    private String lastName;
+  private String lastName;
 
-    private String position;
+  private String position;
 
-    private Long departmentId;
+  private Long departmentId;
 }

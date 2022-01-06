@@ -1,23 +1,21 @@
 package com.leverx.model;
 
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.EAGER;
+import static javax.persistence.GenerationType.IDENTITY;
+
+import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import java.util.Set;
-
-import static javax.persistence.CascadeType.ALL;
-import static javax.persistence.FetchType.EAGER;
-import static javax.persistence.GenerationType.IDENTITY;
 
 @Data
 @Entity
@@ -28,13 +26,12 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Builder
 public class Department {
 
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = IDENTITY)
+  private Long id;
 
-    @Column
-    private String title;
+  @Column private String title;
 
-    @OneToMany(mappedBy = "department", cascade = ALL, fetch = EAGER, orphanRemoval = true)
-    private Set<User> users;
+  @OneToMany(mappedBy = "department", cascade = ALL, fetch = EAGER, orphanRemoval = true)
+  private Set<User> users;
 }

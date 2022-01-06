@@ -20,7 +20,7 @@
         <slf4j.version>1.7.32</slf4j.version>
         <hibernate>5.6.3.Final</hibernate>
         <gson>2.8.6</gson>
-        <swagger>2.7.0</swagger>
+        <swagger>3.0.0</swagger>
         <jackson>2.13.1</jackson>
         <postgresql>42.3.1</postgresql>
         <spring-data-jpa>2.6.0</spring-data-jpa>
@@ -157,15 +157,15 @@
         </dependency>
 
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${swagger}</version>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.4.4</version>
         </dependency>
 
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>${swagger}</version>
+            <groupId>com.google.googlejavaformat</groupId>
+            <artifactId>google-java-format</artifactId>
+            <version>1.13.0</version>
         </dependency>
     </dependencies>
 
@@ -200,6 +200,27 @@
                 <plugin>
                     <artifactId>maven-deploy-plugin</artifactId>
                     <version>2.8.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.coveo</groupId>
+                    <artifactId>fmt-maven-plugin</artifactId>
+                    <version>2.9</version>
+                    <configuration>
+                        <sourceDirectory>src/main/java</sourceDirectory>
+                        <testSourceDirectory>src/test/java</testSourceDirectory>
+                        <verbose>false</verbose>
+                        <filesNamePattern>.*\.java</filesNamePattern>
+                        <skip>false</skip>
+                        <skipSortingImports>false</skipSortingImports>
+                        <style>google</style>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>

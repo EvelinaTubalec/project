@@ -2,8 +2,8 @@ C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\controllers\ProjectC
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\services\UserService.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\services\ProjectService.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\model\User.java
-C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\config\SpringConfig.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\config\DispatcherServletInitializer.java
+C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\exception\DefaultExceptionHandler.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\model\request\UserProjectRequest.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\model\request\DepartmentRequest.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\repositories\DepartmentRepository.java
@@ -18,7 +18,9 @@ C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\controllers\Departme
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\model\Project.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\services\DepartmentService.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\model\response\UserResponse.java
+C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\exception\ErrorMessage.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\config\DataSourceConfig.java
+C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\config\ApplicationConfig.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\config\SwaggerConfig.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\model\request\UserRequest.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\repositories\ProjectRepository.java
