@@ -65,7 +65,7 @@ public class DataSourceConfig {
   public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
     LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
     em.setDataSource(dataSource());
-    em.setPackagesToScan("com.leverx");
+    em.setPackagesToScan("com.leverx.model");
 
     JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
     em.setJpaVendorAdapter(vendorAdapter);

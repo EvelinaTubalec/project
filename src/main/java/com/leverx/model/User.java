@@ -1,8 +1,11 @@
 package com.leverx.model;
 
-import static javax.persistence.GenerationType.IDENTITY;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,17 +14,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import java.util.Set;
 
-@Data
+import static javax.persistence.GenerationType.IDENTITY;
+
+@Getter
+@Setter
 @Builder
 @Entity
 @Table(name = "users")
-@EqualsAndHashCode(exclude = {"departments", "userProjects"})
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {

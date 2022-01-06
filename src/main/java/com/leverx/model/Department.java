@@ -1,28 +1,29 @@
 package com.leverx.model;
 
-import static javax.persistence.CascadeType.ALL;
-import static javax.persistence.FetchType.EAGER;
-import static javax.persistence.GenerationType.IDENTITY;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import java.util.Set;
 
-@Data
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.EAGER;
+import static javax.persistence.GenerationType.IDENTITY;
+
+@Getter
+@Setter
 @Entity
 @Table(name = "departments")
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = {"users"})
 @Builder
 public class Department {
 

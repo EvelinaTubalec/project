@@ -1,8 +1,11 @@
 package com.leverx.model;
 
-import static javax.persistence.GenerationType.IDENTITY;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,12 +13,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.time.LocalDate;
 
-@Data
+import static javax.persistence.GenerationType.IDENTITY;
+
+@Getter
+@Setter
 @Builder
 @Entity
 @Table(name = "user_projects")
