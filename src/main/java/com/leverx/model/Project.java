@@ -40,5 +40,4 @@ public class Project {
 
   @OneToMany(mappedBy = "project")
   Set<Position> userProjects;
-
 }

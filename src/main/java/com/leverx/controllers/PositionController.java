@@ -1,7 +1,7 @@
 package com.leverx.controllers;
 
-import com.leverx.model.dto.PositionRequest;
-import com.leverx.model.response.PositionResponse;
+import com.leverx.model.dto.requests.PositionRequest;
+import com.leverx.model.dto.responses.PositionResponse;
 import com.leverx.services.PositionService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;

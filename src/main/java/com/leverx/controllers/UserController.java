@@ -1,7 +1,7 @@
 package com.leverx.controllers;
 
-import com.leverx.model.dto.UserRequest;
-import com.leverx.model.response.UserResponse;
+import com.leverx.model.dto.requests.UserRequest;
+import com.leverx.model.dto.responses.UserResponse;
 import com.leverx.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;

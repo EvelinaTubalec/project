@@ -1,8 +1,9 @@
 package com.leverx.services;
 
 import com.leverx.model.Project;
-import com.leverx.model.dto.ProjectRequest;
-import com.leverx.model.response.ProjectResponse;
+import com.leverx.model.dto.requests.ProjectRequest;
+import com.leverx.model.dto.responses.ProjectResponse;
+import com.leverx.model.utils.convertors.ProjectConvertor;
 import com.leverx.repositories.ProjectRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,61 +12,28 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
-
 @Service
 @AllArgsConstructor
 public class ProjectService {
 
   private final ProjectRepository projectRepository;
+  private final ProjectConvertor projectConvertor;
 
   public List<ProjectResponse> findAll() {
     List<Project> projects = projectRepository.findAll();
-    return projects.stream()
-            .map(
-                    project ->
-                            ProjectResponse.builder()
-                                    .projectId(project.getId())
-                                    .title(project.getTitle())
-                                    .startDate(project.getStartDate())
-                                    .endDate(project.getEndDate())
-                                    .build())
-            .collect(toList());
+    return projectConvertor.convertToListProjectResponse(projects);
   }
 
   public ProjectResponse create(ProjectRequest request) {
-    Project project =
-            Project.builder()
-                    .title(request.getTitle())
-                    .startDate(request.getStartDate())
-                    .endDate(request.getEndDate())
-                    .build();
-
+    Project project = projectConvertor.convertRequestToProject(request);
     Project savedProject = projectRepository.save(project);
-
-    return ProjectResponse.builder()
-            .projectId(savedProject.getId())
-            .title(savedProject.getTitle())
-            .startDate(savedProject.getStartDate())
-            .endDate(savedProject.getEndDate())
-            .build();
+    return projectConvertor.convertProjectToResponse(savedProject);
   }
 
   public ProjectResponse update(ProjectRequest request, Long projectId) {
-    Project projectById = projectRepository.findById(projectId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
-            "Project with id = " + projectId + " doesn't exists"));
-    projectById.setTitle(request.getTitle());
-    projectById.setStartDate(request.getStartDate());
-    projectById.setEndDate(request.getEndDate());
-
-    Project updatedProject = projectRepository.save(projectById);
-
-    return ProjectResponse.builder()
-            .projectId(updatedProject.getId())
-            .title(updatedProject.getTitle())
-            .startDate(updatedProject.getStartDate())
-            .endDate(updatedProject.getEndDate())
-            .build();
+    Project project = projectConvertor.convertRequestToProject(request, projectId);
+    Project updatedProject = projectRepository.save(project);
+    return projectConvertor.convertProjectToResponse(updatedProject);
   }
 
   public void delete(Long projectId) {

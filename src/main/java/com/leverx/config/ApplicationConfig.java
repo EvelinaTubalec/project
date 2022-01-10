@@ -7,4 +7,5 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @Configuration
 @ComponentScan({"com.leverx"})
 @EnableWebMvc
-public class ApplicationConfig{}
+public class ApplicationConfig{
+}
