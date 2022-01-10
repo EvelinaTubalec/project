@@ -39,6 +39,6 @@ public class Project {
   private LocalDate endDate;
 
   @OneToMany(mappedBy = "project")
-  Set<UserProject> userProjects;
+  Set<Position> userProjects;
 
 }

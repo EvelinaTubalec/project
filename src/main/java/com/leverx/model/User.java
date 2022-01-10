@@ -48,5 +48,5 @@ public class User {
   private Department department;
 
   @OneToMany(mappedBy = "user")
-  Set<UserProject> userProjects;
+  Set<Position> userProjects;
 }
