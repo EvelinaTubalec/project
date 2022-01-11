@@ -28,7 +28,9 @@
         <liquibase>4.6.2</liquibase>
         <mockitoversion>4.2.0</mockitoversion>
         <springdoc>1.4.4</springdoc>
-        <google-java-format>google-java-format</google-java-format>
+        <google-java-format>1.13.0</google-java-format>
+        <junit>5.6.2</junit>
+        <guava>19.0</guava>
     </properties>
 
     <dependencies>
@@ -168,8 +170,8 @@
 
         <dependency>
             <groupId>com.google.googlejavaformat</groupId>
-            <artifactId>${google-java-format}</artifactId>
-            <version>1.13.0</version>
+            <artifactId>google-java-format</artifactId>
+            <version>${google-java-format}</version>
         </dependency>
 
         <dependency>
@@ -181,20 +183,20 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.6.2</version>
+            <version>${junit}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.vintage</groupId>
             <artifactId>junit-vintage-engine</artifactId>
-            <version>5.6.2</version>
+            <version>${junit}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>19.0</version>
+            <version>${guava}</version>
             <scope>test</scope>
         </dependency>
 
@@ -217,8 +219,6 @@
             <version>5.3.14</version>
             <scope>test</scope>
         </dependency>
-
-
     </dependencies>
 
     <build>
