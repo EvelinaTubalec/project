@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -24,13 +23,16 @@
         <jackson>2.13.1</jackson>
         <postgresql>42.3.1</postgresql>
         <spring-data-jpa>2.6.0</spring-data-jpa>
-        <jaxb>2.3.1</jaxb>
+        <jaxb>2.4.0-b180830.0359</jaxb>
         <liquibase>4.6.2</liquibase>
         <mockitoversion>4.2.0</mockitoversion>
-        <springdoc>1.4.4</springdoc>
+        <springdoc>1.6.3</springdoc>
         <google-java-format>1.13.0</google-java-format>
-        <junit>5.6.2</junit>
-        <guava>19.0</guava>
+        <junit>5.8.2</junit>
+        <guava>31.0.1-jre</guava>
+        <spring-test>5.3.14</spring-test>
+        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+        <fmt-maven-plugin.version>2.9</fmt-maven-plugin.version>
     </properties>
 
     <dependencies>
@@ -186,6 +188,7 @@
             <version>${junit}</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.junit.vintage</groupId>
             <artifactId>junit-vintage-engine</artifactId>
@@ -216,7 +219,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>5.3.14</version>
+            <version>${spring-test}</version>
             <scope>test</scope>
         </dependency>
 
@@ -227,17 +230,9 @@
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>2.22.2</version>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>2.22.2</version>
-                </plugin>
-                <plugin>
                     <groupId>com.coveo</groupId>
                     <artifactId>fmt-maven-plugin</artifactId>
-                    <version>2.9</version>
+                    <version>${fmt-maven-plugin.version}</version>
                     <configuration>
                         <sourceDirectory>src/main/java</sourceDirectory>
                         <testSourceDirectory>src/test/java</testSourceDirectory>
