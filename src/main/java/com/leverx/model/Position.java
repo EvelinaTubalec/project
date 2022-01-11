@@ -21,7 +21,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Setter
 @Builder
 @Entity
-@Table(name = "positions")
+@Table(name = "project_positions")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Position {

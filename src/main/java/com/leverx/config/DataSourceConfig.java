@@ -19,7 +19,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@EnableJpaRepositories("com.leverx.repositories")
+@EnableJpaRepositories("com.leverx.repository")
 @PropertySource(value = {"classpath:application.properties"})
 @EnableTransactionManagement
 public class DataSourceConfig {
