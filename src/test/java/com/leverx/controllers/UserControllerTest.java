@@ -48,8 +48,7 @@ class UserControllerTest {
                         new UserRequest("firstName", "LastName", "email", "password", "position", 3L)))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
-        .andExpect(status().isCreated())
-        .andReturn();
+        .andExpect(status().isCreated());
   }
 
   @Test
@@ -68,7 +67,7 @@ class UserControllerTest {
   @Test
   void deleteUser() throws Exception {
     mockMvc
-        .perform(MockMvcRequestBuilders.delete("/users/{id}", 1L))
+        .perform(MockMvcRequestBuilders.delete("/users/{id}", 5L))
         .andExpect(status().isNoContent());
   }
 

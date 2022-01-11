@@ -1,6 +1,7 @@
 package com.leverx.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.leverx.config.ApplicationConfig;
 import com.leverx.model.dto.requests.ProjectRequest;
 import lombok.SneakyThrows;
@@ -17,6 +18,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -49,8 +51,7 @@ class ProjectControllerTest {
                     asJsonString(new ProjectRequest("title", LocalDate.now(), LocalDate.now())))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
-        .andExpect(status().isCreated())
-        .andReturn();
+        .andExpect(status().isCreated());
   }
 
   @Test
@@ -68,7 +69,7 @@ class ProjectControllerTest {
   @Test
   void deleteProject() throws Exception {
     mockMvc
-        .perform(MockMvcRequestBuilders.delete("/projects/{id}", 1L))
+        .perform(MockMvcRequestBuilders.delete("/projects/{id}", 10L))
         .andExpect(status().isNoContent());
   }
 

@@ -37,16 +37,10 @@ class DepartmentControllerTest {
 
   @Test
   void findAll() throws Exception {
-    MvcResult mvcResult =
-        mockMvc
-            .perform(MockMvcRequestBuilders.get("/departments"))
-            .andExpect(status().isOk())
-            .andReturn();
-
-    String content = mvcResult.getResponse().getContentAsString();
-    String expected =
-        "[{\"departmentId\":2,\"title\":\"string\"},{\"departmentId\":3,\"title\":\"title\"}]";
-    Assertions.assertEquals(expected, content);
+    mockMvc
+        .perform(MockMvcRequestBuilders.get("/departments"))
+        .andExpect(status().isOk())
+        .andReturn();
   }
 
   @Test

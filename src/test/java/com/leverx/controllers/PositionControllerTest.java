@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.leverx.config.ApplicationConfig;
 import com.leverx.model.dto.requests.PositionRequest;
 import lombok.SneakyThrows;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,6 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -41,7 +43,7 @@ class PositionControllerTest {
   }
 
   @Test
-  void saveUserProject() throws Exception {
+  void savePosition() throws Exception {
     mockMvc
         .perform(
             MockMvcRequestBuilders.post("/positions")
@@ -49,12 +51,11 @@ class PositionControllerTest {
                     asJsonString(new PositionRequest(1L, 1L, LocalDate.now(), LocalDate.now())))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
-        .andExpect(status().isCreated())
-        .andReturn();
+        .andExpect(status().isCreated());
   }
 
   @Test
-  void updateUserProject() throws Exception {
+  void updatePosition() throws Exception {
     mockMvc
         .perform(
             MockMvcRequestBuilders.patch("/positions/{id}", 1L)
@@ -66,9 +67,9 @@ class PositionControllerTest {
   }
 
   @Test
-  void deleteUserProject() throws Exception {
+  void deletePosition() throws Exception {
     mockMvc
-        .perform(MockMvcRequestBuilders.delete("/positions/{id}", 1L))
+        .perform(MockMvcRequestBuilders.delete("/positions/{id}", 11L))
         .andExpect(status().isNoContent());
   }
 

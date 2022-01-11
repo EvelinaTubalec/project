@@ -33,37 +33,37 @@ public class PositionController {
 
   @GetMapping
   @ResponseStatus(OK)
-  @Operation(summary = "Get userProjects")
+  @Operation(summary = "Get positions")
   public List<PositionResponse> findAll() {
-    List<PositionResponse> userProjects = positionService.findAll();
+    List<PositionResponse> positions = positionService.findAll();
     log.debug("Get userProjects");
-    return userProjects;
+    return positions;
   }
 
   @PostMapping
   @ResponseStatus(CREATED)
-  @Operation(summary = "Save userProject")
-  public PositionResponse saveUserProject(
+  @Operation(summary = "Save position")
+  public PositionResponse savePosition(
           @RequestBody PositionRequest request) {
-    PositionResponse createdUserProject = positionService.create(request);
+    PositionResponse createdPosition = positionService.create(request);
     log.debug("Save userProject");
-    return createdUserProject;
+    return createdPosition;
   }
 
-  @PatchMapping("/{userProjectId}")
+  @PatchMapping("/{positionId}")
   @ResponseStatus(OK)
-  @Operation(summary = "Update userProject")
-  public PositionResponse updateUserProject(@RequestBody PositionRequest request, @PathVariable Long userProjectId) {
-    PositionResponse updatedUserProject = positionService.update(request, userProjectId);
+  @Operation(summary = "Update position")
+  public PositionResponse updatePosition(@RequestBody PositionRequest request, @PathVariable Long positionId) {
+    PositionResponse updatedPosition = positionService.update(request, positionId);
     log.debug("Update userProject");
-    return updatedUserProject;
+    return updatedPosition;
   }
 
-  @DeleteMapping("/{userProjectId}")
+  @DeleteMapping("/{positionId}")
   @ResponseStatus(NO_CONTENT)
-  @Operation(summary = "Delete userProject")
-  public void deleteUserProject(@PathVariable Long userProjectId) {
-    positionService.delete(userProjectId);
+  @Operation(summary = "Delete position")
+  public void deletePosition(@PathVariable Long positionId) {
+    positionService.delete(positionId);
     log.debug("Delete userProject");
   }
 }
