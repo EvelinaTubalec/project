@@ -9,7 +9,7 @@
    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
     <changeSet author="evelina.tubalets" id="1641908232187-5">
-        <createTable tableName="departments">
+        <createTable tableName="department">
             <column autoIncrement="true" name="id" type="BIGSERIAL">
                 <constraints primaryKey="true" primaryKeyName="departments_pkey"/>
             </column>
@@ -18,7 +18,7 @@
     </changeSet>
 
     <changeSet author="evelina.tubalets" id="1641908232187-6">
-        <createTable tableName="project_positions">
+        <createTable tableName="project_position">
             <column autoIncrement="true" name="id" type="BIGSERIAL">
                 <constraints primaryKey="true" primaryKeyName="project_positions_pkey"/>
             </column>
@@ -30,7 +30,7 @@
     </changeSet>
 
     <changeSet author="evelina.tubalets" id="1641908232187-7">
-        <createTable tableName="projects">
+        <createTable tableName="project">
             <column autoIncrement="true" name="id" type="BIGSERIAL">
                 <constraints primaryKey="true" primaryKeyName="projects_pkey"/>
             </column>
@@ -55,15 +55,15 @@
 
     </changeSet>
     <changeSet author="evelina.tubalets" id="1641908232187-9">
-        <addForeignKeyConstraint baseColumnNames="project_id" baseTableName="project_positions" constraintName="fkq2v0qo1fc2h4mbkgy15ejc93f" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="projects"/>
+        <addForeignKeyConstraint baseColumnNames="project_id" baseTableName="project_position" constraintName="fkq2v0qo1fc2h4mbkgy15ejc93f" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="project"/>
     </changeSet>
 
     <changeSet author="evelina.tubalets" id="1641908232187-10">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="project_positions" constraintName="fkq5we97odx1psdi2lih2n52obe" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="project_position" constraintName="fkq5we97odx1psdi2lih2n52obe" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
 
     <changeSet author="evelina.tubalets" id="1641908232187-11">
-        <addForeignKeyConstraint baseColumnNames="department_id" baseTableName="users" constraintName="fksbg59w8q63i0oo53rlgvlcnjq" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="departments"/>
+        <addForeignKeyConstraint baseColumnNames="department_id" baseTableName="users" constraintName="fksbg59w8q63i0oo53rlgvlcnjq" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="department"/>
     </changeSet>
 
 </databaseChangeLog>

@@ -4,14 +4,13 @@ import com.leverx.model.Department;
 import com.leverx.model.User;
 import com.leverx.model.dto.request.UserRequestDto;
 import com.leverx.model.dto.response.UserResponseDto;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@NoArgsConstructor
 public class UserConvertor {
-
-  public UserConvertor() {
-  }
 
   public static UserResponseDto toResponse(User user) {
     return UserResponseDto.builder()

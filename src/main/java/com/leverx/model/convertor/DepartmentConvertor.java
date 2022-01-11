@@ -3,16 +3,14 @@ package com.leverx.model.convertor;
 import com.leverx.model.Department;
 import com.leverx.model.dto.request.DepartmentRequestDto;
 import com.leverx.model.dto.response.DepartmentResponseDto;
-import org.springframework.stereotype.Component;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
+@NoArgsConstructor
 public class DepartmentConvertor {
-
-    public DepartmentConvertor() {
-    }
 
     public static DepartmentResponseDto toResponse(Department department){
         return DepartmentResponseDto.builder()

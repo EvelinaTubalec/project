@@ -3,15 +3,14 @@ package com.leverx.model.convertor;
 import com.leverx.model.Project;
 import com.leverx.model.dto.request.ProjectRequestDto;
 import com.leverx.model.dto.response.ProjectResponseDto;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
+@NoArgsConstructor
 public class ProjectConvertor {
-
-  public ProjectConvertor() {
-  }
 
   public static ProjectResponseDto toResponse(Project project) {
     return ProjectResponseDto.builder()

@@ -5,14 +5,13 @@ import com.leverx.model.Project;
 import com.leverx.model.User;
 import com.leverx.model.dto.request.PositionRequestDto;
 import com.leverx.model.dto.response.PositionResponseDto;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@NoArgsConstructor
 public class PositionConvertor {
-
-  public PositionConvertor() {
-  }
 
   public static PositionResponseDto toResponse(Position position) {
     return PositionResponseDto.builder()
