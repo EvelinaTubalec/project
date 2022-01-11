@@ -1,7 +1,6 @@
 package com.leverx.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.leverx.config.ApplicationConfig;
 import com.leverx.model.dto.requests.ProjectRequest;
 import lombok.SneakyThrows;
@@ -18,7 +17,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
