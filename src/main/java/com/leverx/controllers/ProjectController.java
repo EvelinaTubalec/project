@@ -50,7 +50,7 @@ public class ProjectController {
   }
 
   @PatchMapping("/{projectId}")
-  @ResponseStatus(CREATED)
+  @ResponseStatus(OK)
   @Operation(summary = "Update project")
   public ProjectResponse updateProject(@RequestBody ProjectRequest request, @PathVariable Long projectId) {
     ProjectResponse updatedProject = projectService.update(request, projectId);

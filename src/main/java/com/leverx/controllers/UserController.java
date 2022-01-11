@@ -50,7 +50,7 @@ public class UserController {
   }
 
   @PatchMapping("/{userId}")
-  @ResponseStatus(CREATED)
+  @ResponseStatus(OK)
   @Operation(summary = "Update user")
   public UserResponse updateUser(
           @RequestBody UserRequest request, @PathVariable Long userId) {

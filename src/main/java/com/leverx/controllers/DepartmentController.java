@@ -50,7 +50,7 @@ public class DepartmentController {
   }
 
   @PatchMapping("/{departmentId}")
-  @ResponseStatus(CREATED)
+  @ResponseStatus(OK)
   @Operation(summary = "Updated department")
   public DepartmentResponse updateDepartment(@RequestBody DepartmentRequest request, @PathVariable Long departmentId) {
     DepartmentResponse updatedDepartment = departmentService.update(request, departmentId);

@@ -51,7 +51,7 @@ public class PositionController {
   }
 
   @PatchMapping("/{userProjectId}")
-  @ResponseStatus(CREATED)
+  @ResponseStatus(OK)
   @Operation(summary = "Update userProject")
   public PositionResponse updateUserProject(@RequestBody PositionRequest request, @PathVariable Long userProjectId) {
     PositionResponse updatedUserProject = positionService.update(request, userProjectId);
