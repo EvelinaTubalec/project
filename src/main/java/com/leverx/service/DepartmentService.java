@@ -6,6 +6,7 @@ import com.leverx.model.dto.response.DepartmentResponseDto;
 import com.leverx.model.convertor.DepartmentConvertor;
 import com.leverx.repository.DepartmentRepository;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -24,9 +25,18 @@ public class DepartmentService {
   }
 
   public DepartmentResponseDto create(DepartmentRequestDto request) {
+    validateDepartmentRequest(request);
+
     Department department = DepartmentConvertor.toEntity(request);
     Department savedDepartment = departmentRepository.save(department);
     return DepartmentConvertor.toResponse(savedDepartment);
+  }
+
+  private void validateDepartmentRequest(DepartmentRequestDto request) {
+    if(StringUtils.isEmpty(request.getTitle())){
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+              "Title is empty");
+    }
   }
 
   public DepartmentResponseDto update(DepartmentRequestDto request, Long departmentId) {

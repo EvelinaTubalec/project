@@ -49,4 +49,23 @@ public class User {
 
   @OneToMany(mappedBy = "user")
   Set<Position> userProjects;
+
+  public User(String firstName, String lastName, String email, String password, String jobTitle, Department department) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.password = password;
+    this.jobTitle = jobTitle;
+    this.department = department;
+  }
+
+  public User(Long id, String firstName, String lastName, String email, String password, String jobTitle, Department department) {
+    this.id = id;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.password = password;
+    this.jobTitle = jobTitle;
+    this.department = department;
+  }
 }

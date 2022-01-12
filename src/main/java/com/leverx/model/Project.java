@@ -40,4 +40,17 @@ public class Project {
 
   @OneToMany(mappedBy = "project")
   Set<Position> userProjects;
+
+  public Project(String title, LocalDate startDate, LocalDate endDate) {
+    this.title = title;
+    this.startDate = startDate;
+    this.endDate = endDate;
+  }
+
+  public Project(Long id, String title, LocalDate startDate, LocalDate endDate) {
+    this.id = id;
+    this.title = title;
+    this.startDate = startDate;
+    this.endDate = endDate;
+  }
 }

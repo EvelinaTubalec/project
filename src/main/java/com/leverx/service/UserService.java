@@ -38,7 +38,7 @@ public class UserService {
     User userById = userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
             "User with id = " + userId + " doesn't exists"));
     Department departmentById = departmentRepository.findById(request.getDepartmentId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
-            "Game with id = " + request.getDepartmentId() + " doesn't exists"));
+            "Department with id = " + request.getDepartmentId() + " doesn't exists"));
     User user = UserConvertor.toEntity(request, userById, departmentById);
     User updatedUser = userRepository.save(user);
     return UserConvertor.toResponse(updatedUser);

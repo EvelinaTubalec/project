@@ -39,8 +39,7 @@ class DepartmentControllerTest {
   void findAll() throws Exception {
     mockMvc
         .perform(MockMvcRequestBuilders.get("/departments"))
-        .andExpect(status().isOk())
-        .andReturn();
+        .andExpect(status().isOk());
   }
 
   @Test

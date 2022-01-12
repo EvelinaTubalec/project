@@ -13,7 +13,9 @@
             <column autoIncrement="true" name="id" type="BIGSERIAL">
                 <constraints primaryKey="true" primaryKeyName="departments_pkey"/>
             </column>
-            <column name="title" type="VARCHAR(255)"/>
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
 
@@ -22,10 +24,18 @@
             <column autoIncrement="true" name="id" type="BIGSERIAL">
                 <constraints primaryKey="true" primaryKeyName="project_positions_pkey"/>
             </column>
-            <column name="position_end_date" type="date"/>
-            <column name="position_start_date" type="date"/>
-            <column name="project_id" type="BIGINT"/>
-            <column name="user_id" type="BIGINT"/>
+            <column name="position_end_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="position_start_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="project_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
 
@@ -34,9 +44,15 @@
             <column autoIncrement="true" name="id" type="BIGSERIAL">
                 <constraints primaryKey="true" primaryKeyName="projects_pkey"/>
             </column>
-            <column name="end_date" type="date"/>
-            <column name="start_date" type="date"/>
-            <column name="title" type="VARCHAR(255)"/>
+            <column name="end_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
 
@@ -45,25 +61,46 @@
             <column autoIncrement="true" name="id" type="BIGSERIAL">
                 <constraints primaryKey="true" primaryKeyName="users_pkey"/>
             </column>
-            <column name="email" type="VARCHAR(255)"/>
-            <column name="first_name" type="VARCHAR(255)"/>
-            <column name="jobtitle" type="VARCHAR(255)"/>
-            <column name="last_name" type="VARCHAR(255)"/>
-            <column name="password" type="VARCHAR(255)"/>
-            <column name="department_id" type="BIGINT"/>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="jobtitle" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="department_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
 
     </changeSet>
     <changeSet author="evelina.tubalets" id="1641908232187-9">
-        <addForeignKeyConstraint baseColumnNames="project_id" baseTableName="project_position" constraintName="fkq2v0qo1fc2h4mbkgy15ejc93f" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="project"/>
+        <addForeignKeyConstraint baseColumnNames="project_id" baseTableName="project_position"
+                                 constraintName="fkq2v0qo1fc2h4mbkgy15ejc93f" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="project"/>
     </changeSet>
 
     <changeSet author="evelina.tubalets" id="1641908232187-10">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="project_position" constraintName="fkq5we97odx1psdi2lih2n52obe" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="project_position"
+                                 constraintName="fkq5we97odx1psdi2lih2n52obe" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
 
     <changeSet author="evelina.tubalets" id="1641908232187-11">
-        <addForeignKeyConstraint baseColumnNames="department_id" baseTableName="users" constraintName="fksbg59w8q63i0oo53rlgvlcnjq" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="department"/>
+        <addForeignKeyConstraint baseColumnNames="department_id" baseTableName="users"
+                                 constraintName="fksbg59w8q63i0oo53rlgvlcnjq" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="department"/>
     </changeSet>
 
 </databaseChangeLog>
