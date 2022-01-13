@@ -48,7 +48,7 @@ public class User {
   private Department department;
 
   @OneToMany(mappedBy = "user")
-  Set<Position> userProjects;
+  Set<ProjectPosition> userProjects;
 
   public User(String firstName, String lastName, String email, String password, String jobTitle, Department department) {
     this.firstName = firstName;

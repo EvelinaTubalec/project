@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 @Builder
 @AllArgsConstructor
-public class PositionResponseDto {
+public class ProjectPositionResponseDto {
 
   private Long positionId;
 

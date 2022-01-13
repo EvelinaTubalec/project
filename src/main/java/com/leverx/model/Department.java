@@ -27,15 +27,6 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Builder
 public class Department {
 
-  public Department(Long id, String title) {
-    this.id = id;
-    this.title = title;
-  }
-
-  public Department(String title) {
-    this.title = title;
-  }
-
   @Id
   @GeneratedValue(strategy = IDENTITY)
   private Long id;
@@ -45,4 +36,13 @@ public class Department {
 
   @OneToMany(mappedBy = "department", cascade = ALL, fetch = EAGER, orphanRemoval = true)
   private Set<User> users;
+
+  public Department(Long id, String title) {
+    this.id = id;
+    this.title = title;
+  }
+
+  public Department(String title) {
+    this.title = title;
+  }
 }

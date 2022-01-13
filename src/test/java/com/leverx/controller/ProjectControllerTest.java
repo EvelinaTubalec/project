@@ -1,6 +1,7 @@
 package com.leverx.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.leverx.config.ApplicationConfig;
 import com.leverx.model.dto.request.ProjectRequestDto;
 import lombok.SneakyThrows;
@@ -67,12 +68,12 @@ class ProjectControllerTest {
   @Test
   void deleteProject() throws Exception {
     mockMvc
-        .perform(MockMvcRequestBuilders.delete("/projects/{id}", 10L))
+        .perform(MockMvcRequestBuilders.delete("/projects/{id}", 2L))
         .andExpect(status().isNoContent());
   }
 
   @SneakyThrows
   public static String asJsonString(final Object obj) {
-    return new ObjectMapper().writeValueAsString(obj);
+    return new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(obj);
   }
 }

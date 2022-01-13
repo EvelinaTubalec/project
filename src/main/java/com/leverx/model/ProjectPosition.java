@@ -24,7 +24,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Table(name = "project_position")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Position {
+public class ProjectPosition {
 
   @Id
   @GeneratedValue(strategy = IDENTITY)

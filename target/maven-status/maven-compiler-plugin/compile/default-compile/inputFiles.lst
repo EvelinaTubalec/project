@@ -4,9 +4,9 @@ C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\model\User.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\controller\UserController.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\model\convertor\DepartmentConvertor.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\repository\ProjectRepository.java
+C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\security\SecurityInitializer.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\service\PositionService.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\config\DispatcherServletInitializer.java
-C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\security\MyBasicAuthenticationEntryPoint.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\model\dto\response\PositionResponseDto.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\model\dto\request\ProjectRequestDto.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\controller\PositionController.java
@@ -22,6 +22,7 @@ C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\model\dto\request\Po
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\model\Position.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\model\Project.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\model\convertor\UserConvertor.java
+C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\security\CustomFilter.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\config\DataSourceConfig.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\controller\ProjectController.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\config\ApplicationConfig.java

@@ -16,12 +16,16 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+  public static final String ROLE_USER = "ROLE_USER";
+  public static final String USER = "user";
+  public static final String PASSWORD = "password";
+
   @Autowired
   public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
     auth.inMemoryAuthentication()
-        .withUser("user")
-        .password(passwordEncoder().encode("password"))
-        .authorities("ROLE_USER");
+        .withUser(USER)
+        .password(passwordEncoder().encode(PASSWORD))
+        .authorities(ROLE_USER);
   }
 
   @Override

@@ -66,7 +66,6 @@
           <element id="library" level="project" name="Maven: jakarta.activation:jakarta.activation-api:1.2.1" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.12.1" />
           <element id="library" level="project" name="Maven: org.yaml:snakeyaml:1.27" />
-          <element id="library" level="project" name="Maven: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.1" />
           <element id="library" level="project" name="Maven: jakarta.validation:jakarta.validation-api:2.0.2" />
           <element id="library" level="project" name="Maven: io.github.classgraph:classgraph:4.8.117" />
           <element id="library" level="project" name="Maven: io.github.toolfactory:jvm-driver:4.0.0" />
@@ -88,6 +87,7 @@
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-config:5.6.1" />
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-taglibs:5.6.1" />
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-acl:5.6.1" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.1" />
         </element>
       </element>
       <element id="directory" name="META-INF">

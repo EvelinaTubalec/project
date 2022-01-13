@@ -1,5 +1,9 @@
 package com.leverx.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,20 +36,18 @@ public class Project {
 
   @Column private String title;
 
+  @JsonSerialize(using = LocalDateTimeSerializer.class)
+  @JsonDeserialize(using = LocalDateTimeDeserializer.class)
   @Column(name = "start_date")
   private LocalDate startDate;
 
+  @JsonSerialize(using = LocalDateTimeSerializer.class)
+  @JsonDeserialize(using = LocalDateTimeDeserializer.class)
   @Column(name = "end_date")
   private LocalDate endDate;
 
   @OneToMany(mappedBy = "project")
-  Set<Position> userProjects;
-
-  public Project(String title, LocalDate startDate, LocalDate endDate) {
-    this.title = title;
-    this.startDate = startDate;
-    this.endDate = endDate;
-  }
+  Set<ProjectPosition> userProjects;
 
   public Project(Long id, String title, LocalDate startDate, LocalDate endDate) {
     this.id = id;

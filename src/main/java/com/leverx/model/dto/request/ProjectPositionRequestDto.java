@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PositionRequestDto {
+public class ProjectPositionRequestDto {
 
   private Long userId;
 
