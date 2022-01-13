@@ -55,10 +55,10 @@ class UserControllerTest {
   void updateUser() throws Exception {
     mockMvc
         .perform(
-            MockMvcRequestBuilders.patch("/users/{id}", 1L)
+            MockMvcRequestBuilders.patch("/users/{id}", 2L)
                 .content(
                     asJsonString(
-                        new UserRequestDto("firstName", "LastName", "email", "password", "position", 2L)))
+                        new UserRequestDto("firstName", "LastName", "email", "password", "position", 3L)))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk());
@@ -67,7 +67,7 @@ class UserControllerTest {
   @Test
   void deleteUser() throws Exception {
     mockMvc
-        .perform(MockMvcRequestBuilders.delete("/users/{id}", 5L))
+        .perform(MockMvcRequestBuilders.delete("/users/{id}", 2L))
         .andExpect(status().isNoContent());
   }
 

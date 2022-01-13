@@ -82,6 +82,12 @@
           <element id="library" level="project" name="Maven: org.apache.maven.surefire:surefire-api:2.22.0" />
           <element id="library" level="project" name="Maven: org.apache.maven.surefire:surefire-logger-api:2.22.0" />
           <element id="library" level="project" name="Maven: org.apache.maven.surefire:common-java5:2.22.0" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-web:5.6.1" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-core:5.6.1" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-crypto:5.6.1" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-config:5.6.1" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-taglibs:5.6.1" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-acl:5.6.1" />
         </element>
       </element>
       <element id="directory" name="META-INF">

@@ -9,7 +9,6 @@ import com.leverx.model.dto.response.PositionResponseDto;
 import com.leverx.repository.PositionRepository;
 import com.leverx.repository.ProjectRepository;
 import com.leverx.repository.UserRepository;
-import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -81,7 +80,8 @@ class PositionServiceTest {
     when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
     when(projectRepository.findById(project.getId())).thenReturn(Optional.of(project));
 
-    PositionResponseDto positionResponseDto = positionService.create(new PositionRequestDto(1L, 1L, LocalDate.now(), LocalDate.now()));
+    PositionResponseDto positionResponseDto =
+        positionService.create(new PositionRequestDto(1L, 1L, LocalDate.now(), LocalDate.now()));
 
     LocalDate actualPositionStartDate = positionResponseDto.getPositionStartDate();
     LocalDate actualPositionEndDate = positionResponseDto.getPositionEndDate();
@@ -105,7 +105,9 @@ class PositionServiceTest {
     positionDb.setPositionEndDate(LocalDate.of(2022, 12, 12));
     when(positionRepository.save(positionDb)).thenReturn(positionDb);
 
-    PositionResponseDto updatePositionResponseDto = positionService.update(new PositionRequestDto(1L, 1L, LocalDate.now(), LocalDate.of(2022, 12, 12)), 1L);
+    PositionResponseDto updatePositionResponseDto =
+        positionService.update(
+            new PositionRequestDto(1L, 1L, LocalDate.now(), LocalDate.of(2022, 12, 12)), 1L);
     LocalDate actualPositionEndDate = updatePositionResponseDto.getPositionEndDate();
     LocalDate expectedPositionEndDate = positionDb.getPositionEndDate();
 

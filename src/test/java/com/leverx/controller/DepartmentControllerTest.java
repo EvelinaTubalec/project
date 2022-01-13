@@ -79,7 +79,7 @@ class DepartmentControllerTest {
   @Test
   void deleteDepartment() throws Exception {
     mockMvc
-        .perform(MockMvcRequestBuilders.delete("/departments/{id}", 1L))
+        .perform(MockMvcRequestBuilders.delete("/departments/{id}", 2L))
         .andExpect(status().isNoContent());
   }
 

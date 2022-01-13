@@ -6,10 +6,12 @@ C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\model\convertor\Depa
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\repository\ProjectRepository.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\service\PositionService.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\config\DispatcherServletInitializer.java
+C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\security\MyBasicAuthenticationEntryPoint.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\model\dto\response\PositionResponseDto.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\model\dto\request\ProjectRequestDto.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\controller\PositionController.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\model\dto\request\DepartmentRequestDto.java
+C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\security\SecurityConfiguration.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\service\UserService.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\exceptionhandler\DefaultExceptionHandler.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\model\Department.java
