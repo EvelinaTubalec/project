@@ -30,8 +30,6 @@ class DepartmentControllerTest {
 
   @Autowired private WebApplicationContext webApplicationContext;
 
-
-
   @BeforeEach
   public void setUp() {
     mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
@@ -58,6 +56,7 @@ class DepartmentControllerTest {
 
     String content = mvcResult.getResponse().getContentAsString();
     String expected = "\"title\":\"title\"";
+
     Assertions.assertTrue(content.contains(expected));
   }
 
@@ -75,6 +74,7 @@ class DepartmentControllerTest {
 
     String content = mvcResult.getResponse().getContentAsString();
     String expected = "\"title\":\"title\"";
+
     Assertions.assertTrue(content.contains(expected));
   }
 

@@ -1,7 +1,9 @@
 package com.leverx.controller;
 
+import com.leverx.model.User;
 import com.leverx.model.dto.request.UserRequestDto;
 import com.leverx.model.dto.response.UserResponseDto;
+import com.leverx.service.LoadingUsersFromCSVFileService;
 import com.leverx.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.CREATED;
@@ -29,14 +32,23 @@ import static org.springframework.http.HttpStatus.OK;
 public class UserController {
 
   private final UserService userService;
+  private final LoadingUsersFromCSVFileService loadingUsersFromCSVFileService;
   private static final Logger log = LoggerFactory.logger(DepartmentController.class);
+
+  @GetMapping("/csv")
+  @ResponseStatus(OK)
+  @Operation(summary = "Get users from CSV file")
+  public List<User> findAllFromCSVFile() throws FileNotFoundException {
+    log.debug("Get users from CSV file");
+    return loadingUsersFromCSVFileService.findAllFromCSVFile();
+  }
 
   @GetMapping
   @ResponseStatus(OK)
   @Operation(summary = "Get users")
   public List<UserResponseDto> findAll() {
     List<UserResponseDto> users = userService.findAll();
-    log.debug("Find departments");
+    log.debug("Find users");
     return users;
   }
 

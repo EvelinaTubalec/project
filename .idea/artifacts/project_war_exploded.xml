@@ -88,6 +88,7 @@
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-taglibs:5.6.1" />
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-acl:5.6.1" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.1" />
+          <element id="library" level="project" name="Maven: net.sf.opencsv:opencsv:2.3" />
         </element>
       </element>
       <element id="directory" name="META-INF">
