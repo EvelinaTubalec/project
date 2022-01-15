@@ -3,9 +3,11 @@ package com.leverx.model.convertor;
 import com.leverx.model.Department;
 import com.leverx.model.User;
 import com.leverx.model.dto.request.UserRequestDto;
+import com.leverx.model.dto.response.AvailableUserResponseDto;
 import com.leverx.model.dto.response.UserResponseDto;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 

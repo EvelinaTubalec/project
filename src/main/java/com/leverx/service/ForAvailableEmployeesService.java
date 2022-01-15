@@ -2,6 +2,7 @@ package com.leverx.service;
 
 import com.leverx.model.User;
 import com.leverx.model.convertor.UserConvertor;
+import com.leverx.model.dto.response.AvailableUserResponseDto;
 import com.leverx.model.dto.response.UserResponseDto;
 import com.leverx.repository.ProjectPositionRepository;
 import com.leverx.repository.UserRepository;
@@ -26,7 +27,7 @@ public class ForAvailableEmployeesService {
     private final ProjectPositionRepository projectPositionRepository;
     private final UserRepository userRepository;
 
-    public List<UserResponseDto> findAvailableUsers(){
+    public List<AvailableUserResponseDto> findAvailableUsers(){
         List<Long> availableUsers = projectPositionRepository.findAvailableUser(LocalDate.now());
         List<User> result = new ArrayList<>();
         for (Long userId : availableUsers){
@@ -34,10 +35,24 @@ public class ForAvailableEmployeesService {
                     "User with id = " + userId + " doesn't exists"));
             result.add(user);
         }
-        return UserConvertor.convertToListUserResponse(result);
+        List<AvailableUserResponseDto> response = new ArrayList<>();
+        for (User user : result) {
+            LocalDate availableDateOfUser = projectPositionRepository.findAvailableDateOfUser(user.getId(), LocalDate.now());
+            AvailableUserResponseDto availableUserResponseDto = AvailableUserResponseDto.builder()
+                    .userId(user.getId())
+                    .firstName(user.getFirstName())
+                    .lastName(user.getLastName())
+                    .position(user.getJobTitle())
+                    .departmentId(user.getDepartment().getId())
+                    .availableFrom(LocalDate.now())
+                    .availableTo(availableDateOfUser)
+                    .build();
+            response.add(availableUserResponseDto);
+        }
+        return response;
     }
 
-    public List<UserResponseDto> findAvailableUsers(Integer period) throws ParseException {
+    public List<AvailableUserResponseDto> findAvailableUsers(Integer period) throws ParseException {
         String s = LocalDate.now().toString();
         Calendar c = Calendar.getInstance();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -57,6 +72,21 @@ public class ForAvailableEmployeesService {
                     "User with id = " + userId + " doesn't exists"));
             result.add(user);
         }
-        return UserConvertor.convertToListUserResponse(result);
+
+        List<AvailableUserResponseDto> response = new ArrayList<>();
+        for (User user : result) {
+           LocalDate availableDateOfUser = projectPositionRepository.findAvailableDateOfUser(user.getId(), LocalDate.now());
+           AvailableUserResponseDto availableUserResponseDto = AvailableUserResponseDto.builder()
+                   .userId(user.getId())
+                   .firstName(user.getFirstName())
+                   .lastName(user.getLastName())
+                   .position(user.getJobTitle())
+                   .departmentId(user.getDepartment().getId())
+                   .availableFrom(LocalDate.now())
+                   .availableTo(availableDateOfUser)
+                   .build();
+           response.add(availableUserResponseDto);
+       }
+        return response;
     }
 }

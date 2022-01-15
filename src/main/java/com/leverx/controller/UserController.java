@@ -2,6 +2,7 @@ package com.leverx.controller;
 
 import com.leverx.model.User;
 import com.leverx.model.dto.request.UserRequestDto;
+import com.leverx.model.dto.response.AvailableUserResponseDto;
 import com.leverx.model.dto.response.UserResponseDto;
 import com.leverx.service.ForAvailableEmployeesService;
 import com.leverx.service.LoadingUsersFromCSVFileService;
@@ -51,14 +52,14 @@ public class UserController {
   @GetMapping("/available")
   @ResponseStatus(OK)
   @Operation(summary = "Get available users")
-  public List<UserResponseDto> findAllAvailable(){
+  public List<AvailableUserResponseDto> findAllAvailable(){
     return forAvailableEmployeesService.findAvailableUsers();
   }
 
   @GetMapping("/available/{period}")
   @ResponseStatus(OK)
   @Operation(summary = "Get available users")
-  public List<UserResponseDto> findAllAvailable(@PathVariable("period") Integer period) throws ParseException {
+  public List<AvailableUserResponseDto> findAllAvailable(@PathVariable("period") Integer period) throws ParseException {
     return forAvailableEmployeesService.findAvailableUsers(period);
   }
 
