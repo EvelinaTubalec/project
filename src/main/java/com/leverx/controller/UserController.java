@@ -3,12 +3,14 @@ package com.leverx.controller;
 import com.leverx.model.User;
 import com.leverx.model.dto.request.UserRequestDto;
 import com.leverx.model.dto.response.UserResponseDto;
+import com.leverx.service.ForAvailableEmployeesService;
 import com.leverx.service.LoadingUsersFromCSVFileService;
 import com.leverx.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.hibernate.annotations.common.util.impl.LoggerFactory;
 import org.jboss.logging.Logger;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -19,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.ws.rs.QueryParam;
 import java.io.FileNotFoundException;
+import java.text.ParseException;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.CREATED;
@@ -33,6 +37,7 @@ public class UserController {
 
   private final UserService userService;
   private final LoadingUsersFromCSVFileService loadingUsersFromCSVFileService;
+  private final ForAvailableEmployeesService forAvailableEmployeesService;
   private static final Logger log = LoggerFactory.logger(DepartmentController.class);
 
   @GetMapping("/csv")
@@ -41,6 +46,20 @@ public class UserController {
   public List<User> findAllFromCSVFile() throws FileNotFoundException {
     log.debug("Get users from CSV file");
     return loadingUsersFromCSVFileService.findAllFromCSVFile();
+  }
+
+  @GetMapping("/available")
+  @ResponseStatus(OK)
+  @Operation(summary = "Get available users")
+  public List<UserResponseDto> findAllAvailable(){
+    return forAvailableEmployeesService.findAvailableUsers();
+  }
+
+  @GetMapping("/available/{period}")
+  @ResponseStatus(OK)
+  @Operation(summary = "Get available users")
+  public List<UserResponseDto> findAllAvailable(@PathVariable("period") Integer period) throws ParseException {
+    return forAvailableEmployeesService.findAvailableUsers(period);
   }
 
   @GetMapping
