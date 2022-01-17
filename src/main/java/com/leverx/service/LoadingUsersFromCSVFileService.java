@@ -28,8 +28,7 @@ public class LoadingUsersFromCSVFileService {
     return users;
   }
 
-  private static ColumnPositionMappingStrategy setColumMapping()
-  {
+  private static ColumnPositionMappingStrategy setColumMapping() {
     ColumnPositionMappingStrategy strategy = new ColumnPositionMappingStrategy();
     strategy.setType(User.class);
     String[] columns = new String[] {"id", "firstName", "lastName", "email", "password", "jobTitle"};

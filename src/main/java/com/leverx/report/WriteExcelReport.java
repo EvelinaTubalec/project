@@ -48,13 +48,15 @@ public class WriteExcelReport {
       column++;
       Department department = findDepartment(user);
       Project project = findProject(user);
-      ProjectPosition projectPosition = findProjectPosition(user);
+      List<ProjectPosition> projectPositions = findProjectPosition(user);
 
-      String projectTitle = project.getTitle();
-      if(projectPosition.getPositionEndDate().isBefore(LocalDate.now())){
-        projectTitle = "no active project";
+      for (ProjectPosition projectPosition: projectPositions) {
+        String projectTitle = project.getTitle();
+        if(projectPosition.getPositionEndDate().isBefore(LocalDate.now())){
+          projectTitle = "no active project";
+        }
+        data.put(Integer.toString(column), new Object[] {user.getId().toString(), user.getFirstName() + user.getLastName(), department.getTitle(), projectTitle, user.getJobTitle()});
       }
-      data.put(Integer.toString(column), new Object[] {user.getId().toString(), user.getFirstName() + user.getLastName(), department.getTitle(), projectTitle, user.getJobTitle()});
     }
     writeDataToFile("statistics.xlsx", data);
   }
@@ -65,6 +67,7 @@ public class WriteExcelReport {
 
     LocalDate date = TransformDate.addPeriodToLocalDate(30);
     List<Long> availableUsersId = projectPositionRepository.findAvailableUser(date);
+
     List<User> all = new ArrayList<>();
     for (Long userId : availableUsersId) {
       User user = userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
@@ -77,28 +80,35 @@ public class WriteExcelReport {
       count++;
       Department department = findDepartment(user);
       Project project = findProject(user);
-      ProjectPosition projectPosition = findProjectPosition(user);
+      List<ProjectPosition> projectPositions = findProjectPosition(user);
 
-      LocalDate endDate = projectPosition.getPositionEndDate();
-      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-      String endProjectDate = endDate.format(formatter);
+      for (ProjectPosition projectPosition: projectPositions) {
+        LocalDate endDate = projectPosition.getPositionEndDate();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String endProjectDate = endDate.format(formatter);
 
-      LocalDate startDate = projectPosition.getPositionStartDate();
-      String startProjectDate = startDate.format(formatter);
+        LocalDate startDate = projectPosition.getPositionStartDate();
+        String startProjectDate = startDate.format(formatter);
 
-      if(endDate.isBefore(LocalDate.now())){
-        endProjectDate = "no active project";
-        startProjectDate ="no active project";
+        if(endDate.isBefore(LocalDate.now())){
+          endProjectDate = "no active project";
+          startProjectDate ="no active project";
         }
-      data.put(Integer.toString(count), new Object[] {user.getId().toString(), user.getFirstName() + user.getLastName(), department.getTitle(), project.getTitle(), startProjectDate, endProjectDate});
+        data.put(Integer.toString(count), new Object[] {user.getId().toString(), user.getFirstName() + user.getLastName(), department.getTitle(), project.getTitle(), startProjectDate, endProjectDate});
+      }
     }
     writeDataToFile("statisticsForAvailableEmployee.xlsx", data);
   }
 
-  public ProjectPosition findProjectPosition(User user){
-    Long projectPositionId = projectPositionRepository.findProjectPositionIdByUserId(user.getId());
-    return projectPositionRepository.findById(projectPositionId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
-            "Project position with id = " + projectPositionId + " doesn't exists"));
+  public List<ProjectPosition> findProjectPosition(User user){
+    List<Long> allProjectPositionId = projectPositionRepository.findProjectPositionIdByUserId(user.getId());
+    List<ProjectPosition> projectPositions = new ArrayList<>();
+    for (Long projectPositionId: allProjectPositionId) {
+      ProjectPosition projectPosition = projectPositionRepository.findById(projectPositionId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
+              "Project position with id = " + projectPositionId + " doesn't exists"));
+      projectPositions.add(projectPosition);
+    }
+    return projectPositions;
   }
 
   public Project findProject(User user){

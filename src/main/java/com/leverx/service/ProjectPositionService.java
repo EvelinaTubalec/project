@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -35,8 +36,20 @@ public class ProjectPositionService {
     Project projectById = projectRepository.findById(request.getProjectId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
             "Project with id = " + request.getProjectId() + " doesn't exists"));
     ProjectPosition projectPosition = ProjectPositionConvertor.toEntity(request, userById, projectById);
-    ProjectPosition savedProject = projectPositionRepository.save(projectPosition);
-    return ProjectPositionConvertor.toResponse(savedProject);
+
+    if (projectPositionRepository.findProjectPositionIdByUserId(userById.getId()) != null){
+      List<Long> projectPositionByUserId = projectPositionRepository.findProjectPositionIdByUserId(userById.getId());
+      for (Long projectPositionId: projectPositionByUserId) {
+        ProjectPosition actualProjectPosition = projectPositionRepository.findById(projectPositionId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                "Project with id = " + request.getProjectId() + " doesn't exists"));
+        if(actualProjectPosition.getPositionEndDate().isAfter(LocalDate.now()) || actualProjectPosition.getPositionEndDate().isEqual(LocalDate.now())){
+          throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This user already has current project position");
+      }
+      }
+    }
+      ProjectPosition savedProject = projectPositionRepository.save(projectPosition);
+      return ProjectPositionConvertor.toResponse(savedProject);
+
   }
 
   public ProjectPositionResponseDto update(ProjectPositionRequestDto request, Long positionId) {
