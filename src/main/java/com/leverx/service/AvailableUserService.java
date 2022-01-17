@@ -25,16 +25,16 @@ public class AvailableUserService {
 
     public List<AvailableUserResponseDto> findCurrentAvailableUsers(){
         List<Long> availableUsers = projectPositionRepository.findAvailableUser(LocalDate.now());
-        return findListOfUsers(availableUsers);
+        return findListOfAvailableUsers(availableUsers);
     }
 
     public List<AvailableUserResponseDto> findAvailableInPeriodUsers(Integer period) throws ParseException {
         LocalDate date = TransformDate.addPeriodToLocalDate(period);
         List<Long> availableUsers = projectPositionRepository.findAvailableUser(date);
-        return findListOfUsers(availableUsers);
+        return findListOfAvailableUsers(availableUsers);
     }
 
-    public List<AvailableUserResponseDto> findListOfUsers(List<Long> availableUsers){
+    public List<AvailableUserResponseDto> findListOfAvailableUsers(List<Long> availableUsers){
         List<User> result = new ArrayList<>();
         for (Long userId : availableUsers){
             User user = userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,

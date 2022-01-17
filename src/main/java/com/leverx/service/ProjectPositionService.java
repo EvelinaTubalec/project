@@ -44,12 +44,11 @@ public class ProjectPositionService {
                 "Project with id = " + request.getProjectId() + " doesn't exists"));
         if(actualProjectPosition.getPositionEndDate().isAfter(LocalDate.now()) || actualProjectPosition.getPositionEndDate().isEqual(LocalDate.now())){
           throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This user already has current project position");
-      }
+        }
       }
     }
       ProjectPosition savedProject = projectPositionRepository.save(projectPosition);
       return ProjectPositionConvertor.toResponse(savedProject);
-
   }
 
   public ProjectPositionResponseDto update(ProjectPositionRequestDto request, Long positionId) {

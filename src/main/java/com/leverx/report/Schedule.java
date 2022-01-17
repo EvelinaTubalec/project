@@ -14,7 +14,7 @@ public class Schedule {
 
     @Scheduled(cron = "0 8 1 * * *")
     public void reportGenerating() throws ParseException {
-        writeExcelReport.writeToXmlFileStatisticOfUsers();
+        writeExcelReport.writeToXmlFileStatisticOfUsersForMonth();
         writeExcelReport.writeToXmlFileAvailableEmployees();
     }
 }

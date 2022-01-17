@@ -2,12 +2,8 @@ package com.leverx.repository;
 
 import com.leverx.model.ProjectPosition;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -38,13 +34,13 @@ public interface ProjectPositionRepository extends JpaRepository<ProjectPosition
                           + "from project_position "
                           + "where user_id = :userId ",
           nativeQuery = true)
-  Long findProjectByUserId(@Param("userId") Long userId);
+  List<Long> findProjectByUserId(@Param("userId") Long userId);
 
   @Query(
           value =
                   "select id "
                           + "from project_position "
-                          + "where user_id = :userId ",
+                          + "where user_id = :userId and project_position.position_start_date >= '2022-01-01' ",
           nativeQuery = true)
-  List<Long> findProjectPositionIdByUserId(@Param("userId") Long userId);
+  List<Long> findProjectPositionIdByUserId(@Param("userId") Long userId) ;
 }

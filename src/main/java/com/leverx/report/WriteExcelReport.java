@@ -35,29 +35,25 @@ public class WriteExcelReport {
 
   private final UserRepository userRepository;
   private final ProjectPositionRepository projectPositionRepository;
-  private final ProjectRepository projectRepository;
   private final DepartmentRepository departmentRepository;
 
-  public void writeToXmlFileStatisticOfUsers() {
+  public void writeToXmlFileStatisticOfUsersForMonth() {
     Map<String, Object[]> data = new TreeMap<>();
     data.put("1", new Object[] {"ID", "User Name", "Department", "Project", "JobTitle"});
 
     List<User> all = userRepository.findAllAsc();
     int column = 1;
     for (User user : all) {
-      column++;
       Department department = findDepartment(user);
-      Project project = findProject(user);
-      List<ProjectPosition> projectPositions = findProjectPosition(user);
 
+      List<ProjectPosition> projectPositions = findProjectPosition(user);
       for (ProjectPosition projectPosition: projectPositions) {
+        Project project = projectPosition.getProject();
         String projectTitle = project.getTitle();
-        if(projectPosition.getPositionEndDate().isBefore(LocalDate.now())){
-          projectTitle = "no active project";
+        column++;
+          data.put(Integer.toString(column), new Object[] {user.getId().toString(), user.getFirstName() + user.getLastName(), department.getTitle(), projectTitle, user.getJobTitle()});
         }
-        data.put(Integer.toString(column), new Object[] {user.getId().toString(), user.getFirstName() + user.getLastName(), department.getTitle(), projectTitle, user.getJobTitle()});
       }
-    }
     writeDataToFile("statistics.xlsx", data);
   }
 
@@ -79,7 +75,6 @@ public class WriteExcelReport {
     for (User user : all) {
       count++;
       Department department = findDepartment(user);
-      Project project = findProject(user);
       List<ProjectPosition> projectPositions = findProjectPosition(user);
 
       for (ProjectPosition projectPosition: projectPositions) {
@@ -94,6 +89,7 @@ public class WriteExcelReport {
           endProjectDate = "no active project";
           startProjectDate ="no active project";
         }
+        Project project = projectPosition.getProject();
         data.put(Integer.toString(count), new Object[] {user.getId().toString(), user.getFirstName() + user.getLastName(), department.getTitle(), project.getTitle(), startProjectDate, endProjectDate});
       }
     }
@@ -109,12 +105,6 @@ public class WriteExcelReport {
       projectPositions.add(projectPosition);
     }
     return projectPositions;
-  }
-
-  public Project findProject(User user){
-    Long projectId = projectPositionRepository.findProjectByUserId(user.getId());
-    return projectRepository.findById(projectId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
-            "Project with id = " + projectId + " doesn't exists"));
   }
 
   public Department findDepartment(User user){
