@@ -47,7 +47,7 @@ public class Project {
   private LocalDate endDate;
 
   @OneToMany(mappedBy = "project")
-  Set<ProjectPosition> userProjects;
+  Set<ProjectPosition> projectPositions;
 
   public Project(Long id, String title, LocalDate startDate, LocalDate endDate) {
     this.id = id;

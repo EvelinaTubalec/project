@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Data
 @Builder
 @AllArgsConstructor
-public class AvailableUserResponseDto {
+public class AvailableEmployeeResponseDto {
 
     private Long userId;
 

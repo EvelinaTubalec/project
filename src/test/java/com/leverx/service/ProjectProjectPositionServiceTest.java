@@ -1,14 +1,14 @@
 package com.leverx.service;
 
 import com.leverx.model.Department;
+import com.leverx.model.Employee;
 import com.leverx.model.ProjectPosition;
 import com.leverx.model.Project;
-import com.leverx.model.User;
 import com.leverx.model.dto.request.ProjectPositionRequestDto;
 import com.leverx.model.dto.response.ProjectPositionResponseDto;
 import com.leverx.repository.ProjectPositionRepository;
 import com.leverx.repository.ProjectRepository;
-import com.leverx.repository.UserRepository;
+import com.leverx.repository.EmployeeRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,7 +35,8 @@ class ProjectProjectPositionServiceTest {
   @Mock
   ProjectPositionRepository projectPositionRepository;
 
-  @Mock UserRepository userRepository;
+  @Mock
+  EmployeeRepository employeeRepository;
 
   @Mock ProjectRepository projectRepository;
 
@@ -51,12 +52,12 @@ class ProjectProjectPositionServiceTest {
   void whenfindAll_thenReturnListPositionResponse() {
     List<ProjectPosition> projectPositions = new ArrayList<>();
     Department department = new Department(1L, "title");
-    User user = new User(1L, "firstName", "lastName", "email", "password", "jobTitle", department);
+    Employee employee = new Employee(1L, "firstName", "lastName", "email", "password", "jobTitle", department);
     Project project = new Project(1L, "title", LocalDate.now(), LocalDate.now());
 
-    ProjectPosition projectPosition1 = new ProjectPosition(1L, LocalDate.now(), LocalDate.now(), project, user);
-    ProjectPosition projectPosition2 = new ProjectPosition(2L, LocalDate.now(), LocalDate.now(), project, user);
-    ProjectPosition projectPosition3 = new ProjectPosition(3L, LocalDate.now(), LocalDate.now(), project, user);
+    ProjectPosition projectPosition1 = new ProjectPosition(1L, LocalDate.now(), LocalDate.now(), project, employee);
+    ProjectPosition projectPosition2 = new ProjectPosition(2L, LocalDate.now(), LocalDate.now(), project, employee);
+    ProjectPosition projectPosition3 = new ProjectPosition(3L, LocalDate.now(), LocalDate.now(), project, employee);
 
     projectPositions.add(projectPosition1);
     projectPositions.add(projectPosition2);
@@ -74,12 +75,12 @@ class ProjectProjectPositionServiceTest {
   @Test
   void givenPositionRequest_whenSavePosition_thenReturnPositionResponse() {
     Department department = new Department(1L, "title");
-    User user = new User(1L, "firstName", "lastName", "email", "password", "jobTitle", department);
+    Employee employee = new Employee(1L, "firstName", "lastName", "email", "password", "jobTitle", department);
     Project project = new Project(1L, "title", LocalDate.now(), LocalDate.now());
-    ProjectPosition projectPositionDb = new ProjectPosition(1L, LocalDate.now(), LocalDate.now(), project, user);
+    ProjectPosition projectPositionDb = new ProjectPosition(1L, LocalDate.now(), LocalDate.now(), project, employee);
     when(projectPositionRepository.save(any(ProjectPosition.class))).thenReturn(projectPositionDb);
 
-    when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
+    when(employeeRepository.findById(employee.getId())).thenReturn(Optional.of(employee));
     when(projectRepository.findById(project.getId())).thenReturn(Optional.of(project));
 
     ProjectPositionResponseDto projectPositionResponseDto =
@@ -98,11 +99,11 @@ class ProjectProjectPositionServiceTest {
   @Test
   void givenPositionRequest_whenUpdatePosition_thenReturnPositionResponse() {
     Department department = new Department(1L, "title");
-    User user = new User(1L, "firstName", "lastName", "email", "password", "jobTitle", department);
+    Employee employee = new Employee(1L, "firstName", "lastName", "email", "password", "jobTitle", department);
     Project project = new Project(1L, "title", LocalDate.now(), LocalDate.now());
-    ProjectPosition projectPositionDb = new ProjectPosition(1L, LocalDate.now(), LocalDate.now(), project, user);
+    ProjectPosition projectPositionDb = new ProjectPosition(1L, LocalDate.now(), LocalDate.now(), project, employee);
     when(projectPositionRepository.findById(1L)).thenReturn(Optional.of(projectPositionDb));
-    when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
+    when(employeeRepository.findById(employee.getId())).thenReturn(Optional.of(employee));
     when(projectRepository.findById(project.getId())).thenReturn(Optional.of(project));
     projectPositionDb.setPositionEndDate(LocalDate.of(2022, 12, 12));
     when(projectPositionRepository.save(projectPositionDb)).thenReturn(projectPositionDb);
@@ -119,9 +120,9 @@ class ProjectProjectPositionServiceTest {
   @Test
   void givenPositionRequest_whenDeletePosition() {
     Department department = new Department(1L, "title");
-    User user = new User(1L, "firstName", "lastName", "email", "password", "jobTitle", department);
+    Employee employee = new Employee(1L, "firstName", "lastName", "email", "password", "jobTitle", department);
     Project project = new Project(1L, "title", LocalDate.now(), LocalDate.now());
-    ProjectPosition projectPositionDb = new ProjectPosition(1L, LocalDate.now(), LocalDate.now(), project, user);
+    ProjectPosition projectPositionDb = new ProjectPosition(1L, LocalDate.now(), LocalDate.now(), project, employee);
     when(projectPositionRepository.findById(1L)).thenReturn(Optional.of(projectPositionDb));
     doNothing().when(projectPositionRepository).deleteById(projectPositionDb.getId());
 

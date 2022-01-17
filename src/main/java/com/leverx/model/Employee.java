@@ -22,10 +22,10 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Setter
 @Builder
 @Entity
-@Table(name = "users")
+@Table(name = "employee")
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class Employee {
 
   @Id
   @GeneratedValue(strategy = IDENTITY)
@@ -47,10 +47,10 @@ public class User {
   @JoinColumn(name = "department_id")
   private Department department;
 
-  @OneToMany(mappedBy = "user")
-  Set<ProjectPosition> userProjects;
+  @OneToMany(mappedBy = "employee")
+  Set<ProjectPosition> projectPositions;
 
-  public User(String firstName, String lastName, String email, String password, String jobTitle, Department department) {
+  public Employee(String firstName, String lastName, String email, String password, String jobTitle, Department department) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
@@ -59,7 +59,7 @@ public class User {
     this.department = department;
   }
 
-  public User(Long id, String firstName, String lastName, String email, String password, String jobTitle, Department department) {
+  public Employee(Long id, String firstName, String lastName, String email, String password, String jobTitle, Department department) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;

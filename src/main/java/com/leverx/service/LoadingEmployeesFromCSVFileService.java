@@ -3,7 +3,7 @@ package com.leverx.service;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
 import au.com.bytecode.opencsv.bean.CsvToBean;
-import com.leverx.model.User;
+import com.leverx.model.Employee;
 import org.springframework.stereotype.Service;
 
 import java.io.FileNotFoundException;
@@ -12,25 +12,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class LoadingUsersFromCSVFileService {
+public class LoadingEmployeesFromCSVFileService {
 
-  public List<User> findAllFromCSVFile() throws FileNotFoundException {
+  public List<Employee> findAllFromCSVFile() throws FileNotFoundException {
     CsvToBean csv = new CsvToBean();
     String csvFilename = "C:\\Users\\evelina.tubalets\\Desktop\\data.csv";
     CSVReader csvReader = new CSVReader(new FileReader(csvFilename));
     // Set column mapping strategy
-    List<User> users = new ArrayList<>();
+    List<Employee> employees = new ArrayList<>();
     List list = csv.parse(setColumMapping(), csvReader);
     for (Object object : list) {
-      User user = (User) object;
-      users.add(user);
+      Employee employee = (Employee) object;
+      employees.add(employee);
     }
-    return users;
+    return employees;
   }
 
   private static ColumnPositionMappingStrategy setColumMapping() {
     ColumnPositionMappingStrategy strategy = new ColumnPositionMappingStrategy();
-    strategy.setType(User.class);
+    strategy.setType(Employee.class);
     String[] columns = new String[] {"id", "firstName", "lastName", "email", "password", "jobTitle"};
     strategy.setColumnMapping(columns);
     return strategy;

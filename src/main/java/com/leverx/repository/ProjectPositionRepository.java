@@ -30,14 +30,6 @@ public interface ProjectPositionRepository extends JpaRepository<ProjectPosition
 
   @Query(
           value =
-                  "select project_id "
-                          + "from project_position "
-                          + "where user_id = :userId ",
-          nativeQuery = true)
-  List<Long> findProjectByUserId(@Param("userId") Long userId);
-
-  @Query(
-          value =
                   "select id "
                           + "from project_position "
                           + "where user_id = :userId and project_position.position_start_date >= '2022-01-01' ",

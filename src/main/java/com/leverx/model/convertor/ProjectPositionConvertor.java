@@ -2,7 +2,7 @@ package com.leverx.model.convertor;
 
 import com.leverx.model.ProjectPosition;
 import com.leverx.model.Project;
-import com.leverx.model.User;
+import com.leverx.model.Employee;
 import com.leverx.model.dto.request.ProjectPositionRequestDto;
 import com.leverx.model.dto.response.ProjectPositionResponseDto;
 import lombok.NoArgsConstructor;
@@ -16,24 +16,24 @@ public class ProjectPositionConvertor {
   public static ProjectPositionResponseDto toResponse(ProjectPosition projectPosition) {
     return ProjectPositionResponseDto.builder()
         .positionId(projectPosition.getId())
-        .userId(projectPosition.getUser().getId())
+        .userId(projectPosition.getEmployee().getId())
         .projectId(projectPosition.getProject().getId())
         .positionStartDate(projectPosition.getPositionStartDate())
         .positionEndDate(projectPosition.getPositionEndDate())
         .build();
   }
 
-  public static ProjectPosition toEntity(ProjectPositionRequestDto request, User user, Project project) {
+  public static ProjectPosition toEntity(ProjectPositionRequestDto request, Employee employee, Project project) {
     return ProjectPosition.builder()
-        .user(user)
+        .employee(employee)
         .project(project)
         .positionStartDate(request.getPositionStartDate())
         .positionEndDate(request.getPositionEndDate())
         .build();
   }
 
-  public static ProjectPosition toEntity(ProjectPositionRequestDto request, ProjectPosition projectPosition, User user, Project project) {
-    projectPosition.setUser(user);
+  public static ProjectPosition toEntity(ProjectPositionRequestDto request, ProjectPosition projectPosition, Employee employee, Project project) {
+    projectPosition.setEmployee(employee);
     projectPosition.setProject(project);
     projectPosition.setPositionStartDate(request.getPositionStartDate());
     projectPosition.setPositionEndDate(request.getPositionEndDate());
@@ -46,7 +46,7 @@ public class ProjectPositionConvertor {
             projectPosition ->
                 ProjectPositionResponseDto.builder()
                     .positionId(projectPosition.getId())
-                    .userId(projectPosition.getUser().getId())
+                    .userId(projectPosition.getEmployee().getId())
                     .projectId(projectPosition.getProject().getId())
                     .positionStartDate(projectPosition.getPositionStartDate())
                     .positionEndDate(projectPosition.getPositionEndDate())

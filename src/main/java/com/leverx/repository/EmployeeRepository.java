@@ -1,13 +1,13 @@
 package com.leverx.repository;
 
-import com.leverx.model.User;
+import com.leverx.model.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     @Query(value = "select * from users order by id asc ", nativeQuery = true)
-    List<User> findAllAsc();
+    List<Employee> findAllAsc();
 }

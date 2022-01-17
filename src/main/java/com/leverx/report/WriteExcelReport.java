@@ -1,13 +1,12 @@
 package com.leverx.report;
 
 import com.leverx.model.Department;
+import com.leverx.model.Employee;
 import com.leverx.model.Project;
 import com.leverx.model.ProjectPosition;
-import com.leverx.model.User;
 import com.leverx.repository.DepartmentRepository;
 import com.leverx.repository.ProjectPositionRepository;
-import com.leverx.repository.ProjectRepository;
-import com.leverx.repository.UserRepository;
+import com.leverx.repository.EmployeeRepository;
 import com.leverx.utils.TransformDate;
 import lombok.AllArgsConstructor;
 import org.apache.poi.ss.usermodel.Cell;
@@ -18,7 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -33,7 +31,7 @@ import java.util.TreeMap;
 @AllArgsConstructor
 public class WriteExcelReport {
 
-  private final UserRepository userRepository;
+  private final EmployeeRepository employeeRepository;
   private final ProjectPositionRepository projectPositionRepository;
   private final DepartmentRepository departmentRepository;
 
@@ -41,41 +39,41 @@ public class WriteExcelReport {
     Map<String, Object[]> data = new TreeMap<>();
     data.put("1", new Object[] {"ID", "User Name", "Department", "Project", "JobTitle"});
 
-    List<User> all = userRepository.findAllAsc();
+    List<Employee> all = employeeRepository.findAllAsc();
     int column = 1;
-    for (User user : all) {
-      Department department = findDepartment(user);
+    for (Employee employee : all) {
+      Department department = findDepartment(employee);
 
-      List<ProjectPosition> projectPositions = findProjectPosition(user);
+      List<ProjectPosition> projectPositions = findProjectPosition(employee);
       for (ProjectPosition projectPosition: projectPositions) {
         Project project = projectPosition.getProject();
         String projectTitle = project.getTitle();
         column++;
-          data.put(Integer.toString(column), new Object[] {user.getId().toString(), user.getFirstName() + user.getLastName(), department.getTitle(), projectTitle, user.getJobTitle()});
+          data.put(Integer.toString(column), new Object[] {employee.getId().toString(), employee.getFirstName() + employee.getLastName(), department.getTitle(), projectTitle, employee.getJobTitle()});
         }
       }
-    writeDataToFile("statistics.xlsx", data);
+    writeDataToExcelFile("statistics.xlsx", data);
   }
 
-  public void writeToXmlFileAvailableEmployees() throws ParseException {
+  public void writeToXmlFileAvailableEmployeesDuringMonth() throws ParseException {
     Map<String, Object[]> data = new TreeMap<>();
     data.put("1", new Object[] {"ID", "User Name", "Department", "Project", "Start Date",  "End Date"});
 
     LocalDate date = TransformDate.addPeriodToLocalDate(30);
     List<Long> availableUsersId = projectPositionRepository.findAvailableUser(date);
 
-    List<User> all = new ArrayList<>();
+    List<Employee> all = new ArrayList<>();
     for (Long userId : availableUsersId) {
-      User user = userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
+      Employee employee = employeeRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
       "User with id = " + userId + " doesn't exists"));
-      all.add(user);
+      all.add(employee);
     }
 
     int count = 1;
-    for (User user : all) {
+    for (Employee employee : all) {
       count++;
-      Department department = findDepartment(user);
-      List<ProjectPosition> projectPositions = findProjectPosition(user);
+      Department department = findDepartment(employee);
+      List<ProjectPosition> projectPositions = findProjectPosition(employee);
 
       for (ProjectPosition projectPosition: projectPositions) {
         LocalDate endDate = projectPosition.getPositionEndDate();
@@ -90,14 +88,14 @@ public class WriteExcelReport {
           startProjectDate ="no active project";
         }
         Project project = projectPosition.getProject();
-        data.put(Integer.toString(count), new Object[] {user.getId().toString(), user.getFirstName() + user.getLastName(), department.getTitle(), project.getTitle(), startProjectDate, endProjectDate});
+        data.put(Integer.toString(count), new Object[] {employee.getId().toString(), employee.getFirstName() + employee.getLastName(), department.getTitle(), project.getTitle(), startProjectDate, endProjectDate});
       }
     }
-    writeDataToFile("statisticsForAvailableEmployee.xlsx", data);
+    writeDataToExcelFile("statisticsForAvailableEmployee.xlsx", data);
   }
 
-  public List<ProjectPosition> findProjectPosition(User user){
-    List<Long> allProjectPositionId = projectPositionRepository.findProjectPositionIdByUserId(user.getId());
+  public List<ProjectPosition> findProjectPosition(Employee employee){
+    List<Long> allProjectPositionId = projectPositionRepository.findProjectPositionIdByUserId(employee.getId());
     List<ProjectPosition> projectPositions = new ArrayList<>();
     for (Long projectPositionId: allProjectPositionId) {
       ProjectPosition projectPosition = projectPositionRepository.findById(projectPositionId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
@@ -107,23 +105,23 @@ public class WriteExcelReport {
     return projectPositions;
   }
 
-  public Department findDepartment(User user){
-    return departmentRepository.findById(user.getDepartment().getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
-            "Department with id = " + user.getDepartment().getId() + " doesn't exists"));
+  public Department findDepartment(Employee employee){
+    return departmentRepository.findById(employee.getDepartment().getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
+            "Department with id = " + employee.getDepartment().getId() + " doesn't exists"));
   }
 
-  public void writeDataToFile(String fileName, Map<String, Object[]> data){
+  public void writeDataToExcelFile(String fileName, Map<String, Object[]> data){
     XSSFWorkbook workbook = new XSSFWorkbook();
     XSSFSheet sheet = workbook.createSheet("User statistic");
 
     Set<String> keyset = data.keySet();
-    int rownum = 0;
+    int rowNumber = 0;
     for (String key : keyset) {
-      Row row = sheet.createRow(rownum++);
+      Row row = sheet.createRow(rowNumber++);
       Object[] objArr = data.get(key);
-      int cellnum = 0;
+      int columnNumber = 0;
       for (Object obj : objArr) {
-        Cell cell = row.createCell(cellnum++);
+        Cell cell = row.createCell(columnNumber++);
         if (obj instanceof String) cell.setCellValue((String) obj);
         else if (obj instanceof Integer) cell.setCellValue((Integer) obj);
       }
@@ -131,7 +129,7 @@ public class WriteExcelReport {
     try {
       // Write the workbook in file system
       //C:\Program Files\Apache Software Foundation\Tomcat 8.5\bin
-      FileOutputStream out = new FileOutputStream(new File(fileName));
+      FileOutputStream out = new FileOutputStream(fileName);
       workbook.write(out);
       out.close();
     } catch (Exception e) {

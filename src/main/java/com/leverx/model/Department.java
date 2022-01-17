@@ -35,7 +35,7 @@ public class Department {
   private String title;
 
   @OneToMany(mappedBy = "department", cascade = ALL, fetch = EAGER, orphanRemoval = true)
-  private Set<User> users;
+  private Set<Employee> employees;
 
   public Department(Long id, String title) {
     this.id = id;

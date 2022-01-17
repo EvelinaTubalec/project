@@ -57,7 +57,7 @@
     </changeSet>
 
     <changeSet author="evelina.tubalets" id="1641908232187-8">
-        <createTable tableName="users">
+        <createTable tableName="employees">
             <column autoIncrement="true" name="id" type="BIGSERIAL">
                 <constraints primaryKey="true" primaryKeyName="users_pkey"/>
             </column>
@@ -93,11 +93,11 @@
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="project_position"
                                  constraintName="fkq5we97odx1psdi2lih2n52obe" deferrable="false"
                                  initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
-                                 referencedColumnNames="id" referencedTableName="users"/>
+                                 referencedColumnNames="id" referencedTableName="employees"/>
     </changeSet>
 
     <changeSet author="evelina.tubalets" id="1641908232187-11">
-        <addForeignKeyConstraint baseColumnNames="department_id" baseTableName="users"
+        <addForeignKeyConstraint baseColumnNames="department_id" baseTableName="employees"
                                  constraintName="fksbg59w8q63i0oo53rlgvlcnjq" deferrable="false"
                                  initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
                                  referencedColumnNames="id" referencedTableName="department"/>
