@@ -16,12 +16,13 @@ public interface ProjectPositionRepository extends JpaRepository<ProjectPosition
 
   @Query(
       value =
-          "select distinct user_id "
+          "select user_id "
               + "from project_position "
-              + "where position_start_date >= :currentDate "
+              + "where position_start_date > :currentDate "
               + "or position_end_date < :currentDate",
       nativeQuery = true)
   List<Long> findAvailableUser(@Param("currentDate") LocalDate currentDate);
+
 
   @Query(
       value =
@@ -30,6 +31,21 @@ public interface ProjectPositionRepository extends JpaRepository<ProjectPosition
               + "where user_id = :userId "
               + "and project_position.position_start_date > :currentDate",
       nativeQuery = true)
-  LocalDate findAvailableDateOfUser(
-      @Param("userId") Long userId, @Param("currentDate") LocalDate currentDate);
+  LocalDate findAvailableDateOfUser(@Param("userId") Long userId, @Param("currentDate") LocalDate currentDate);
+
+  @Query(
+          value =
+                  "select project_id "
+                          + "from project_position "
+                          + "where user_id = :userId ",
+          nativeQuery = true)
+  Long findProjectByUserId(@Param("userId") Long userId);
+
+  @Query(
+          value =
+                  "select id "
+                          + "from project_position "
+                          + "where user_id = :userId ",
+          nativeQuery = true)
+  Long findProjectPositionIdByUserId(@Param("userId") Long userId);
 }
