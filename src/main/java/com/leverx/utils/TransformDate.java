@@ -16,10 +16,11 @@ public class TransformDate {
         String s = LocalDate.now().toString();
         Calendar c = Calendar.getInstance();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
         c.setTime(format.parse(s));
         c.add(Calendar.DATE, period);  // number of days to add
         s = format.format(c.getTime());
-        Date docDate= format.parse(s);
+        Date docDate = format.parse(s);
         return docDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
 }

@@ -18,6 +18,7 @@ public class LoadingEmployeesFromCSVFileService {
     CsvToBean csv = new CsvToBean();
     String csvFilename = "C:\\Users\\evelina.tubalets\\Desktop\\data.csv";
     CSVReader csvReader = new CSVReader(new FileReader(csvFilename));
+
     // Set column mapping strategy
     List<Employee> employees = new ArrayList<>();
     List list = csv.parse(setColumMapping(), csvReader);
