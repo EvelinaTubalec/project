@@ -23,7 +23,7 @@ public class EmployeeService {
 
   public List<EmployeeResponseDto> findAll() {
     List<Employee> employees = employeeRepository.findAll();
-    return EmployeeConvertor.convertToListUserResponse(employees);
+    return EmployeeConvertor.convertToListEmployeeResponse(employees);
   }
 
   public EmployeeResponseDto create(EmployeeRequestDto request) {

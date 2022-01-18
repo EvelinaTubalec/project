@@ -9,15 +9,18 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class AvailableUserConvertor {
 
-    public static AvailableEmployeeResponseDto toResponse(Employee employee, LocalDate availableDateOfUser){
+    public static AvailableEmployeeResponseDto toResponse(Employee employee, LocalDate availableToDateOfUser, LocalDate availableFromDateOfUser){
+        //if availableFromDateOfUser == null
+        //if availableTo == null
+
         return AvailableEmployeeResponseDto.builder()
-                .userId(employee.getId())
+                .employeeId(employee.getId())
                 .firstName(employee.getFirstName())
                 .lastName(employee.getLastName())
                 .position(employee.getJobTitle())
                 .departmentId(employee.getDepartment().getId())
-                .availableFrom(LocalDate.now())
-                .availableTo(availableDateOfUser)
+                .availableFrom(availableFromDateOfUser)
+                .availableTo(availableToDateOfUser)
                 .build();
     }
 }

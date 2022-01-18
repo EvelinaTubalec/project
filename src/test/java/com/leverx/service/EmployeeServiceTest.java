@@ -76,7 +76,7 @@ class EmployeeServiceTest {
 
     String actualFirstName = employeeResponseDto.getFirstName();
     String actualLastName = employeeResponseDto.getLastName();
-    String actualJobTitle = employeeResponseDto.getPosition();
+    String actualJobTitle = employeeResponseDto.getJobTitle();
     Long actualDepartmentId = employeeResponseDto.getDepartmentId();
 
     String expectedFirstName = employee.getFirstName();

@@ -16,7 +16,7 @@ public class ProjectPositionConvertor {
   public static ProjectPositionResponseDto toResponse(ProjectPosition projectPosition) {
     return ProjectPositionResponseDto.builder()
         .positionId(projectPosition.getId())
-        .userId(projectPosition.getEmployee().getId())
+        .employeeId(projectPosition.getEmployee().getId())
         .projectId(projectPosition.getProject().getId())
         .positionStartDate(projectPosition.getPositionStartDate())
         .positionEndDate(projectPosition.getPositionEndDate())
@@ -46,7 +46,7 @@ public class ProjectPositionConvertor {
             projectPosition ->
                 ProjectPositionResponseDto.builder()
                     .positionId(projectPosition.getId())
-                    .userId(projectPosition.getEmployee().getId())
+                    .employeeId(projectPosition.getEmployee().getId())
                     .projectId(projectPosition.getProject().getId())
                     .positionStartDate(projectPosition.getPositionStartDate())
                     .positionEndDate(projectPosition.getPositionEndDate())

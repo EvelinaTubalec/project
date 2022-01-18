@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ProjectPositionRequestDto {
 
-  private Long userId;
+  private Long employeeId;
 
   private Long projectId;
 

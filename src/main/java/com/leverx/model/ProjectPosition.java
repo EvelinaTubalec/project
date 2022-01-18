@@ -41,7 +41,7 @@ public class ProjectPosition {
   private Project project;
 
   @ManyToOne
-  @JoinColumn(name = "user_id")
+  @JoinColumn(name = "employee_id")
   private Employee employee;
 
 }

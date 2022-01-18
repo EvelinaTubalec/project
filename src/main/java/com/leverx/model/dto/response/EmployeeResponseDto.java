@@ -9,13 +9,13 @@ import lombok.Data;
 @AllArgsConstructor
 public class EmployeeResponseDto {
 
-  private Long userId;
+  private Long employeeId;
 
   private String firstName;
 
   private String lastName;
 
-  private String position;
+  private String jobTitle;
 
   private Long departmentId;
 }

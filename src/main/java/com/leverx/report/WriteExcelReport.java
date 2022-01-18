@@ -60,7 +60,7 @@ public class WriteExcelReport {
     data.put("1", new Object[] {"ID", "User Name", "Department", "Project", "Start Date",  "End Date"});
 
     LocalDate date = TransformDate.addPeriodToLocalDate(30);
-    List<Long> availableUsersId = projectPositionRepository.findAvailableUser(date);
+    List<Long> availableUsersId = projectPositionRepository.findAvailableEmployee(date);
 
     List<Employee> all = new ArrayList<>();
     for (Long userId : availableUsersId) {
@@ -95,7 +95,7 @@ public class WriteExcelReport {
   }
 
   public List<ProjectPosition> findProjectPosition(Employee employee){
-    List<Long> allProjectPositionId = projectPositionRepository.findProjectPositionIdByUserId(employee.getId());
+    List<Long> allProjectPositionId = projectPositionRepository.findProjectPositionIdByEmployeeId(employee.getId());
     List<ProjectPosition> projectPositions = new ArrayList<>();
     for (Long projectPositionId: allProjectPositionId) {
       ProjectPosition projectPosition = projectPositionRepository.findById(projectPositionId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,

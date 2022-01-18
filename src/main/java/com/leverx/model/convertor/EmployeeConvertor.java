@@ -14,10 +14,10 @@ public class EmployeeConvertor {
 
   public static EmployeeResponseDto toResponse(Employee employee) {
     return EmployeeResponseDto.builder()
-        .userId(employee.getId())
+        .employeeId(employee.getId())
         .firstName(employee.getFirstName())
         .lastName(employee.getLastName())
-        .position(employee.getJobTitle())
+        .jobTitle(employee.getJobTitle())
         .departmentId(employee.getDepartment().getId())
         .build();
   }
@@ -28,7 +28,7 @@ public class EmployeeConvertor {
         .lastName(request.getLastName())
         .email(request.getEmail())
         .password(request.getPassword())
-        .jobTitle(request.getPosition())
+        .jobTitle(request.getJobTitle())
         .department(department)
         .build();
   }
@@ -38,21 +38,21 @@ public class EmployeeConvertor {
     employee.setLastName(request.getLastName());
     employee.setEmail(request.getEmail());
     employee.setPassword(request.getPassword());
-    employee.setJobTitle(request.getPosition());
+    employee.setJobTitle(request.getJobTitle());
     employee.setDepartment(department);
     return employee;
   }
 
-  public static List<EmployeeResponseDto> convertToListUserResponse(List<Employee> employees) {
+  public static List<EmployeeResponseDto> convertToListEmployeeResponse(List<Employee> employees) {
     return employees.stream()
         .map(
-            user ->
+            employee ->
                 EmployeeResponseDto.builder()
-                    .userId(user.getId())
-                    .firstName(user.getFirstName())
-                    .lastName(user.getLastName())
-                    .position(user.getJobTitle())
-                    .departmentId(user.getDepartment().getId())
+                    .employeeId(employee.getId())
+                    .firstName(employee.getFirstName())
+                    .lastName(employee.getLastName())
+                    .jobTitle(employee.getJobTitle())
+                    .departmentId(employee.getDepartment().getId())
                     .build())
         .collect(Collectors.toList());
   }

@@ -24,27 +24,27 @@ public class AvailableEmployeeService {
     private final EmployeeRepository employeeRepository;
 
     public List<AvailableEmployeeResponseDto> findCurrentAvailableUsers(){
-        List<Long> availableUsers = projectPositionRepository.findAvailableUser(LocalDate.now());
-        return findListOfAvailableUsers(availableUsers);
+        return findListOfAvailableUsers(LocalDate.now());
     }
 
     public List<AvailableEmployeeResponseDto> findAvailableInPeriodUsers(Integer period) throws ParseException {
         LocalDate date = TransformDate.addPeriodToLocalDate(period);
-        List<Long> availableUsers = projectPositionRepository.findAvailableUser(date);
-        return findListOfAvailableUsers(availableUsers);
+        return findListOfAvailableUsers(date);
     }
 
-    public List<AvailableEmployeeResponseDto> findListOfAvailableUsers(List<Long> availableUsers){
-        List<Employee> result = new ArrayList<>();
+    public List<AvailableEmployeeResponseDto> findListOfAvailableUsers(LocalDate date){
+        List<Long> availableUsers = projectPositionRepository.findAvailableEmployee(date);
+        List<Employee> listOfAvailableUsers = new ArrayList<>();
         for (Long userId : availableUsers){
             Employee employee = employeeRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Employee with id = " + userId + " doesn't exists"));
-            result.add(employee);
+            listOfAvailableUsers.add(employee);
         }
         List<AvailableEmployeeResponseDto> response = new ArrayList<>();
-        for (Employee employee : result) {
-            LocalDate availableDateOfUser = projectPositionRepository.findAvailableDateOfUser(employee.getId(), LocalDate.now());
-            AvailableEmployeeResponseDto availableEmployeeResponseDto = AvailableUserConvertor.toResponse(employee, availableDateOfUser);
+        for (Employee employee : listOfAvailableUsers) {
+            LocalDate availableToDateOfUser = projectPositionRepository.findAvailableDateOfEmployee(employee.getId(), date);
+            LocalDate availableFromDateOfUser = projectPositionRepository.findLastProjectPositionDateOfEmployee(employee.getId(), date);
+            AvailableEmployeeResponseDto availableEmployeeResponseDto = AvailableUserConvertor.toResponse(employee, availableToDateOfUser, availableFromDateOfUser);
             response.add(availableEmployeeResponseDto);
         }
         return response;

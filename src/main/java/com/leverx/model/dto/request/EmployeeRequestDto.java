@@ -19,7 +19,7 @@ public class EmployeeRequestDto {
 
   private String password;
 
-  private String position;
+  private String jobTitle;
 
   private Long departmentId;
 }

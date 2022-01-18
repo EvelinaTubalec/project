@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class AvailableEmployeeResponseDto {
 
-    private Long userId;
+    private Long employeeId;
 
     private String firstName;
 

@@ -31,14 +31,16 @@ public class ProjectPositionService {
   }
 
   public ProjectPositionResponseDto create(ProjectPositionRequestDto request) {
-    Employee employeeById = employeeRepository.findById(request.getUserId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
-            "Employee with id = " + request.getUserId() + " doesn't exists"));
+    Employee employeeById = employeeRepository.findById(request.getEmployeeId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
+            "Employee with id = " + request.getEmployeeId() + " doesn't exists"));
     Project projectById = projectRepository.findById(request.getProjectId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
             "Project with id = " + request.getProjectId() + " doesn't exists"));
     ProjectPosition projectPosition = ProjectPositionConvertor.toEntity(request, employeeById, projectById);
 
-    if (projectPositionRepository.findProjectPositionIdByUserId(employeeById.getId()) != null){
-      List<Long> projectPositionByUserId = projectPositionRepository.findProjectPositionIdByUserId(employeeById.getId());
+    List<Long> projectPositionIdByUserId = projectPositionRepository.findProjectPositionIdByEmployeeId(employeeById.getId());
+
+    if (projectPositionIdByUserId.size()!=0){
+      List<Long> projectPositionByUserId = projectPositionRepository.findProjectPositionIdByEmployeeId(employeeById.getId());
       for (Long projectPositionId: projectPositionByUserId) {
         ProjectPosition actualProjectPosition = projectPositionRepository.findById(projectPositionId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
                 "Project with id = " + request.getProjectId() + " doesn't exists"));
@@ -54,8 +56,8 @@ public class ProjectPositionService {
   public ProjectPositionResponseDto update(ProjectPositionRequestDto request, Long positionId) {
     ProjectPosition projectPositionById = projectPositionRepository.findById(positionId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
             "Position with id = " + positionId + " doesn't exists"));
-    Employee employeeById = employeeRepository.findById(request.getUserId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
-            "Employee with id = " + request.getUserId() + " doesn't exists"));
+    Employee employeeById = employeeRepository.findById(request.getEmployeeId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
+            "Employee with id = " + request.getEmployeeId() + " doesn't exists"));
     Project projectById = projectRepository.findById(request.getProjectId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
             "Project with id = " + request.getProjectId() + " doesn't exists"));
     ProjectPosition projectPosition = ProjectPositionConvertor.toEntity(request, projectPositionById, employeeById, projectById);

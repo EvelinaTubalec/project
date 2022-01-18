@@ -12,7 +12,7 @@ public class ProjectPositionResponseDto {
 
   private Long positionId;
 
-  private Long userId;
+  private Long employeeId;
 
   private Long projectId;
 

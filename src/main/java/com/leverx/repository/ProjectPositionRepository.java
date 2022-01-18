@@ -12,27 +12,37 @@ public interface ProjectPositionRepository extends JpaRepository<ProjectPosition
 
   @Query(
       value =
-          "select distinct user_id "
+          "select distinct employee_id "
               + "from project_position "
               + "where position_start_date > :currentDate "
               + "or position_end_date < :currentDate",
       nativeQuery = true)
-  List<Long> findAvailableUser(@Param("currentDate") LocalDate currentDate);
+  List<Long> findAvailableEmployee(@Param("currentDate") LocalDate currentDate);
 
   @Query(
       value =
           "select max (project_position.position_start_date)\n"
               + "from project_position\n"
-              + "where user_id = :userId "
+              + "where employee_id = :employeeId "
               + "and project_position.position_start_date > :currentDate",
       nativeQuery = true)
-  LocalDate findAvailableDateOfUser(@Param("userId") Long userId, @Param("currentDate") LocalDate currentDate);
+  LocalDate findAvailableDateOfEmployee(@Param("employeeId") Long userId, @Param("currentDate") LocalDate currentDate);
+
+  @Query(
+          value =
+                  "select max (project_position.position_end_date)\n"
+                          + "from project_position\n"
+                          + "where employee_id = :employeeId and " +
+                          "project_position.position_end_date < :currentDate",
+          nativeQuery = true)
+  LocalDate findLastProjectPositionDateOfEmployee(@Param("employeeId") Long userId , @Param("currentDate") LocalDate currentDate);
 
   @Query(
           value =
                   "select id "
                           + "from project_position "
-                          + "where user_id = :userId and project_position.position_start_date >= '2022-01-01' ",
+                          + "where employee_id = :employeeId and (project_position.position_start_date >= '2022-01-01' " +
+                          "or position_end_date < '2022-01-31') ",
           nativeQuery = true)
-  List<Long> findProjectPositionIdByUserId(@Param("userId") Long userId) ;
+  List<Long> findProjectPositionIdByEmployeeId(@Param("employeeId") Long employeeId) ;
 }

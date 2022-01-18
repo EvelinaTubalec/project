@@ -4,6 +4,7 @@ import com.leverx.model.Employee;
 import com.leverx.model.dto.request.EmployeeRequestDto;
 import com.leverx.model.dto.response.AvailableEmployeeResponseDto;
 import com.leverx.model.dto.response.EmployeeResponseDto;
+import com.leverx.report.WriteExcelReport;
 import com.leverx.service.AvailableEmployeeService;
 import com.leverx.service.EmployeeService;
 import com.leverx.service.LoadingEmployeesFromCSVFileService;
@@ -37,7 +38,24 @@ public class EmployeeController {
   private final EmployeeService employeeService;
   private final LoadingEmployeesFromCSVFileService loadingEmployeesFromCSVFileService;
   private final AvailableEmployeeService availableEmployeeService;
+  public final WriteExcelReport writeExcelReport;
   private static final Logger log = LoggerFactory.logger(DepartmentController.class);
+
+  @GetMapping("/statistic")
+  @ResponseStatus(OK)
+  @Operation(summary = "Get users statistic")
+  public void getStatistic() {
+    log.debug("Get users statistic");
+    writeExcelReport.writeToXmlFileStatisticOfUsersForMonth();
+  }
+
+  @GetMapping("/statistic2")
+  @ResponseStatus(OK)
+  @Operation(summary = "Get statistic of available employees")
+  public void getStatisticOfAvailableEmployees() throws ParseException {
+    log.debug("Get statistic of available employees");
+    writeExcelReport.writeToXmlFileAvailableEmployeesDuringMonth();
+  }
 
   @GetMapping("/csv")
   @ResponseStatus(OK)
