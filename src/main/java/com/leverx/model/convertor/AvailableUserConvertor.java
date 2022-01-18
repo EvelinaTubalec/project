@@ -10,8 +10,6 @@ import java.time.LocalDate;
 public class AvailableUserConvertor {
 
     public static AvailableEmployeeResponseDto toResponse(Employee employee, LocalDate availableToDateOfUser, LocalDate availableFromDateOfUser){
-        //if availableFromDateOfUser == null
-        //if availableTo == null
 
         return AvailableEmployeeResponseDto.builder()
                 .employeeId(employee.getId())

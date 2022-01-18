@@ -4,8 +4,6 @@ import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
 import au.com.bytecode.opencsv.bean.CsvToBean;
 import com.leverx.model.Employee;
-import com.leverx.model.convertor.EmployeeConvertor;
-import com.leverx.model.dto.response.EmployeeResponseDto;
 import org.springframework.stereotype.Service;
 
 import java.io.FileNotFoundException;

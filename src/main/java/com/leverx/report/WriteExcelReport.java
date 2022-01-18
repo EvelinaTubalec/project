@@ -37,7 +37,7 @@ public class WriteExcelReport {
 
   public void writeToXmlFileStatisticOfUsersForMonth() {
     Map<String, Object[]> data = new TreeMap<>();
-    data.put("1", new Object[] {"ID", "User Name", "Department", "Project", "JobTitle"});
+    data.put("1", new Object[] {"ID", "User Name", "Department", "Project", "JobTitle", "StartDate", "EndDate"});
 
     List<Employee> all = employeeRepository.findAllAsc();
     int column = 1;
@@ -49,7 +49,20 @@ public class WriteExcelReport {
         Project project = projectPosition.getProject();
         String projectTitle = project.getTitle();
         column++;
-          data.put(Integer.toString(column), new Object[] {employee.getId().toString(), employee.getFirstName() + employee.getLastName(), department.getTitle(), projectTitle, employee.getJobTitle()});
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate endDate = projectPosition.getPositionEndDate();
+        String endProjectDate = endDate.format(formatter);
+
+        LocalDate startDate = projectPosition.getPositionStartDate();
+        String startProjectDate = startDate.format(formatter);
+          data.put(Integer.toString(column), new Object[] {
+                  employee.getId().toString(),
+                  employee.getFirstName() + employee.getLastName(),
+                  department.getTitle(),
+                  projectTitle,
+                  employee.getJobTitle(),
+                  startProjectDate,
+                  endProjectDate});
         }
       }
     writeDataToExcelFile("statistics.xlsx", data);
@@ -76,8 +89,8 @@ public class WriteExcelReport {
       List<ProjectPosition> projectPositions = findProjectPosition(employee);
 
       for (ProjectPosition projectPosition: projectPositions) {
-        LocalDate endDate = projectPosition.getPositionEndDate();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate endDate = projectPosition.getPositionEndDate();
         String endProjectDate = endDate.format(formatter);
 
         LocalDate startDate = projectPosition.getPositionStartDate();
@@ -88,7 +101,13 @@ public class WriteExcelReport {
           startProjectDate ="no active project";
         }
         Project project = projectPosition.getProject();
-        data.put(Integer.toString(count), new Object[] {employee.getId().toString(), employee.getFirstName() + employee.getLastName(), department.getTitle(), project.getTitle(), startProjectDate, endProjectDate});
+        data.put(Integer.toString(count), new Object[] {
+                employee.getId().toString(),
+                employee.getFirstName() + employee.getLastName(),
+                department.getTitle(),
+                project.getTitle(),
+                startProjectDate,
+                endProjectDate});
       }
     }
     writeDataToExcelFile("statisticsForAvailableEmployee.xlsx", data);
@@ -127,7 +146,6 @@ public class WriteExcelReport {
       }
     }
     try {
-      // Write the workbook in file system
       //C:\Program Files\Apache Software Foundation\Tomcat 8.5\bin
       FileOutputStream out = new FileOutputStream(fileName);
       workbook.write(out);
