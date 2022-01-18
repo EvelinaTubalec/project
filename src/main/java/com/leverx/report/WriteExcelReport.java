@@ -31,13 +31,21 @@ import java.util.TreeMap;
 @AllArgsConstructor
 public class WriteExcelReport {
 
+  public static final String ID = "ID";
+  public static final String USER_NAME = "User Name";
+  public static final String DEPARTMENT = "Department";
+  public static final String PROJECT = "Project";
+  public static final String START_DATE = "Start Date";
+  public static final String END_DATE = "End Date";
+  public static final String JOB_TITLE = "JobTitle";
+  public static final String YYYY_MM_DD = "yyyy-MM-dd";
   private final EmployeeRepository employeeRepository;
   private final ProjectPositionRepository projectPositionRepository;
   private final DepartmentRepository departmentRepository;
 
   public void writeToXmlFileStatisticOfUsersForMonth() {
     Map<String, Object[]> data = new TreeMap<>();
-    data.put("1", new Object[] {"ID", "User Name", "Department", "Project", "JobTitle", "StartDate", "EndDate"});
+    data.put("1", new Object[] {ID, USER_NAME, DEPARTMENT, PROJECT, JOB_TITLE, START_DATE, END_DATE});
 
     List<Employee> all = employeeRepository.findAllAsc();
     int column = 1;
@@ -49,7 +57,7 @@ public class WriteExcelReport {
         Project project = projectPosition.getProject();
         String projectTitle = project.getTitle();
         column++;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(YYYY_MM_DD);
         LocalDate endDate = projectPosition.getPositionEndDate();
         String endProjectDate = endDate.format(formatter);
 
@@ -70,7 +78,7 @@ public class WriteExcelReport {
 
   public void writeToXmlFileAvailableEmployeesDuringMonth() throws ParseException {
     Map<String, Object[]> data = new TreeMap<>();
-    data.put("1", new Object[] {"ID", "User Name", "Department", "Project", "Start Date",  "End Date"});
+    data.put("1", new Object[] {ID, USER_NAME, DEPARTMENT, PROJECT, START_DATE, END_DATE});
 
     LocalDate date = TransformDate.addPeriodToLocalDate(30);
     List<Long> availableUsersId = projectPositionRepository.findAvailableEmployee(date);
@@ -89,7 +97,7 @@ public class WriteExcelReport {
       List<ProjectPosition> projectPositions = findProjectPosition(employee);
 
       for (ProjectPosition projectPosition: projectPositions) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(YYYY_MM_DD);
         LocalDate endDate = projectPosition.getPositionEndDate();
         String endProjectDate = endDate.format(formatter);
 
@@ -131,7 +139,7 @@ public class WriteExcelReport {
 
   public void writeDataToExcelFile(String fileName, Map<String, Object[]> data){
     XSSFWorkbook workbook = new XSSFWorkbook();
-    XSSFSheet sheet = workbook.createSheet("User statistic");
+    XSSFSheet sheet = workbook.createSheet("Employee statistic");
 
     Set<String> keyset = data.keySet();
     int rowNumber = 0;

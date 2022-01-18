@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
-    @Query(value = "select * from employee order by id asc ", nativeQuery = true)
+    @Query(value = "SELECT * FROM employee ORDER BY id ASC ", nativeQuery = true)
     List<Employee> findAllAsc();
 }

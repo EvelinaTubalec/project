@@ -52,15 +52,15 @@ public class EmployeeController {
   @Operation(summary = "Get available employees")
   public List<AvailableEmployeeResponseDto> findAllAvailableEmployees(){
     log.debug("Get available employees");
-    return availableEmployeeService.findCurrentAvailableUsers();
+    return availableEmployeeService.findCurrentAvailableEmployees();
   }
 
   @GetMapping("/available/{period}")
   @ResponseStatus(OK)
-  @Operation(summary = "Get available employees")
+  @Operation(summary = "Get available employees in period")
   public List<AvailableEmployeeResponseDto> findAllAvailableEmployeeInPeriod(@PathVariable("period") Integer period) throws ParseException {
     log.debug("Get available employees in period");
-    return availableEmployeeService.findAvailableInPeriodUsers(period);
+    return availableEmployeeService.findAvailableInPeriodEmployees(period);
   }
 
   @GetMapping

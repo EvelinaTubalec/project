@@ -106,8 +106,7 @@ class DepartmentServiceTest {
   }
 
   @Test
-  void
-      givenDepartmentRequest_whenUpdateDepartmentNonExistingDepartment_thenReturnResponseStatusException() {
+  void givenDepartmentRequest_whenUpdateDepartmentNonExistingDepartment_thenReturnResponseStatusException() {
     Department department = new Department(1L, "title");
     when(departmentRepository.findById(department.getId()))
         .thenThrow(

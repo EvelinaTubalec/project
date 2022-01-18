@@ -1,4 +1,4 @@
-package com.leverx.controller;
+package controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.leverx.config.ApplicationConfig;
@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {ApplicationConfig.class})
 @WebAppConfiguration
-class DepartmentControllerTest {
+class DepartmentControllerIntegrationTest {
 
   public MockMvc mockMvc;
 

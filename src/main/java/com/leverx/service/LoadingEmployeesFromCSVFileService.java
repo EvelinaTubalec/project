@@ -16,7 +16,7 @@ public class LoadingEmployeesFromCSVFileService {
 
   public List<Employee> findAllFromCSVFile() throws FileNotFoundException {
     CsvToBean csv = new CsvToBean();
-    String csvFilename = "C:\\Users\\evelina.tubalets\\Desktop\\dataa.csv";
+    String csvFilename = "C:\\Users\\evelina.tubalets\\Desktop\\data.csv";
     CSVReader csvReader = new CSVReader(new FileReader(csvFilename));
     // Set column mapping strategy
     List<Employee> employees = new ArrayList<>();

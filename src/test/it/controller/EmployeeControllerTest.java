@@ -1,4 +1,4 @@
-package com.leverx.controller;
+package controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.leverx.config.ApplicationConfig;

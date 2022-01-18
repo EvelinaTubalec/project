@@ -39,7 +39,7 @@ public interface ProjectPositionRepository extends JpaRepository<ProjectPosition
 
   @Query(
           value =
-                  "select id "
+                  "SELECT id "
                           + "from project_position "
                           + "where employee_id = :employeeId and (project_position.position_start_date >= '2022-01-01' " +
                           "or position_end_date < '2022-01-31') ",
