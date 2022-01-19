@@ -2,16 +2,21 @@ package com.leverx.service;
 
 import com.leverx.model.Department;
 import com.leverx.model.Employee;
+import com.leverx.model.convertor.AvailableUserConvertor;
 import com.leverx.model.dto.request.EmployeeRequestDto;
+import com.leverx.model.dto.response.AvailableEmployeeResponseDto;
 import com.leverx.model.dto.response.EmployeeResponseDto;
 import com.leverx.model.convertor.EmployeeConvertor;
 import com.leverx.repository.DepartmentRepository;
 import com.leverx.repository.EmployeeRepository;
+import com.leverx.repository.ProjectPositionRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,6 +25,7 @@ public class EmployeeService {
 
   private final EmployeeRepository employeeRepository;
   private final DepartmentRepository departmentRepository;
+  private final ProjectPositionRepository projectPositionRepository;
 
   public List<EmployeeResponseDto> findAll() {
     List<Employee> employees = employeeRepository.findAll();
@@ -48,5 +54,23 @@ public class EmployeeService {
     employeeRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
             "Employee with id = " + userId + " doesn't exists"));
     employeeRepository.deleteById(userId);
+  }
+
+  public List<AvailableEmployeeResponseDto> findListOfAvailableEmployees(LocalDate date){
+    List<Long> allEmployeeId = projectPositionRepository.findAvailableEmployee(date);
+    List<Employee> employees = new ArrayList<>();
+    for (Long employeeId : allEmployeeId){
+      Employee employee = employeeRepository.findById(employeeId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
+              "Employee with id = " + employeeId + " doesn't exists"));
+      employees.add(employee);
+    }
+    List<AvailableEmployeeResponseDto> response = new ArrayList<>();
+    for (Employee employee : employees) {
+      LocalDate availableTo = projectPositionRepository.findAvailableDateOfEmployee(employee.getId(), date);
+      LocalDate availableFrom = projectPositionRepository.findLastProjectPositionDateOfEmployee(employee.getId(), date);
+      AvailableEmployeeResponseDto availableEmployeeResponseDto = AvailableUserConvertor.toResponse(employee, availableTo, availableFrom);
+      response.add(availableEmployeeResponseDto);
+    }
+    return response;
   }
 }

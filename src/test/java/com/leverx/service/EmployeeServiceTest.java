@@ -2,10 +2,13 @@ package com.leverx.service;
 
 import com.leverx.model.Department;
 import com.leverx.model.Employee;
+import com.leverx.model.convertor.AvailableUserConvertor;
 import com.leverx.model.dto.request.EmployeeRequestDto;
+import com.leverx.model.dto.response.AvailableEmployeeResponseDto;
 import com.leverx.model.dto.response.EmployeeResponseDto;
 import com.leverx.repository.DepartmentRepository;
 import com.leverx.repository.EmployeeRepository;
+import com.leverx.repository.ProjectPositionRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +36,9 @@ class EmployeeServiceTest {
   EmployeeRepository employeeRepository;
 
   @Mock DepartmentRepository departmentRepository;
+
+  @Mock
+  ProjectPositionRepository projectPositionRepository;
 
   @InjectMocks
   EmployeeService employeeService;
@@ -118,5 +125,36 @@ class EmployeeServiceTest {
     employeeService.delete(1L);
 
     verify(employeeRepository, times(1)).deleteById(employee.getId());
+  }
+
+  @Test
+  void whenFindAllAvailableEmployees_returnListAvailableEmployeesResponse() {
+    LocalDate date = LocalDate.now();
+    Department department = new Department(1L, "title");
+    Employee employee = new Employee(1L, "firstName", "listName", "email", "password", "jobTitle", department);
+
+    List<Long> availableEmployees = new ArrayList<>();
+    availableEmployees.add(1L);
+    when(projectPositionRepository.findAvailableEmployee(date)).thenReturn(availableEmployees);
+
+    List<Employee> listOfAvailableEmployees = new ArrayList<>();
+    for (Long employeeId : availableEmployees){
+      when(employeeRepository.findById(employeeId)).thenReturn(Optional.of(employee));
+      listOfAvailableEmployees.add(employee);
+    }
+
+    List<AvailableEmployeeResponseDto> expectedResponse = new ArrayList<>();
+    for (Employee e : listOfAvailableEmployees) {
+      LocalDate availableTo = LocalDate.of(2022, 1, 1);
+      LocalDate availableFrom = LocalDate.of(2022, 2, 25);
+      when(projectPositionRepository.findAvailableDateOfEmployee(e.getId(), date)).thenReturn(availableTo);
+      when(projectPositionRepository.findLastProjectPositionDateOfEmployee(e.getId(), date)).thenReturn(availableFrom);
+
+      AvailableEmployeeResponseDto availableEmployeeResponseDto = AvailableUserConvertor.toResponse(e, availableTo, availableFrom);
+      expectedResponse.add(availableEmployeeResponseDto);
+    }
+
+    List<AvailableEmployeeResponseDto> actualResponse = employeeService.findListOfAvailableEmployees(LocalDate.now());
+    Assertions.assertEquals(expectedResponse.size(), actualResponse.size());
   }
 }

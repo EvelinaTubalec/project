@@ -12,37 +12,38 @@ public interface ProjectPositionRepository extends JpaRepository<ProjectPosition
 
   @Query(
       value =
-          "select distinct employee_id "
-              + "from project_position "
-              + "where position_start_date > :currentDate "
-              + "or position_end_date < :currentDate",
+          "SELECT DISTINCT employee_id "
+              + "FROM project_position "
+              + "WHERE position_start_date > :currentDate "
+              + "OR position_end_date < :currentDate",
       nativeQuery = true)
   List<Long> findAvailableEmployee(@Param("currentDate") LocalDate currentDate);
 
   @Query(
       value =
-          "select max (project_position.position_start_date)\n"
-              + "from project_position\n"
-              + "where employee_id = :employeeId "
-              + "and project_position.position_start_date > :currentDate",
+          "SELECT MAX (project_position.position_start_date)\n"
+              + "FROM project_position\n"
+              + "WHERE employee_id = :employeeId "
+              + "AND project_position.position_start_date > :currentDate",
       nativeQuery = true)
   LocalDate findAvailableDateOfEmployee(@Param("employeeId") Long userId, @Param("currentDate") LocalDate currentDate);
 
   @Query(
           value =
-                  "select max (project_position.position_end_date)\n"
-                          + "from project_position\n"
-                          + "where employee_id = :employeeId and " +
-                          "project_position.position_end_date < :currentDate",
+                  "SELECT MAX (project_position.position_end_date)\n"
+                          + "FROM project_position\n"
+                          + "WHERE employee_id = :employeeId "
+                          + "AND project_position.position_end_date < :currentDate",
           nativeQuery = true)
   LocalDate findLastProjectPositionDateOfEmployee(@Param("employeeId") Long userId , @Param("currentDate") LocalDate currentDate);
 
   @Query(
           value =
                   "SELECT id "
-                          + "from project_position "
-                          + "where employee_id = :employeeId and (project_position.position_start_date >= '2022-01-01' " +
-                          "or position_end_date < '2022-01-31') ",
+                          + "FROM project_position "
+                          + "WHERE employee_id = :employeeId "
+                          + "AND (project_position.position_start_date >= '2022-01-01' "
+                          + "OR position_end_date < '2022-01-31') ",
           nativeQuery = true)
   List<Long> findProjectPositionIdByEmployeeId(@Param("employeeId") Long employeeId) ;
 }

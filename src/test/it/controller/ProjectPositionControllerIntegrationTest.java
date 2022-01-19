@@ -3,7 +3,7 @@ package controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.leverx.config.ApplicationConfig;
-import com.leverx.model.dto.request.ProjectRequestDto;
+import com.leverx.model.dto.request.ProjectPositionRequestDto;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {ApplicationConfig.class})
 @WebAppConfiguration
-class ProjectControllerTest {
+class ProjectPositionControllerIntegrationTest {
 
   public MockMvc mockMvc;
 
@@ -38,37 +38,37 @@ class ProjectControllerTest {
 
   @Test
   void findAll() throws Exception {
-    mockMvc.perform(MockMvcRequestBuilders.get("/projects")).andExpect(status().isOk());
+    mockMvc.perform(MockMvcRequestBuilders.get("/positions")).andExpect(status().isOk());
   }
 
   @Test
-  void saveProject() throws Exception {
+  void saveProjectPosition() throws Exception {
     mockMvc
         .perform(
-            MockMvcRequestBuilders.post("/projects")
+            MockMvcRequestBuilders.post("/positions")
                 .content(
-                    asJsonString(new ProjectRequestDto("title", LocalDate.now(), LocalDate.now())))
+                    asJsonString(new ProjectPositionRequestDto(2L, 1L, LocalDate.now(), LocalDate.now())))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isCreated());
   }
 
   @Test
-  void updateProject() throws Exception {
+  void updateProjectPosition() throws Exception {
     mockMvc
         .perform(
-            MockMvcRequestBuilders.patch("/projects/{id}", 1L)
+            MockMvcRequestBuilders.patch("/positions/{id}", 1L)
                 .content(
-                    asJsonString(new ProjectRequestDto("title", LocalDate.now(), LocalDate.now())))
+                    asJsonString(new ProjectPositionRequestDto(2L, 1L, LocalDate.now(), LocalDate.now())))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk());
   }
 
   @Test
-  void deleteProject() throws Exception {
+  void deleteProjectPosition() throws Exception {
     mockMvc
-        .perform(MockMvcRequestBuilders.delete("/projects/{id}", 2L))
+        .perform(MockMvcRequestBuilders.delete("/positions/{id}", 3L))
         .andExpect(status().isNoContent());
   }
 

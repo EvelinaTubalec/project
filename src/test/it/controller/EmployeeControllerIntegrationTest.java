@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {ApplicationConfig.class})
 @WebAppConfiguration
-class EmployeeControllerTest {
+class EmployeeControllerIntegrationTest {
 
   public MockMvc mockMvc;
 
