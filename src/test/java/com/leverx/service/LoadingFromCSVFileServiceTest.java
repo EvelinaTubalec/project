@@ -13,11 +13,13 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @RunWith(MockitoJUnitRunner.class)
 class LoadingFromCSVFileServiceTest {
 
     @InjectMocks
-    LoadingFromCSVFileService loadingFromCSVFileService;
+    private LoadingFromCSVFileService loadingFromCSVFileService;
 
     @BeforeEach
     void init() {
@@ -26,14 +28,24 @@ class LoadingFromCSVFileServiceTest {
 
     @Test
     void findAllFromCSVFile() throws FileNotFoundException {
-        Employee employee = new Employee(1L, "Lokesh","Gupta","email","password","ui" );
-        Employee employee2 = new Employee(2L, "David","Miller","email","password","developer" );
+        Employee emp1 = new Employee(1L, "Lokesh","Gupta","email","password","ui" );
+        Employee emp2 = new Employee(2L, "David","Miller","email","password","developer" );
 
         List<Employee> exceptedEmployees = new ArrayList<>();
-        exceptedEmployees.add(employee);
-        exceptedEmployees.add(employee2);
+        exceptedEmployees.add(emp1);
+        exceptedEmployees.add(emp2);
+
         List<Employee> actualEmployees = loadingFromCSVFileService.findAllFromCSVFile();
 
-        Assertions.assertEquals(exceptedEmployees.size(), actualEmployees.size());
+        assertEquals(exceptedEmployees.size(), actualEmployees.size());
+
+        Employee expectedEmp = exceptedEmployees.get(1);
+        Employee actualEmp = actualEmployees.get(1);
+
+        assertEquals(expectedEmp.getFirstName(), actualEmp.getFirstName());
+        assertEquals(expectedEmp.getLastName(), actualEmp.getLastName());
+        assertEquals(expectedEmp.getEmail(), actualEmp.getEmail());
+        assertEquals(expectedEmp.getPassword(), actualEmp.getPassword());
+        assertEquals(expectedEmp.getJobTitle(), actualEmp.getJobTitle());
     }
 }

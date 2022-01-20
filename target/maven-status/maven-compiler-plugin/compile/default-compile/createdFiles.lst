@@ -1,7 +1,5 @@
 com\leverx\config\ApplicationConfig.class
 com\leverx\repository\ProjectRepository.class
-com\leverx\service\AvailableEmployeeService.class
-com\leverx\service\LoadingEmployeesFromCSVFileService.class
 com\leverx\model\dto\request\ProjectRequestDto$ProjectRequestDtoBuilder.class
 com\leverx\config\DataSourceConfig.class
 com\leverx\report\Schedule.class
@@ -14,6 +12,7 @@ com\leverx\repository\ProjectPositionRepository.class
 com\leverx\model\dto\request\ProjectPositionRequestDto.class
 com\leverx\model\convertor\DepartmentConvertor.class
 com\leverx\model\ProjectPosition$ProjectPositionBuilder.class
+com\leverx\service\LoadingFromCSVFileService.class
 com\leverx\model\dto\request\ProjectRequestDto.class
 com\leverx\model\dto\response\AvailableEmployeeResponseDto.class
 com\leverx\model\dto\response\ProjectResponseDto.class
@@ -34,6 +33,7 @@ com\leverx\controller\ProjectPositionController.class
 com\leverx\model\dto\response\ProjectResponseDto$ProjectResponseDtoBuilder.class
 com\leverx\model\dto\response\DepartmentResponseDto$DepartmentResponseDtoBuilder.class
 com\leverx\security\SecurityInitializer.class
+Main.class
 com\leverx\model\dto\request\EmployeeRequestDto.class
 com\leverx\model\convertor\AvailableUserConvertor.class
 com\leverx\config\DispatcherServletInitializer.class

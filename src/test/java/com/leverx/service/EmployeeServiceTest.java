@@ -145,8 +145,8 @@ class EmployeeServiceTest {
 
     List<AvailableEmployeeResponseDto> expectedResponse = new ArrayList<>();
     for (Employee e : listOfAvailableEmployees) {
-      LocalDate availableTo = LocalDate.of(2022, 1, 1);
-      LocalDate availableFrom = LocalDate.of(2022, 2, 25);
+      LocalDate availableFrom = LocalDate.of(2022, 1, 1);
+      LocalDate availableTo = LocalDate.of(2022, 2, 25);
       when(projectPositionRepository.findAvailableDateOfEmployee(e.getId(), date)).thenReturn(availableTo);
       when(projectPositionRepository.findLastProjectPositionDateOfEmployee(e.getId(), date)).thenReturn(availableFrom);
 

@@ -35,14 +35,14 @@ class EmployeeControllerIntegrationTest {
 
   @Test
   void findAll() throws Exception {
-    mockMvc.perform(MockMvcRequestBuilders.get("/users")).andExpect(status().isOk());
+    mockMvc.perform(MockMvcRequestBuilders.get("/employees")).andExpect(status().isOk());
   }
 
   @Test
   void saveEmployee() throws Exception {
     mockMvc
         .perform(
-            MockMvcRequestBuilders.post("/users")
+            MockMvcRequestBuilders.post("/employees")
                 .content(
                     asJsonString(
                         new EmployeeRequestDto("firstName", "LastName", "email", "password", "position", 3L)))
@@ -55,7 +55,7 @@ class EmployeeControllerIntegrationTest {
   void updateEmployee() throws Exception {
     mockMvc
         .perform(
-            MockMvcRequestBuilders.patch("/users/{id}", 2L)
+            MockMvcRequestBuilders.patch("/employees/{id}", 2L)
                 .content(
                     asJsonString(
                         new EmployeeRequestDto("firstName", "LastName", "email", "password", "position", 3L)))
@@ -67,7 +67,7 @@ class EmployeeControllerIntegrationTest {
   @Test
   void deleteEmployee() throws Exception {
     mockMvc
-        .perform(MockMvcRequestBuilders.delete("/users/{id}", 2L))
+        .perform(MockMvcRequestBuilders.delete("/employees/{id}", 2L))
         .andExpect(status().isNoContent());
   }
 

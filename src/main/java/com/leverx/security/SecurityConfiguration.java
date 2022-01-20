@@ -16,16 +16,16 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-  public static final String ROLE_USER = "ROLE_USER";
+  public static final String ROLE_USER = "USER";
   public static final String USER = "user";
   public static final String PASSWORD = "password";
+  public static final String REALM_NAME = "leverx.com";
 
-  @Autowired
-  public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+
+  @Override
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     auth.inMemoryAuthentication()
-        .withUser(USER)
-        .password(passwordEncoder().encode(PASSWORD))
-        .authorities(ROLE_USER);
+            .withUser(USER).password(passwordEncoder().encode(PASSWORD)).roles(ROLE_USER);
   }
 
   @Override
@@ -34,12 +34,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .csrf()
             .disable()
             .authorizeRequests()
-            .anyRequest()
-            .authenticated()
+            .anyRequest().authenticated()
             .and()
-            .httpBasic();
-
-    http.addFilterAfter(new CustomFilter(), BasicAuthenticationFilter.class);
+            .httpBasic()
+            .realmName(REALM_NAME)
+            .authenticationEntryPoint(new CustomAuthenticationEntryPoint());
   }
 
   @Bean

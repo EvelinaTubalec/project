@@ -24,6 +24,7 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -41,11 +42,12 @@ public class WriteExcelReport {
   public static final String END_DATE = "End Date";
   public static final String JOB_TITLE = "JobTitle";
   public static final String YYYY_MM_DD = "yyyy-MM-dd";
+  public static String nameOfReport;
   private final EmployeeRepository employeeRepository;
   private final ProjectPositionRepository projectPositionRepository;
   private final DepartmentRepository departmentRepository;
 
-  public void writeToXmlFileStatisticOfUsersForMonth() {
+  public String writeToXmlFileStatisticOfUsersForMonth() {
     Map<String, Object[]> data = new TreeMap<>();
     data.put("1", new Object[] {ID, USER_NAME, DEPARTMENT, PROJECT, JOB_TITLE, START_DATE, END_DATE});
 
@@ -75,10 +77,10 @@ public class WriteExcelReport {
                   endProjectDate});
         }
       }
-    writeDataToExcelFile("statistics.xlsx", data);
+    return writeDataToExcelFile("employees_month_statistic.xlsx", data);
   }
 
-  public void writeToXmlFileAvailableEmployeesDuringMonth() throws ParseException {
+  public String writeToXmlFileAvailableEmployeesDuringMonth() throws ParseException {
     Map<String, Object[]> data = new TreeMap<>();
     data.put("1", new Object[] {ID, USER_NAME, DEPARTMENT, PROJECT, START_DATE, END_DATE});
 
@@ -120,7 +122,7 @@ public class WriteExcelReport {
                 endProjectDate});
       }
     }
-    writeDataToExcelFile("statisticsForAvailableEmployee.xlsx", data);
+    return writeDataToExcelFile("available_employees.xlsx", data);
   }
 
   public List<ProjectPosition> findProjectPosition(Employee employee){
@@ -139,7 +141,7 @@ public class WriteExcelReport {
             "Department with id = " + employee.getDepartment().getId() + " doesn't exists"));
   }
 
-  public void writeDataToExcelFile(String fileName, Map<String, Object[]> data){
+  public String writeDataToExcelFile(String fileName, Map<String, Object[]> data){
     XSSFWorkbook workbook = new XSSFWorkbook();
     XSSFSheet sheet = workbook.createSheet("Employee statistic");
 
@@ -156,12 +158,14 @@ public class WriteExcelReport {
       }
     }
     try {
-      //C:\Program Files\Apache Software Foundation\Tomcat 8.5\bin
-      FileOutputStream out = new FileOutputStream(fileName);
+      nameOfReport = "C:\\Users\\evelina.tubalets\\Projects\\reports\\"  + fileName;
+      File file = new File(nameOfReport);
+      FileOutputStream out = new FileOutputStream(file);
       workbook.write(out);
       out.close();
     } catch (Exception e) {
       e.printStackTrace();
     }
+    return nameOfReport;
   }
 }
