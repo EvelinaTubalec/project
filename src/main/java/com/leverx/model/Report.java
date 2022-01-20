@@ -37,8 +37,12 @@ public class Report {
     @Column(name = "file_name")
     private String fileName;
 
-    public Report(Timestamp createDate, String fileName) {
+    @Column(name = "type")
+    private String type;
+
+    public Report(Timestamp createDate, String fileName, String type) {
         this.createDate = createDate;
         this.fileName = fileName;
+        this.type = type;
     }
 }

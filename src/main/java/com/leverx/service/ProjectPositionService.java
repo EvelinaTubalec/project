@@ -37,10 +37,11 @@ public class ProjectPositionService {
             "Project with id = " + request.getProjectId() + " doesn't exists"));
     ProjectPosition projectPosition = ProjectPositionConvertor.toEntity(request, employeeById, projectById);
 
-    List<Long> projectPositionIdByUserId = projectPositionRepository.findProjectPositionIdByEmployeeId(employeeById.getId());
+    List<Long> projectPositionIdByUserId = projectPositionRepository.findProjectPositionIdByEmployeeId(employeeById.getId(), LocalDate.now());
 
+    // не нужно?
     if (projectPositionIdByUserId.size()!=0){
-      List<Long> projectPositionByUserId = projectPositionRepository.findProjectPositionIdByEmployeeId(employeeById.getId());
+      List<Long> projectPositionByUserId = projectPositionRepository.findProjectPositionIdByEmployeeId(employeeById.getId(), LocalDate.now());
       for (Long projectPositionId: projectPositionByUserId) {
         ProjectPosition actualProjectPosition = projectPositionRepository.findById(projectPositionId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
                 "Project with id = " + request.getProjectId() + " doesn't exists"));

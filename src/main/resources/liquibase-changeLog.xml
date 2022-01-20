@@ -103,12 +103,15 @@
                                  referencedColumnNames="id" referencedTableName="department"/>
     </changeSet>
 
-    <changeSet author="evelina.tubalets" id="1641908232187-14">
+    <changeSet author="evelina.tubalets" id="1641908232187-20">
         <createTable tableName="report">
             <column autoIncrement="true" name="id" type="BIGSERIAL">
                 <constraints primaryKey="true" primaryKeyName="report_pkey"/>
             </column>
             <column name="file_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
             <column name="create_date" type="timestamp">

@@ -10,10 +10,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+
+import static com.leverx.report.WriteExcelReport.EMPLOYEES_MONTH_STATISTIC_FILE;
+import static com.leverx.report.WriteExcelReport.REPORT_OF_AVAILABLE_EMPLOYEES_FILE;
 
 @Service
 @AllArgsConstructor
@@ -22,14 +21,13 @@ public class ReportService {
     private final ReportRepository reportRepository;
     private final WriteExcelReport writeExcelReport;
 
-
     public Report save(Report report) {
         return reportRepository.save(report);
     }
 
     public String getStatisticForMonth() {
         String reportName = writeExcelReport.writeToXmlFileStatisticOfUsersForMonth();
-        Report report = new Report(new Timestamp(System.currentTimeMillis()), reportName);
+        Report report = new Report(new Timestamp(System.currentTimeMillis()), reportName, EMPLOYEES_MONTH_STATISTIC_FILE );
         save(report);
         return reportName;
     }
@@ -37,7 +35,7 @@ public class ReportService {
     public String replaceReportOfAvailableEmployees() throws ParseException {
         String reportName = writeExcelReport.writeToXmlFileAvailableEmployeesDuringMonth();
         if(reportRepository.findReportByReportName(reportName) == null){
-            Report report = new Report(new Timestamp(System.currentTimeMillis()), reportName);
+            Report report = new Report(new Timestamp(System.currentTimeMillis()), reportName, REPORT_OF_AVAILABLE_EMPLOYEES_FILE);
             save(report);
         }else{
         Long id = (reportRepository.findReportByReportName(reportName));

@@ -6,6 +6,7 @@ import au.com.bytecode.opencsv.bean.CsvToBean;
 import com.leverx.model.Employee;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.List;
@@ -19,7 +20,15 @@ public class LoadingFromCSVFileService {
   public static final String EMAIL = "email";
   public static final String PASSWORD = "password";
   public static final String JOB_TITLE = "jobTitle";
-  public static final String FILE_NAME = "C:\\Users\\evelina.tubalets\\Projects\\src\\main\\resources\\data.csv";
+  public static final String FILE_NAME =
+          "C:" + File.separator
+          + "Users" + File.separator
+          + "evelina.tubalets" + File.separator
+          + "Projects" + File.separator
+          + "src" + File.separator
+          + "main" + File.separator
+          + "resources" + File.separator
+          + "data.csv";
 
   public List<Employee> findAllFromCSVFile() throws FileNotFoundException {
     CsvToBean<Employee> csv = new CsvToBean<>();

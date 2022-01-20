@@ -5,8 +5,9 @@ import com.leverx.model.Employee;
 import com.leverx.model.Project;
 import com.leverx.model.ProjectPosition;
 import com.leverx.repository.DepartmentRepository;
-import com.leverx.repository.ProjectPositionRepository;
 import com.leverx.repository.EmployeeRepository;
+import com.leverx.repository.ProjectPositionRepository;
+import com.leverx.repository.ReportRepository;
 import com.leverx.utils.TransformDate;
 import lombok.AllArgsConstructor;
 import org.apache.poi.ss.usermodel.Cell;
@@ -19,14 +20,13 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.net.URL;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -42,10 +42,19 @@ public class WriteExcelReport {
   public static final String END_DATE = "End Date";
   public static final String JOB_TITLE = "JobTitle";
   public static final String YYYY_MM_DD = "yyyy-MM-dd";
+  public static final String PATH_TO_FILE =
+          "C:" + File.separator
+          + "Users" + File.separator
+          + "evelina.tubalets" + File.separator
+          + "Projects" + File.separator
+          + "reports" + File.separator;
+  public static final String REPORT_OF_AVAILABLE_EMPLOYEES_FILE = "available_employees.xlsx";
+  public static final String EMPLOYEES_MONTH_STATISTIC_FILE = "employees_month_statistic.xlsx";
   public static String nameOfReport;
   private final EmployeeRepository employeeRepository;
   private final ProjectPositionRepository projectPositionRepository;
   private final DepartmentRepository departmentRepository;
+  private final ReportRepository reportRepository;
 
   public String writeToXmlFileStatisticOfUsersForMonth() {
     Map<String, Object[]> data = new TreeMap<>();
@@ -77,7 +86,7 @@ public class WriteExcelReport {
                   endProjectDate});
         }
       }
-    return writeDataToExcelFile("employees_month_statistic.xlsx", data);
+    return writeDataToExcelFile(EMPLOYEES_MONTH_STATISTIC_FILE, data);
   }
 
   public String writeToXmlFileAvailableEmployeesDuringMonth() throws ParseException {
@@ -122,11 +131,14 @@ public class WriteExcelReport {
                 endProjectDate});
       }
     }
-    return writeDataToExcelFile("available_employees.xlsx", data);
+    return writeDataToExcelFile(REPORT_OF_AVAILABLE_EMPLOYEES_FILE, data);
   }
 
   public List<ProjectPosition> findProjectPosition(Employee employee){
-    List<Long> allProjectPositionId = projectPositionRepository.findProjectPositionIdByEmployeeId(employee.getId());
+    LocalDate now = LocalDate.now();
+    LocalDate startDate = now.withDayOfMonth(1);
+    LocalDate endDate = now.withDayOfMonth(now.lengthOfMonth());
+    List<Long> allProjectPositionId = projectPositionRepository.findProjectPositionIdByEmployeeIdDuringMonth(employee.getId(), startDate, endDate);
     List<ProjectPosition> projectPositions = new ArrayList<>();
     for (Long projectPositionId: allProjectPositionId) {
       ProjectPosition projectPosition = projectPositionRepository.findById(projectPositionId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
@@ -158,7 +170,17 @@ public class WriteExcelReport {
       }
     }
     try {
-      nameOfReport = "C:\\Users\\evelina.tubalets\\Projects\\reports\\"  + fileName;
+      if(Objects.equals(fileName, REPORT_OF_AVAILABLE_EMPLOYEES_FILE)){
+        nameOfReport = PATH_TO_FILE  + fileName;
+      }else{
+        if(reportRepository.findLastIdReport(EMPLOYEES_MONTH_STATISTIC_FILE)==null){
+          nameOfReport = PATH_TO_FILE + 1 + "_" + fileName;
+        } else {
+          Long lastReport = reportRepository.findLastIdReport(EMPLOYEES_MONTH_STATISTIC_FILE);
+          String s = lastReport.toString();
+          nameOfReport = PATH_TO_FILE + s + "_" + fileName;
+        }
+      }
       File file = new File(nameOfReport);
       FileOutputStream out = new FileOutputStream(file);
       workbook.write(out);

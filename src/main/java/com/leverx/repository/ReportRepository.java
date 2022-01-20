@@ -5,8 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.sql.Timestamp;
-
 public interface ReportRepository extends JpaRepository<Report, Long> {
 
     @Query(value = "SELECT id FROM report WHERE file_name=:fileName", nativeQuery = true)
@@ -14,4 +12,7 @@ public interface ReportRepository extends JpaRepository<Report, Long> {
 
     @Query(value = "SELECT id FROM report WHERE create_date IN (SELECT MAX(create_date) FROM report)", nativeQuery = true)
     Long findLastReport();
+
+    @Query(value = "SELECT id FROM report WHERE create_date IN (SELECT MAX(create_date) FROM report WHERE type=:type)", nativeQuery = true)
+    Long findLastIdReport(@Param("type") String type);
 }

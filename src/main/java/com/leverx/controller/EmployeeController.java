@@ -37,30 +37,8 @@ import static org.springframework.http.HttpStatus.OK;
 public class EmployeeController {
 
   private final EmployeeService employeeService;
-  private final ReportService reportService;
   private final LoadingFromCSVFileService loadingFromCSVFileService;
   private static final Logger log = LoggerFactory.logger(DepartmentController.class);
-
-  @GetMapping("/statistic_report")
-  @ResponseStatus(OK)
-  @Operation(summary = "Get statistic report about employees during month")
-  public String getStatistic() {
-    return reportService.getStatisticForMonth();
-  }
-
-  @GetMapping("/report_of_available_employees")
-  @ResponseStatus(OK)
-  @Operation(summary = "Get report of available employees during month")
-  public String getStatisticOfAvailableEmployees() throws ParseException {
-    return reportService.replaceReportOfAvailableEmployees();
-  }
-
-  @GetMapping("/last_report")
-  @ResponseStatus(OK)
-  @Operation(summary = "Get last report")
-  public String getLastReport() {
-    return reportService.getLastReport();
-  }
 
   @GetMapping("/loading-from-csv-file")
   @ResponseStatus(OK)

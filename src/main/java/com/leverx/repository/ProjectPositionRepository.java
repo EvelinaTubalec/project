@@ -42,8 +42,18 @@ public interface ProjectPositionRepository extends JpaRepository<ProjectPosition
                   "SELECT id "
                           + "FROM project_position "
                           + "WHERE employee_id = :employeeId "
-                          + "AND (project_position.position_start_date >= '2022-01-01' "
-                          + "OR position_end_date < '2022-01-31') ",
+                          + "AND (project_position.position_start_date >=:startDate "
+                          + "OR position_end_date <:endDate) ",
           nativeQuery = true)
-  List<Long> findProjectPositionIdByEmployeeId(@Param("employeeId") Long employeeId) ;
+  List<Long> findProjectPositionIdByEmployeeIdDuringMonth(@Param("employeeId") Long employeeId, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate) ;
+
+  @Query(
+          value =
+                  "SELECT id "
+                          + "FROM project_position "
+                          + "WHERE employee_id = :employeeId "
+                          + "AND (project_position.position_start_date >=:currentDate) ",
+          nativeQuery = true)
+  List<Long> findProjectPositionIdByEmployeeId(@Param("employeeId") Long employeeId, @Param("currentDate") LocalDate currentDate) ;
+
 }

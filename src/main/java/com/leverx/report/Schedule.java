@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+
+import static com.leverx.report.WriteExcelReport.EMPLOYEES_MONTH_STATISTIC_FILE;
 
 @Component
 @AllArgsConstructor
@@ -22,7 +22,7 @@ public class Schedule {
     @Scheduled(cron = "0 8 1 * * *")
     public void reportGenerating() throws ParseException {
         String reportName = writeExcelReport.writeToXmlFileStatisticOfUsersForMonth();
-        Report report = new Report(new Timestamp(System.currentTimeMillis()), reportName);
+        Report report = new Report(new Timestamp(System.currentTimeMillis()), reportName, EMPLOYEES_MONTH_STATISTIC_FILE);
         reportService.save(report);
         writeExcelReport.writeToXmlFileAvailableEmployeesDuringMonth();
     }
