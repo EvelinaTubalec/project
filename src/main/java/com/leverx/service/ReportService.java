@@ -189,10 +189,10 @@ public class ReportService {
             if(Objects.equals(fileName, REPORT_OF_AVAILABLE_EMPLOYEES_FILE)){
                 nameOfReport = PATH_TO_FILE  + fileName;
             }else{
-                if(reportRepository.findLastIdReport(EMPLOYEES_MONTH_STATISTIC_FILE) == null){
+                if(reportRepository.findLastIdReportByType(EMPLOYEES_MONTH_STATISTIC_FILE) == null){
                     nameOfReport = PATH_TO_FILE + 1 + "_" + fileName;
                 } else {
-                    Long lastReport = reportRepository.findLastIdReport(EMPLOYEES_MONTH_STATISTIC_FILE);
+                    Long lastReport = reportRepository.findLastIdReportByType(EMPLOYEES_MONTH_STATISTIC_FILE);
                     String s = lastReport.toString();
                     nameOfReport = PATH_TO_FILE + s + "_" + fileName;
                 }

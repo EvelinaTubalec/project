@@ -14,5 +14,5 @@ public interface ReportRepository extends JpaRepository<Report, Long> {
     Long findLastReport();
 
     @Query(value = "SELECT id FROM report WHERE create_date IN (SELECT MAX(create_date) FROM report WHERE type=:type)", nativeQuery = true)
-    Long findLastIdReport(@Param("type") String type);
+    Long findLastIdReportByType(@Param("type") String type);
 }
