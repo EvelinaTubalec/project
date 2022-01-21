@@ -3,6 +3,7 @@ package com.leverx.service;
 import com.leverx.model.Department;
 import com.leverx.model.Employee;
 import com.leverx.model.convertor.AvailableUserConvertor;
+import com.leverx.model.dto.request.DepartmentRequestDto;
 import com.leverx.model.dto.request.EmployeeRequestDto;
 import com.leverx.model.dto.response.AvailableEmployeeResponseDto;
 import com.leverx.model.dto.response.EmployeeResponseDto;
@@ -17,12 +18,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
@@ -95,6 +99,14 @@ class EmployeeServiceTest {
     Assertions.assertEquals(expectedLastName, actualLastName);
     Assertions.assertEquals(expectedJobTitle, actualJobTitle);
     Assertions.assertEquals(expectedDepartmentId, actualDepartmentId);
+  }
+
+  @Test
+  void givenEmployeeRequestWithoutFields_whenSaveEmployee_thenReturnResponseStatusException() {
+    Throwable throwable =
+            assertThrows(Throwable.class, () -> employeeService.create(new EmployeeRequestDto()));
+
+    assertEquals(ResponseStatusException.class, throwable.getClass());
   }
 
   @Test

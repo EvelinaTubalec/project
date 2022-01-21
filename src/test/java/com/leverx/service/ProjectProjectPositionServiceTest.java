@@ -4,6 +4,7 @@ import com.leverx.model.Department;
 import com.leverx.model.Employee;
 import com.leverx.model.ProjectPosition;
 import com.leverx.model.Project;
+import com.leverx.model.dto.request.EmployeeRequestDto;
 import com.leverx.model.dto.request.ProjectPositionRequestDto;
 import com.leverx.model.dto.response.ProjectPositionResponseDto;
 import com.leverx.repository.ProjectPositionRepository;
@@ -17,12 +18,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
@@ -94,6 +98,14 @@ class ProjectProjectPositionServiceTest {
 
     Assertions.assertEquals(expectedPositionStartDate, actualPositionStartDate);
     Assertions.assertEquals(expectedPositionEndDate, actualPositionEndDate);
+  }
+
+  @Test
+  void givenPositionRequestWithoutFields_whenSavePositionRequest_thenReturnResponseStatusException() {
+    Throwable throwable =
+            assertThrows(Throwable.class, () -> projectPositionService.create(new ProjectPositionRequestDto()));
+
+    assertEquals(ResponseStatusException.class, throwable.getClass());
   }
 
   @Test

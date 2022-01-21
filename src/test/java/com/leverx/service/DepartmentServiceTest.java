@@ -83,7 +83,7 @@ class DepartmentServiceTest {
   }
 
   @Test
-  void givenDepartmentRequestWithoutTitle_whenSaveDepartment_thenReturnNullPointerException() {
+  void givenDepartmentRequestWithoutTitle_whenSaveDepartment_thenReturnResponseStatusException() {
     Throwable throwable =
         assertThrows(Throwable.class, () -> departmentService.create(new DepartmentRequestDto()));
 

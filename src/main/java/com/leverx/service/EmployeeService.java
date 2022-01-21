@@ -3,6 +3,7 @@ package com.leverx.service;
 import com.leverx.model.Department;
 import com.leverx.model.Employee;
 import com.leverx.model.convertor.AvailableUserConvertor;
+import com.leverx.model.dto.request.DepartmentRequestDto;
 import com.leverx.model.dto.request.EmployeeRequestDto;
 import com.leverx.model.dto.response.AvailableEmployeeResponseDto;
 import com.leverx.model.dto.response.EmployeeResponseDto;
@@ -11,6 +12,7 @@ import com.leverx.repository.DepartmentRepository;
 import com.leverx.repository.EmployeeRepository;
 import com.leverx.repository.ProjectPositionRepository;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -33,11 +35,25 @@ public class EmployeeService {
   }
 
   public EmployeeResponseDto create(EmployeeRequestDto request) {
+    validateEmployeeRequest(request);
+
     Department departmentById = departmentRepository.findById(request.getDepartmentId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
             "Department with id = " + request.getDepartmentId() + " doesn't exists"));
     Employee employee = EmployeeConvertor.toEntity(request, departmentById);
     Employee savedEmployee = employeeRepository.save(employee);
     return EmployeeConvertor.toResponse(savedEmployee);
+  }
+
+  private void validateEmployeeRequest(EmployeeRequestDto request) {
+    if(StringUtils.isEmpty(request.getFirstName()) ||
+            StringUtils.isEmpty(request.getLastName()) ||
+            StringUtils.isEmpty(request.getEmail()) ||
+            StringUtils.isEmpty(request.getPassword()) ||
+            StringUtils.isEmpty(request.getJobTitle()) ||
+            (request.getDepartmentId() == null)){
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+              "Field(s) is empty");
+    }
   }
 
   public EmployeeResponseDto update(EmployeeRequestDto request, Long userId) {

@@ -1,6 +1,7 @@
 package com.leverx.service;
 
 import com.leverx.model.Project;
+import com.leverx.model.dto.request.ProjectPositionRequestDto;
 import com.leverx.model.dto.request.ProjectRequestDto;
 import com.leverx.model.dto.response.ProjectResponseDto;
 import com.leverx.repository.ProjectRepository;
@@ -12,12 +13,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
@@ -75,6 +79,13 @@ class ProjectServiceTest {
     Assertions.assertEquals(expectedTitle, actualTitle);
     Assertions.assertEquals(expectedStartDate, actualStartDate);
     Assertions.assertEquals(expectedEndDate, actualEndDate);
+  }
+
+  @Test
+  void givenProjectRequestWithoutTitle_whenSaveProjectRequest_thenReturnResponseStatusException() {
+    Throwable throwable =
+            assertThrows(Throwable.class, () -> projectService.create(new ProjectRequestDto()));
+    assertEquals(ResponseStatusException.class, throwable.getClass());
   }
 
   @Test
