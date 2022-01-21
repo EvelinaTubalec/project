@@ -133,8 +133,7 @@ class DepartmentServiceTest {
   }
 
   @Test
-  void
-      givenDepartmentRequest_whenDeleteDepartmentInsistingDepartment_thenReturnResponseStatusException() {
+  void givenDepartmentRequest_whenDeleteDepartmentInsistingDepartment_thenReturnResponseStatusException() {
     Department department = new Department(1L, "title");
     when(departmentRepository.findById(department.getId()))
         .thenThrow(

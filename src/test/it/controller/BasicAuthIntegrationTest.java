@@ -1,12 +1,10 @@
 package controller;
 
 import com.leverx.config.ApplicationConfig;
-import org.apache.commons.codec.binary.Base64;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -26,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {ApplicationConfig.class})
 @WebAppConfiguration
-public class BasicAuthTest {
+public class BasicAuthIntegrationTest {
 
     public MockMvc mockMvc;
 
@@ -35,16 +33,6 @@ public class BasicAuthTest {
     @BeforeEach
     public void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
-    }
-
-    @Test
-    public void authWithHeaderTest() throws Exception {
-      String basicDigestHeaderValue = "Basic " + new String(Base64.encodeBase64(("<user>:<password>").getBytes()));
-      mockMvc
-                .perform(MockMvcRequestBuilders.get("/employees")
-                .header("Authorization", basicDigestHeaderValue)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
     }
 
     @Test

@@ -1,7 +1,6 @@
 package com.leverx.service;
 
 import com.leverx.model.Employee;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +26,7 @@ class LoadingFromCSVFileServiceTest {
     }
 
     @Test
-    void findAllFromCSVFile() throws FileNotFoundException {
+    void findAllFromCSVFile_thenReturnAllEmployees() throws FileNotFoundException {
         Employee emp1 = new Employee(1L, "Lokesh","Gupta","email","password","ui" );
         Employee emp2 = new Employee(2L, "David","Miller","email","password","developer" );
 
