@@ -2,14 +2,13 @@ package com.leverx.service;
 
 import com.leverx.model.Department;
 import com.leverx.model.Employee;
-import com.leverx.model.ProjectPosition;
 import com.leverx.model.Project;
-import com.leverx.model.dto.request.EmployeeRequestDto;
+import com.leverx.model.ProjectPosition;
 import com.leverx.model.dto.request.ProjectPositionRequestDto;
 import com.leverx.model.dto.response.ProjectPositionResponseDto;
+import com.leverx.repository.EmployeeRepository;
 import com.leverx.repository.ProjectPositionRepository;
 import com.leverx.repository.ProjectRepository;
-import com.leverx.repository.EmployeeRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,6 +17,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
@@ -98,6 +98,22 @@ class ProjectProjectPositionServiceTest {
 
     Assertions.assertEquals(expectedPositionStartDate, actualPositionStartDate);
     Assertions.assertEquals(expectedPositionEndDate, actualPositionEndDate);
+  }
+
+  @Test
+  void givenProjectPositionRequest_whenUpdateProjectPositionNonExistingProjectPosition_thenReturnResponseStatusException() {
+    Department department = new Department(1L, "title");
+    Employee employee = new Employee(1L, "firstName", "lastName", "email", "password", "jobTitle", department);
+    Project project = new Project(100L, "title", LocalDate.now(), LocalDate.now());
+    ProjectPosition projectPosition = new ProjectPosition(1L, LocalDate.now(), LocalDate.now(), project, employee);
+
+    when(projectPositionRepository.findById(projectPosition.getId()))
+        .thenThrow(new ResponseStatusException(HttpStatus.BAD_REQUEST, "Project position with " + projectPosition.getId() + " doesn't exists"));
+
+    Throwable throwable =
+            assertThrows(Throwable.class, () -> projectPositionService.update(new ProjectPositionRequestDto(1L, 1L, LocalDate.now(), LocalDate.now()), 100L));
+
+    assertEquals(ResponseStatusException.class, throwable.getClass());
   }
 
   @Test
