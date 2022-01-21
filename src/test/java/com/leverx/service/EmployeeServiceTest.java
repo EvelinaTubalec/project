@@ -18,6 +18,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
@@ -106,6 +107,21 @@ class EmployeeServiceTest {
     Throwable throwable =
             assertThrows(Throwable.class, () -> employeeService.create(new EmployeeRequestDto()));
 
+    assertEquals(ResponseStatusException.class, throwable.getClass());
+  }
+
+  @Test
+  void givenEmployeeRequest_whenUpdateEmployeeNonExistingEmployee_thenReturnResponseStatusException() {
+    Department department = new Department(100L, "title");
+    Employee employee = new Employee(100L, "firstName", "lastName", "email", "password", "jobTitle", department);
+
+    when(departmentRepository.findById(department.getId()))
+            .thenThrow(new ResponseStatusException(HttpStatus.BAD_REQUEST, "Department with" + department.getId() + " doesn't exists"));
+
+    when(employeeRepository.findById(employee.getId()))
+            .thenThrow(new ResponseStatusException(HttpStatus.BAD_REQUEST, "Employee with" + employee.getId() + " doesn't exists"));
+
+    Throwable throwable = assertThrows(Throwable.class, () -> employeeService.update(new EmployeeRequestDto("new", "new", "new", "new", "new", 100L), 100L));
     assertEquals(ResponseStatusException.class, throwable.getClass());
   }
 

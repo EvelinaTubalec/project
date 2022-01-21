@@ -1,6 +1,8 @@
 package com.leverx.service;
 
+import com.leverx.model.Department;
 import com.leverx.model.Project;
+import com.leverx.model.dto.request.DepartmentRequestDto;
 import com.leverx.model.dto.request.ProjectPositionRequestDto;
 import com.leverx.model.dto.request.ProjectRequestDto;
 import com.leverx.model.dto.response.ProjectResponseDto;
@@ -13,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
@@ -79,6 +82,18 @@ class ProjectServiceTest {
     Assertions.assertEquals(expectedTitle, actualTitle);
     Assertions.assertEquals(expectedStartDate, actualStartDate);
     Assertions.assertEquals(expectedEndDate, actualEndDate);
+  }
+
+  @Test
+  void givenProjectRequest_whenUpdateProjectNonExistingProject_thenReturnResponseStatusException() {
+    Project project = new Project(100L, "title", LocalDate.now(), LocalDate.now());
+    when(projectRepository.findById(project.getId())).thenThrow(
+            new ResponseStatusException(HttpStatus.BAD_REQUEST, "Project with " + project.getId() + " doesn't exists"));
+
+    Throwable throwable =
+            assertThrows(Throwable.class, () -> projectService.update(new ProjectRequestDto("title", LocalDate.now(), LocalDate.now()), 100L));
+
+    assertEquals(ResponseStatusException.class, throwable.getClass());
   }
 
   @Test
