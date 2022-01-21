@@ -9,7 +9,6 @@ import com.leverx.model.dto.response.ProjectPositionResponseDto;
 import com.leverx.repository.EmployeeRepository;
 import com.leverx.repository.ProjectPositionRepository;
 import com.leverx.repository.ProjectRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -73,7 +72,7 @@ class ProjectProjectPositionServiceTest {
     int expectedSize = projectPositions.size();
     int actualSize = positionResponses.size();
 
-    Assertions.assertEquals(expectedSize, actualSize);
+    assertEquals(expectedSize, actualSize);
   }
 
   @Test
@@ -96,8 +95,8 @@ class ProjectProjectPositionServiceTest {
     LocalDate expectedPositionStartDate = projectPositionDb.getPositionStartDate();
     LocalDate expectedPositionEndDate = projectPositionDb.getPositionEndDate();
 
-    Assertions.assertEquals(expectedPositionStartDate, actualPositionStartDate);
-    Assertions.assertEquals(expectedPositionEndDate, actualPositionEndDate);
+    assertEquals(expectedPositionStartDate, actualPositionStartDate);
+    assertEquals(expectedPositionEndDate, actualPositionEndDate);
   }
 
   @Test
@@ -142,7 +141,7 @@ class ProjectProjectPositionServiceTest {
     LocalDate actualPositionEndDate = updateProjectPositionResponseDto.getPositionEndDate();
     LocalDate expectedPositionEndDate = projectPositionDb.getPositionEndDate();
 
-    Assertions.assertEquals(expectedPositionEndDate, actualPositionEndDate);
+    assertEquals(expectedPositionEndDate, actualPositionEndDate);
   }
 
   @Test
@@ -157,5 +156,23 @@ class ProjectProjectPositionServiceTest {
     projectPositionService.delete(1L);
 
     verify(projectPositionRepository, times(1)).deleteById(projectPositionDb.getId());
+  }
+
+  @Test
+  void givenProjectPositionRequest_whenDeleteProjectPositionInsistingProjectPosition_thenReturnResponseStatusException() {
+    Department department = new Department(1L, "title");
+    Employee employee = new Employee(1L, "firstName", "lastName", "email", "password", "jobTitle", department);
+    Project project = new Project(1L, "title", LocalDate.now(), LocalDate.now());
+    ProjectPosition projectPositionDb = new ProjectPosition(100L, LocalDate.now(), LocalDate.now(), project, employee);
+
+    when(projectPositionRepository.findById(projectPositionDb.getId()))
+            .thenThrow(
+                    new ResponseStatusException(
+                            HttpStatus.BAD_REQUEST,
+                            "ProjectPosition with" + employee.getId() + " doesn't exists"));
+
+    Throwable throwable = assertThrows(Throwable.class, () -> projectPositionService.delete(100L));
+
+    assertEquals(ResponseStatusException.class, throwable.getClass());
   }
 }

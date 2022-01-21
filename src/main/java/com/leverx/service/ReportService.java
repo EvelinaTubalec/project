@@ -11,6 +11,7 @@ import com.leverx.repository.ProjectPositionRepository;
 import com.leverx.repository.ReportRepository;
 import com.leverx.utils.TransformDate;
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -21,6 +22,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -169,7 +171,8 @@ public class ReportService {
         return writeDataToExcelFile(REPORT_OF_AVAILABLE_EMPLOYEES_FILE, data);
     }
 
-    public String writeDataToExcelFile(String fileName, Map<String, Object[]> data){
+    @SneakyThrows(value = IOException.class)
+    public String writeDataToExcelFile(String fileName, Map<String, Object[]> data) {
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("Employee statistic");
 
@@ -185,25 +188,21 @@ public class ReportService {
                 else if (obj instanceof Integer) cell.setCellValue((Integer) obj);
             }
         }
-        try {
-            if(Objects.equals(fileName, REPORT_OF_AVAILABLE_EMPLOYEES_FILE)){
-                nameOfReport = PATH_TO_FILE  + fileName;
-            }else{
-                if(reportRepository.findLastIdReportByType(EMPLOYEES_MONTH_STATISTIC_FILE) == null){
-                    nameOfReport = PATH_TO_FILE + 1 + "_" + fileName;
-                } else {
-                    Long lastReport = reportRepository.findLastIdReportByType(EMPLOYEES_MONTH_STATISTIC_FILE);
-                    String s = lastReport.toString();
-                    nameOfReport = PATH_TO_FILE + s + "_" + fileName;
-                }
-            }
-            File file = new File(nameOfReport);
-            FileOutputStream out = new FileOutputStream(file);
-            workbook.write(out);
-            out.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    if (Objects.equals(fileName, REPORT_OF_AVAILABLE_EMPLOYEES_FILE)) {
+      nameOfReport = PATH_TO_FILE + fileName;
+    } else {
+      if (reportRepository.findLastIdReportByType(EMPLOYEES_MONTH_STATISTIC_FILE) == null) {
+        nameOfReport = PATH_TO_FILE + 1 + "_" + fileName;
+      } else {
+        Long lastReport = reportRepository.findLastIdReportByType(EMPLOYEES_MONTH_STATISTIC_FILE);
+        String s = lastReport.toString();
+        nameOfReport = PATH_TO_FILE + s + "_" + fileName;
+      }
+    }
+    File file = new File(nameOfReport);
+    FileOutputStream out = new FileOutputStream(file);
+    workbook.write(out);
+    out.close();
         return nameOfReport;
     }
 

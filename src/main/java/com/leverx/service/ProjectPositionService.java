@@ -1,17 +1,15 @@
 package com.leverx.service;
 
 import com.leverx.model.Employee;
-import com.leverx.model.ProjectPosition;
 import com.leverx.model.Project;
-import com.leverx.model.dto.request.ProjectPositionRequestDto;
-import com.leverx.model.dto.request.ProjectRequestDto;
-import com.leverx.model.dto.response.ProjectPositionResponseDto;
+import com.leverx.model.ProjectPosition;
 import com.leverx.model.convertor.ProjectPositionConvertor;
+import com.leverx.model.dto.request.ProjectPositionRequestDto;
+import com.leverx.model.dto.response.ProjectPositionResponseDto;
+import com.leverx.repository.EmployeeRepository;
 import com.leverx.repository.ProjectPositionRepository;
 import com.leverx.repository.ProjectRepository;
-import com.leverx.repository.EmployeeRepository;
 import lombok.AllArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -43,8 +41,8 @@ public class ProjectPositionService {
 
     List<Long> projectPositionIdByUserId = projectPositionRepository.findProjectPositionIdByEmployeeId(employeeById.getId(), LocalDate.now());
 
-    // не нужно?
-    if (projectPositionIdByUserId.size()!=0){
+    //??
+    if (projectPositionIdByUserId.size() != 0){
       List<Long> projectPositionByUserId = projectPositionRepository.findProjectPositionIdByEmployeeId(employeeById.getId(), LocalDate.now());
       for (Long projectPositionId: projectPositionByUserId) {
         ProjectPosition actualProjectPosition = projectPositionRepository.findById(projectPositionId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
@@ -54,6 +52,7 @@ public class ProjectPositionService {
         }
       }
     }
+
       ProjectPosition savedProject = projectPositionRepository.save(projectPosition);
       return ProjectPositionConvertor.toResponse(savedProject);
   }

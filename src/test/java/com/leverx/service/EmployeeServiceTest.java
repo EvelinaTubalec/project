@@ -3,14 +3,12 @@ package com.leverx.service;
 import com.leverx.model.Department;
 import com.leverx.model.Employee;
 import com.leverx.model.convertor.AvailableUserConvertor;
-import com.leverx.model.dto.request.DepartmentRequestDto;
 import com.leverx.model.dto.request.EmployeeRequestDto;
 import com.leverx.model.dto.response.AvailableEmployeeResponseDto;
 import com.leverx.model.dto.response.EmployeeResponseDto;
 import com.leverx.repository.DepartmentRepository;
 import com.leverx.repository.EmployeeRepository;
 import com.leverx.repository.ProjectPositionRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -71,7 +69,7 @@ class EmployeeServiceTest {
     int expectedSize = employees.size();
     int actualSize = userResponses.size();
 
-    Assertions.assertEquals(expectedSize, actualSize);
+    assertEquals(expectedSize, actualSize);
   }
 
   @Test
@@ -96,10 +94,10 @@ class EmployeeServiceTest {
     String expectedJobTitle = employee.getJobTitle();
     Long expectedDepartmentId = department.getId();
 
-    Assertions.assertEquals(expectedFirstName, actualFirstName);
-    Assertions.assertEquals(expectedLastName, actualLastName);
-    Assertions.assertEquals(expectedJobTitle, actualJobTitle);
-    Assertions.assertEquals(expectedDepartmentId, actualDepartmentId);
+    assertEquals(expectedFirstName, actualFirstName);
+    assertEquals(expectedLastName, actualLastName);
+    assertEquals(expectedJobTitle, actualJobTitle);
+    assertEquals(expectedDepartmentId, actualDepartmentId);
   }
 
   @Test
@@ -140,7 +138,7 @@ class EmployeeServiceTest {
     String actualFirstName = updateEmployeeResponseDto.getFirstName();
     String expectedFirstName = employee.getFirstName();
 
-    Assertions.assertEquals(expectedFirstName, actualFirstName);
+    assertEquals(expectedFirstName, actualFirstName);
   }
 
   @Test
@@ -153,6 +151,22 @@ class EmployeeServiceTest {
     employeeService.delete(1L);
 
     verify(employeeRepository, times(1)).deleteById(employee.getId());
+  }
+
+  @Test
+  void givenEmployeeRequest_whenDeleteEmployeeInsistingEmployee_thenReturnResponseStatusException() {
+    Department department = new Department(1L, "title");
+    Employee employee = new Employee(100L, "firstName", "lastName", "email", "password", "jobTitle", department);
+
+    when(employeeRepository.findById(employee.getId()))
+            .thenThrow(
+                    new ResponseStatusException(
+                            HttpStatus.BAD_REQUEST,
+                            "Employee with" + employee.getId() + " doesn't exists"));
+
+    Throwable throwable = assertThrows(Throwable.class, () -> employeeService.delete(100L));
+
+    assertEquals(ResponseStatusException.class, throwable.getClass());
   }
 
   @Test
@@ -183,6 +197,6 @@ class EmployeeServiceTest {
     }
 
     List<AvailableEmployeeResponseDto> actualResponse = employeeService.findListOfAvailableEmployees(LocalDate.now());
-    Assertions.assertEquals(expectedResponse.size(), actualResponse.size());
+    assertEquals(expectedResponse.size(), actualResponse.size());
   }
 }
