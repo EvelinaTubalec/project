@@ -19,13 +19,6 @@ public class ReportController {
 
     private final ReportService reportService;
 
-    @GetMapping("/statistic_report")
-    @ResponseStatus(OK)
-    @Operation(summary = "Get statistic report about employees during current month")
-    public String getStatistic() {
-        return reportService.getStatisticForMonth();
-    }
-
     @GetMapping("/report_of_available_employees")
     @ResponseStatus(OK)
     @Operation(summary = "Get report of available employees during month")

@@ -17,6 +17,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -64,11 +65,11 @@ public class ReportService {
         return reportRepository.save(report);
     }
 
-    public String getStatisticForMonth() {
+    @Scheduled(cron = "0 0 0 LW * *") //last weekday of the month ad midnight
+    public void getStatisticForMonth() {
         String reportName = writeReportOfEmployeesMonthStatisticToXmlFile();
         Report report = new Report(new Timestamp(System.currentTimeMillis()), reportName, EMPLOYEES_MONTH_STATISTIC_FILE );
         save(report);
-        return reportName;
     }
 
     public String replaceReportOfAvailableEmployees() throws ParseException {
