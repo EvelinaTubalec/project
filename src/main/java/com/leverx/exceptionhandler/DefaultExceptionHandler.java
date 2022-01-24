@@ -1,5 +1,6 @@
 package com.leverx.exceptionhandler;
 
+import com.leverx.exceptions.EmailException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -32,6 +33,11 @@ public class DefaultExceptionHandler {
 
   @ExceptionHandler(ParseException.class)
   public ResponseEntity<ErrorMessage> onParseException(ParseException e) {
+    return new ResponseEntity<>(new ErrorMessage(e.getClass().getSimpleName(), e.getMessage()), BAD_REQUEST);
+  }
+
+  @ExceptionHandler(EmailException.class)
+  public ResponseEntity<ErrorMessage> onEmailException(EmailException e) {
     return new ResponseEntity<>(new ErrorMessage(e.getClass().getSimpleName(), e.getMessage()), BAD_REQUEST);
   }
 }

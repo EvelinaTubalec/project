@@ -9,13 +9,13 @@ C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\model\dto\request\Em
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\service\EmployeeService.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\model\dto\request\ProjectRequestDto.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\model\dto\request\DepartmentRequestDto.java
-C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\security\CustomAuthenticationEntryPoint.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\model\ProjectPosition.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\security\SecurityConfiguration.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\controller\ReportController.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\exceptionhandler\DefaultExceptionHandler.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\model\dto\request\ProjectPositionRequestDto.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\model\Department.java
+C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\service\MailService.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\model\convertor\ProjectConvertor.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\repository\EmployeeRepository.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\service\ProjectService.java
@@ -37,7 +37,6 @@ C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\model\Employee.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\utils\TransformDate.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\controller\DepartmentController.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\repository\DepartmentRepository.java
-C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\schedule\Schedule.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\service\ReportService.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\service\ProjectPositionService.java
 C:\Users\evelina.tubalets\Projects\src\main\java\com\leverx\model\Report.java

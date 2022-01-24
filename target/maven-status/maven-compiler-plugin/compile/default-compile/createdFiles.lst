@@ -1,12 +1,12 @@
 com\leverx\config\ApplicationConfig.class
 com\leverx\repository\ProjectRepository.class
+com\leverx\service\MailService.class
 com\leverx\model\dto\request\ProjectRequestDto$ProjectRequestDtoBuilder.class
 com\leverx\config\DataSourceConfig.class
 com\leverx\model\convertor\ProjectConvertor.class
 com\leverx\repository\DepartmentRepository.class
 com\leverx\service\ProjectService.class
 com\leverx\model\dto\response\ProjectPositionResponseDto$ProjectPositionResponseDtoBuilder.class
-com\leverx\schedule\Schedule.class
 com\leverx\repository\ProjectPositionRepository.class
 com\leverx\model\dto\request\ProjectPositionRequestDto.class
 com\leverx\model\convertor\DepartmentConvertor.class
@@ -16,6 +16,7 @@ com\leverx\service\LoadingFromCSVFileService.class
 com\leverx\model\dto\request\ProjectRequestDto.class
 com\leverx\model\dto\response\AvailableEmployeeResponseDto.class
 com\leverx\model\dto\response\ProjectResponseDto.class
+com\leverx\service\MailService$1.class
 com\leverx\service\ReportService.class
 com\leverx\controller\ProjectController.class
 com\leverx\model\dto\response\DepartmentResponseDto.class
@@ -38,7 +39,6 @@ com\leverx\model\dto\response\DepartmentResponseDto$DepartmentResponseDtoBuilder
 com\leverx\security\SecurityInitializer.class
 com\leverx\model\dto\request\EmployeeRequestDto.class
 com\leverx\model\convertor\AvailableUserConvertor.class
-com\leverx\security\CustomAuthenticationEntryPoint.class
 com\leverx\config\DispatcherServletInitializer.class
 com\leverx\model\convertor\EmployeeConvertor.class
 com\leverx\model\dto\request\DepartmentRequestDto.class

@@ -145,6 +145,9 @@
           <element id="library" level="project" name="Maven: de.rototor.pdfbox:graphics2d:0.30" />
           <element id="library" level="project" name="Maven: org.apache.pdfbox:pdfbox:2.0.22" />
           <element id="library" level="project" name="Maven: org.apache.pdfbox:fontbox:2.0.22" />
+          <element id="library" level="project" name="Maven: com.sun.mail:smtp:1.4.4" />
+          <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
+          <element id="library" level="project" name="Maven: com.sun.mail:mailapi:1.4.4" />
         </element>
       </element>
       <element id="directory" name="META-INF">
