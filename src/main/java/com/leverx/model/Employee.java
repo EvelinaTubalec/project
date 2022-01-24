@@ -59,6 +59,15 @@ public class Employee {
     this.department = department;
   }
 
+  public Employee(Long id, String firstName, String lastName, String email, String password, String jobTitle) {
+    this.id = id;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.password = password;
+    this.jobTitle = jobTitle;
+  }
+
   public Employee(Long id, String firstName, String lastName, String email, String password, String jobTitle, Department department) {
     this.id = id;
     this.firstName = firstName;

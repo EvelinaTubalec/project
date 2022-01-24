@@ -1,10 +1,11 @@
 package com.leverx.service;
 
+import com.leverx.model.Department;
+import com.leverx.model.Employee;
 import com.leverx.model.Project;
 import com.leverx.model.dto.request.ProjectRequestDto;
 import com.leverx.model.dto.response.ProjectResponseDto;
 import com.leverx.repository.ProjectRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -12,12 +13,16 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
@@ -54,7 +59,7 @@ class ProjectServiceTest {
     int actual = projectResponses.size();
     int expected = actualProjects.size();
 
-    Assertions.assertEquals(expected, actual);
+    assertEquals(expected, actual);
   }
 
   @Test
@@ -72,9 +77,28 @@ class ProjectServiceTest {
     LocalDate actualStartDate = projectResponseDto.getStartDate();
     LocalDate actualEndDate = projectResponseDto.getEndDate();
 
-    Assertions.assertEquals(expectedTitle, actualTitle);
-    Assertions.assertEquals(expectedStartDate, actualStartDate);
-    Assertions.assertEquals(expectedEndDate, actualEndDate);
+    assertEquals(expectedTitle, actualTitle);
+    assertEquals(expectedStartDate, actualStartDate);
+    assertEquals(expectedEndDate, actualEndDate);
+  }
+
+  @Test
+  void givenProjectRequest_whenUpdateProjectNonExistingProject_thenReturnResponseStatusException() {
+    Project project = new Project(100L, "title", LocalDate.now(), LocalDate.now());
+    when(projectRepository.findById(project.getId())).thenThrow(
+            new ResponseStatusException(HttpStatus.BAD_REQUEST, "Project with " + project.getId() + " doesn't exists"));
+
+    Throwable throwable =
+            assertThrows(Throwable.class, () -> projectService.update(new ProjectRequestDto("title", LocalDate.now(), LocalDate.now()), 100L));
+
+    assertEquals(ResponseStatusException.class, throwable.getClass());
+  }
+
+  @Test
+  void givenProjectRequestWithoutTitle_whenSaveProjectRequest_thenReturnResponseStatusException() {
+    Throwable throwable =
+            assertThrows(Throwable.class, () -> projectService.create(new ProjectRequestDto()));
+    assertEquals(ResponseStatusException.class, throwable.getClass());
   }
 
   @Test
@@ -95,9 +119,9 @@ class ProjectServiceTest {
     LocalDate actualStartDate = projectResponseDto.getStartDate();
     LocalDate actualEndDate = projectResponseDto.getEndDate();
 
-    Assertions.assertEquals(expectedTitle, actualTitle);
-    Assertions.assertEquals(expectedStartDate, actualStartDate);
-    Assertions.assertEquals(expectedEndDate, actualEndDate);
+    assertEquals(expectedTitle, actualTitle);
+    assertEquals(expectedStartDate, actualStartDate);
+    assertEquals(expectedEndDate, actualEndDate);
   }
 
   @Test
@@ -109,5 +133,22 @@ class ProjectServiceTest {
     projectService.delete(1L);
 
     verify(projectRepository, times(1)).deleteById(project.getId());
+  }
+
+  @Test
+  void givenProjectRequest_whenDeleteProjectInsistingProject_thenReturnResponseStatusException() {
+    Department department = new Department(1L, "title");
+    Employee employee = new Employee(1L, "firstName", "lastName", "email", "password", "jobTitle", department);
+    Project project = new Project(100L, "title", LocalDate.now(), LocalDate.now());
+
+    when(projectRepository.findById(project.getId()))
+            .thenThrow(
+                    new ResponseStatusException(
+                            HttpStatus.BAD_REQUEST,
+                            "Project with" + employee.getId() + " doesn't exists"));
+
+    Throwable throwable = assertThrows(Throwable.class, () -> projectService.delete(100L));
+
+    assertEquals(ResponseStatusException.class, throwable.getClass());
   }
 }

@@ -12,10 +12,12 @@ import java.util.Date;
 @AllArgsConstructor
 public class TransformDate {
 
+    public static final String YYYY_MM_DD = "yyyy-MM-dd";
+
     public static LocalDate addPeriodToLocalDate(Integer period) throws ParseException {
         String s = LocalDate.now().toString();
         Calendar c = Calendar.getInstance();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format = new SimpleDateFormat(YYYY_MM_DD);
 
         c.setTime(format.parse(s));
         c.add(Calendar.DATE, period);  // number of days to add

@@ -4,9 +4,10 @@ import com.leverx.model.Employee;
 import com.leverx.model.dto.request.EmployeeRequestDto;
 import com.leverx.model.dto.response.AvailableEmployeeResponseDto;
 import com.leverx.model.dto.response.EmployeeResponseDto;
-import com.leverx.service.AvailableEmployeeService;
 import com.leverx.service.EmployeeService;
-import com.leverx.service.LoadingEmployeesFromCSVFileService;
+import com.leverx.service.LoadingFromCSVFileService;
+import com.leverx.service.ReportService;
+import com.leverx.utils.TransformDate;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.hibernate.annotations.common.util.impl.LoggerFactory;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.FileNotFoundException;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.CREATED;
@@ -35,16 +37,15 @@ import static org.springframework.http.HttpStatus.OK;
 public class EmployeeController {
 
   private final EmployeeService employeeService;
-  private final LoadingEmployeesFromCSVFileService loadingEmployeesFromCSVFileService;
-  private final AvailableEmployeeService availableEmployeeService;
+  private final LoadingFromCSVFileService loadingFromCSVFileService;
   private static final Logger log = LoggerFactory.logger(DepartmentController.class);
 
-  @GetMapping("/csv")
+  @GetMapping("/loading-from-csv-file")
   @ResponseStatus(OK)
   @Operation(summary = "Get employees from CSV file")
   public List<Employee> findAllFromCSVFile() throws FileNotFoundException {
     log.debug("Get employees from CSV file");
-    return loadingEmployeesFromCSVFileService.findAllFromCSVFile();
+    return loadingFromCSVFileService.findAllFromCSVFile();
   }
 
   @GetMapping("/available")
@@ -52,15 +53,16 @@ public class EmployeeController {
   @Operation(summary = "Get available employees")
   public List<AvailableEmployeeResponseDto> findAllAvailableEmployees(){
     log.debug("Get available employees");
-    return availableEmployeeService.findCurrentAvailableEmployees();
+    return employeeService.findListOfAvailableEmployees(LocalDate.now());
   }
 
   @GetMapping("/available/{period}")
   @ResponseStatus(OK)
   @Operation(summary = "Get available employees in period")
   public List<AvailableEmployeeResponseDto> findAllAvailableEmployeeInPeriod(@PathVariable("period") Integer period) throws ParseException {
+    LocalDate date = TransformDate.addPeriodToLocalDate(period);
     log.debug("Get available employees in period");
-    return availableEmployeeService.findAvailableInPeriodEmployees(period);
+    return employeeService.findListOfAvailableEmployees(date);
   }
 
   @GetMapping

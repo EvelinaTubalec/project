@@ -35,7 +35,7 @@ public class DepartmentService {
   private void validateDepartmentRequest(DepartmentRequestDto request) {
     if(StringUtils.isEmpty(request.getTitle())){
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-              "Title is empty");
+              "Field is empty");
     }
   }
 

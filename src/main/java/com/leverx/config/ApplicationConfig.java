@@ -1,14 +1,17 @@
 package com.leverx.config;
 
+import com.leverx.security.SecurityConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+
 @Configuration
 @ComponentScan({"com.leverx"})
-@EnableWebMvc
 @EnableScheduling
+@EnableWebMvc
 public class ApplicationConfig{
 
 }

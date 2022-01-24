@@ -1,9 +1,8 @@
 package controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.leverx.config.ApplicationConfig;
-import com.leverx.model.dto.request.ProjectRequestDto;
+import com.leverx.model.dto.request.EmployeeRequestDto;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,14 +17,12 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.time.LocalDate;
-
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {ApplicationConfig.class})
 @WebAppConfiguration
-class ProjectControllerTest {
+class EmployeeControllerIntegrationTest {
 
   public MockMvc mockMvc;
 
@@ -38,42 +35,44 @@ class ProjectControllerTest {
 
   @Test
   void findAll() throws Exception {
-    mockMvc.perform(MockMvcRequestBuilders.get("/projects")).andExpect(status().isOk());
+    mockMvc.perform(MockMvcRequestBuilders.get("/employees")).andExpect(status().isOk());
   }
 
   @Test
-  void saveProject() throws Exception {
+  void saveEmployee() throws Exception {
     mockMvc
         .perform(
-            MockMvcRequestBuilders.post("/projects")
+            MockMvcRequestBuilders.post("/employees")
                 .content(
-                    asJsonString(new ProjectRequestDto("title", LocalDate.now(), LocalDate.now())))
+                    asJsonString(
+                        new EmployeeRequestDto("firstName", "LastName", "email", "password", "position", 3L)))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isCreated());
   }
 
   @Test
-  void updateProject() throws Exception {
+  void updateEmployee() throws Exception {
     mockMvc
         .perform(
-            MockMvcRequestBuilders.patch("/projects/{id}", 1L)
+            MockMvcRequestBuilders.patch("/employees/{id}", 2L)
                 .content(
-                    asJsonString(new ProjectRequestDto("title", LocalDate.now(), LocalDate.now())))
+                    asJsonString(
+                        new EmployeeRequestDto("firstName", "LastName", "email", "password", "position", 3L)))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk());
   }
 
   @Test
-  void deleteProject() throws Exception {
+  void deleteEmployee() throws Exception {
     mockMvc
-        .perform(MockMvcRequestBuilders.delete("/projects/{id}", 2L))
+        .perform(MockMvcRequestBuilders.delete("/employees/{id}", 2L))
         .andExpect(status().isNoContent());
   }
 
   @SneakyThrows
   public static String asJsonString(final Object obj) {
-    return new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(obj);
+    return new ObjectMapper().writeValueAsString(obj);
   }
 }

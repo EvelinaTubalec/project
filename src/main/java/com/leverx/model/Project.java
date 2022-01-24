@@ -36,13 +36,9 @@ public class Project {
 
   @Column private String title;
 
-  @JsonSerialize(using = LocalDateTimeSerializer.class)
-  @JsonDeserialize(using = LocalDateTimeDeserializer.class)
   @Column(name = "start_date")
   private LocalDate startDate;
 
-  @JsonSerialize(using = LocalDateTimeSerializer.class)
-  @JsonDeserialize(using = LocalDateTimeDeserializer.class)
   @Column(name = "end_date")
   private LocalDate endDate;
 
